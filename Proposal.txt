@@ -1,0 +1,75 @@
+
+Graphics and Interaction Project 2 Proposal
+
+Proposal name: Piracy!
+
+Genre: Wave based naval combat
+
+Gameplay description:
+	The game is played on a square map of fixed size consisting of mostly open ocean
+	along with a handful of islands that will be procedurally generated at the beginning
+	of each new game.
+	
+	The map will be lit using a pseudo day/night cycle where the time of day will change between
+	rounds, but not during them, with ships acting as light sources at night to aid navigation.
+	
+	The player plays as a ship which is represented in the centre of the screen and controlled
+	by tipping the device in the direction that the player wants the ship to travel.
+	
+	Each game consists of a number of rounds through which the player must survive, the game
+	ends upon the players death.
+	
+	At the beginning of each round a number of enemy ships spawn which will use a seeking behaviour
+	to locate the player, once located the enemy ships will aggressively hunt the player and attempt
+	to use their weapons to destroy them. As the rounds progress the number of enemy ships will increase
+	along with their damage dealt, movement speed and lock time (see below).
+	
+	The player and enemy ships will have two weapons at their disposal:
+		> Side facing cannons
+		> Front mounted battering ram
+	
+	When a ship is within a cone of either side of another ship, the cannons aboard that ship will automatically
+	begin 'locking on' to the target, the time this takes is dependent on the distance to the target
+	once the lock is completed, an indicator will appear over the enemy ship and the player can tap the screen to
+	fire their cannons. Cannons can hit multiple targets at once with the damage split between them. Damage also
+	drops off as the distance to the target increases.
+
+	Ships are also capable of ramming one another with the damage dealt being dependent on the speed of the attacking
+	ship relative to the ship it is impacting, an impact to the direct front of another ship will deal 50% damage to
+	both ships.
+	
+	Note that hitting an island will deal ramming damage to the ship equivalent to if the ship had been struck from the
+	side by another ship going at the same relative speed compared to the island.
+	
+	When all enemy ships are defeated, the round will end, displaying some statistics and the player will have a few
+	moments before the next round begins.
+
+
+Cool ideas that we'll only implement if we have extra time on top of the above:
+	>Random environmental hazards such as whirlpools or currents that will deal damage or slow the ship
+	>Upgrades between rounds that allow the player to spend a set number of points to upgrade things like armour, cannons, speed, etc
+	>Single use powerups that can appear randomly on the map at the beginning of each round. Such as mines, speed boosts or shields.
+
+Polygons in the scene:
+	Given the zoomed out nature of the game, the models for the ships will likely be very low polycount and there generally will not
+	be a large number of ships present at any given time.
+	
+	The ocean floor does not need to be overly detailed and will likely be represented as a plane below the ocean surface, also
+	represented as a plane but using custom shaders to give a better appearance of water compared to project 1.
+	
+	Islands will not be large and will potentially only consist of a number of polygons on the order of hundreds.
+
+Milestones:
+	1. Rendering the map and successfully generating islands on each launch
+	2. Implementing the player ship and controls (This includes the camera which follows the player at a slight angle from vertical)
+	3. Implement basic XAML menu to start the game.
+	4. Loading enemy ships that are destroyable with no AI.
+	5. Implementing enemy AI.
+	6. Implement rounds system.
+	
+	There's other smaller steps involved between these, but these are the major milestones important to getting the game up to the specs.
+	
+	Bonuses
+	7. Implement environment hazards
+	8. Single use powerups
+	9. Ship upgrades between rounds.
