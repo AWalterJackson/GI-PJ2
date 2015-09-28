@@ -45,6 +45,7 @@ namespace Project
         public AccelerometerReading accelerometerReading;
         public GameInput input;
         public int score;
+        public bool gameOver;
         public MainPage mainPage;
 
         // TASK 4: Use this to represent difficulty
@@ -100,6 +101,7 @@ namespace Project
 
             score = 0;
             difficulty = 1;
+            gameOver = false;
         }
 
         protected override void LoadContent()
@@ -131,6 +133,13 @@ namespace Project
         {
             if (started)
             {
+                if (gameOver == true)
+                {
+                    this.Exit();
+                    this.Dispose();
+                    App.Current.Exit();
+                    return;
+                }
                 keyboardState = keyboardManager.GetState();
                 flushAddedAndRemovedGameObjects();
                 camera.Update();

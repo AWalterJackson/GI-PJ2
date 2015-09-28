@@ -67,7 +67,7 @@ namespace Project
         // React to getting hit by an enemy bullet.
         public void Hit()
         {
-            game.Exit();
+            game.gameOver = true;
         }
 
         public override void Tapped(GestureRecognizer sender, TappedEventArgs args)

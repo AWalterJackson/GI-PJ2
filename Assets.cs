@@ -95,5 +95,30 @@ namespace Project
             float collisionRadius = (size.X + size.Y + size.Z) / 6 ;
             return new MyModel(game, shapeArray, texturePath, collisionRadius);
         }
+
+        public MyModel CreateWorldBase(int size)
+        {
+            throw new NotImplementedException();
+        }
+
+        public MyModel CreateOcean(int size)
+        {
+            throw new NotImplementedException();
+        }
+
+        public MyModel CreateShip(String texturePath)
+        {
+            throw new NotImplementedException();
+        }
+
+        public MyModel CreateCannonBall()
+        {
+            throw new NotImplementedException();
+        }
+
+        public MyModel CreatePowerup(String texturePath)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

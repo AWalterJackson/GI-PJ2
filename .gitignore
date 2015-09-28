@@ -42,6 +42,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-#Exclude built files
+#Exclude built files and folders
 obj/
 bin/
+*.suo
