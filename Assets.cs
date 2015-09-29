@@ -98,27 +98,68 @@ namespace Project
 
         public MyModel CreateWorldBase(int size)
         {
-            throw new NotImplementedException();
+            
+            float collisionRadius = 1;
+            int sidelength = (int)Math.Pow(2, size);
+            int min = -sidelength / 2;
+            VertexPositionNormalColor[] shapeArray = new VertexPositionNormalColor[sidelength * sidelength*2];
+
+            for (int i = 0; i < shapeArray.Length; i++)
+            {
+                //Each step creates a square in the map mesh
+                //Bottom triangle
+                shapeArray[i] = new VertexPositionNormalColor(new Vector3(i + min, i + min, 0), new Vector3(0,0,1), Color.SandyBrown);
+                shapeArray[i + 1] = new VertexPositionNormalColor(new Vector3(i + min + 1, i + min + 1, 0), new Vector3(0, 0, 1), Color.SandyBrown);
+                shapeArray[i + 2] = new VertexPositionNormalColor(new Vector3(i + min + 1, i + min, 0), new Vector3(0, 0, 1), Color.SandyBrown);
+                
+                //Top Triangle
+                shapeArray[i + 3] = new VertexPositionNormalColor(new Vector3(i + min, i + min, 0), new Vector3(0, 0, 1), Color.SandyBrown);
+                shapeArray[i + 4] = new VertexPositionNormalColor(new Vector3(i + min, i + min + 1, 0), new Vector3(0, 0, 1), Color.SandyBrown);
+                shapeArray[i + 5] = new VertexPositionNormalColor(new Vector3(i + min + 1, i + min + 1, 0), new Vector3(0, 0, 1), Color.SandyBrown);
+                i += 6;
+            }
+
+                return new MyModel(game, shapeArray, collisionRadius);
         }
 
-        public MyModel CreateOcean(int size)
+        public MyModel CreateOcean(int size, int seaLevel)
         {
-            throw new NotImplementedException();
+            float collisionRadius = 0;
+            int sidelength = (int)Math.Pow(2, size);
+            int min = -sidelength / 2;
+            VertexPositionNormalColor[] shapeArray = new VertexPositionNormalColor[sidelength * sidelength * 2];
+
+            for (int i = 0; i < shapeArray.Length; i++)
+            {
+                //Each step creates a square in the map mesh
+                //Bottom triangle
+                shapeArray[i] = new VertexPositionNormalColor(new Vector3(i + min, i + min, -seaLevel), new Vector3(0, 0, 1), Color.SeaGreen);
+                shapeArray[i + 1] = new VertexPositionNormalColor(new Vector3(i + min + 1, i + min + 1, -seaLevel), new Vector3(0, 0, 1), Color.SeaGreen);
+                shapeArray[i + 2] = new VertexPositionNormalColor(new Vector3(i + min + 1, i + min, -seaLevel), new Vector3(0, 0, 1), Color.SeaGreen);
+
+                //Top Triangle
+                shapeArray[i + 3] = new VertexPositionNormalColor(new Vector3(i + min, i + min, -seaLevel), new Vector3(0, 0, 1), Color.SeaGreen);
+                shapeArray[i + 4] = new VertexPositionNormalColor(new Vector3(i + min, i + min + 1, -seaLevel), new Vector3(0, 0, 1), Color.SeaGreen);
+                shapeArray[i + 5] = new VertexPositionNormalColor(new Vector3(i + min + 1, i + min + 1, -seaLevel), new Vector3(0, 0, 1), Color.SeaGreen);
+                i += 6;
+            }
+
+            return new MyModel(game, shapeArray, collisionRadius);
         }
 
         public MyModel CreateShip(String texturePath)
         {
-            throw new NotImplementedException();
+            return CreateTexturedCube("player.png",1);
         }
 
         public MyModel CreateCannonBall()
         {
-            throw new NotImplementedException();
+            return CreateTexturedCube("player_projectile.png",1);
         }
 
         public MyModel CreatePowerup(String texturePath)
         {
-            throw new NotImplementedException();
+            return CreateTexturedCube(texturePath, 1);
         }
     }
 }
