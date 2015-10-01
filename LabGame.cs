@@ -46,6 +46,7 @@ namespace Project
         public GameInput input;
         public int score;
         public bool gameOver;
+        private Land worldBase;
         public MainPage mainPage;
 
         // TASK 4: Use this to represent difficulty
@@ -112,9 +113,11 @@ namespace Project
             removedGameObjects = new Stack<GameObject>();
 
             // Create game objects.
-            player = new Player(this);
-            gameObjects.Add(player);
-            gameObjects.Add(new EnemyController(this));
+            worldBase = new Land(this);
+            gameObjects.Add(worldBase);
+            //player = new Player(this);
+            //gameObjects.Add(player);
+            //gameObjects.Add(new EnemyController(this));
 
             // Create an input layout from the vertices
 

@@ -102,21 +102,27 @@ namespace Project
             float collisionRadius = 1;
             int sidelength = (int)Math.Pow(2, size);
             int min = -sidelength / 2;
-            VertexPositionNormalColor[] shapeArray = new VertexPositionNormalColor[sidelength * sidelength*2];
+            int k = 0;
 
-            for (int i = 0; i < shapeArray.Length; i++)
+            VertexPositionNormalColor[] shapeArray = new VertexPositionNormalColor[sidelength * sidelength*6];
+
+            for (int i = 0; i < sidelength; i++)
             {
-                //Each step creates a square in the map mesh
-                //Bottom triangle
-                shapeArray[i] = new VertexPositionNormalColor(new Vector3(i + min, i + min, 0), new Vector3(0,0,1), Color.SandyBrown);
-                shapeArray[i + 1] = new VertexPositionNormalColor(new Vector3(i + min + 1, i + min + 1, 0), new Vector3(0, 0, 1), Color.SandyBrown);
-                shapeArray[i + 2] = new VertexPositionNormalColor(new Vector3(i + min + 1, i + min, 0), new Vector3(0, 0, 1), Color.SandyBrown);
-                
-                //Top Triangle
-                shapeArray[i + 3] = new VertexPositionNormalColor(new Vector3(i + min, i + min, 0), new Vector3(0, 0, 1), Color.SandyBrown);
-                shapeArray[i + 4] = new VertexPositionNormalColor(new Vector3(i + min, i + min + 1, 0), new Vector3(0, 0, 1), Color.SandyBrown);
-                shapeArray[i + 5] = new VertexPositionNormalColor(new Vector3(i + min + 1, i + min + 1, 0), new Vector3(0, 0, 1), Color.SandyBrown);
-                i += 6;
+                for (int j = 0; j < sidelength; j++)
+                {
+                    //Each step creates a square in the map mesh
+                    //Bottom triangle
+                    shapeArray[k] = new VertexPositionNormalColor(new Vector3(i + min, j + min, 0), new Vector3(0, 0, 1), Color.SandyBrown);
+                    shapeArray[k + 1] = new VertexPositionNormalColor(new Vector3(i + min + 1, j + min + 1, 0), new Vector3(0, 0, 1), Color.SandyBrown);
+                    shapeArray[k + 2] = new VertexPositionNormalColor(new Vector3(i + min + 1, j + min, 0), new Vector3(0, 0, 1), Color.SandyBrown);
+
+                    //Top Triangle
+                    shapeArray[k + 3] = new VertexPositionNormalColor(new Vector3(i + min, j + min, 0), new Vector3(0, 0, 1), Color.SandyBrown);
+                    shapeArray[k + 4] = new VertexPositionNormalColor(new Vector3(i + min, j + min + 1, 0), new Vector3(0, 0, 1), Color.SandyBrown);
+                    shapeArray[k + 5] = new VertexPositionNormalColor(new Vector3(i + min + 1, j + min + 1, 0), new Vector3(0, 0, 1), Color.SandyBrown);
+
+                    k += 6;
+                }
             }
 
                 return new MyModel(game, shapeArray, collisionRadius);
