@@ -130,24 +130,30 @@ namespace Project
 
         public MyModel CreateOcean(int size, int seaLevel)
         {
-            float collisionRadius = 0;
+            float collisionRadius = 1;
             int sidelength = (int)Math.Pow(2, size);
             int min = -sidelength / 2;
-            VertexPositionNormalColor[] shapeArray = new VertexPositionNormalColor[sidelength * sidelength * 2];
+            int k = 0;
 
-            for (int i = 0; i < shapeArray.Length; i++)
+            VertexPositionNormalColor[] shapeArray = new VertexPositionNormalColor[sidelength * sidelength * 6];
+
+            for (int i = 0; i < sidelength; i++)
             {
-                //Each step creates a square in the map mesh
-                //Bottom triangle
-                shapeArray[i] = new VertexPositionNormalColor(new Vector3(i + min, i + min, -seaLevel), new Vector3(0, 0, 1), Color.SeaGreen);
-                shapeArray[i + 1] = new VertexPositionNormalColor(new Vector3(i + min + 1, i + min + 1, -seaLevel), new Vector3(0, 0, 1), Color.SeaGreen);
-                shapeArray[i + 2] = new VertexPositionNormalColor(new Vector3(i + min + 1, i + min, -seaLevel), new Vector3(0, 0, 1), Color.SeaGreen);
+                for (int j = 0; j < sidelength; j++)
+                {
+                    //Each step creates a square in the map mesh
+                    //Bottom triangle
+                    shapeArray[k] = new VertexPositionNormalColor(new Vector3(i + min, j + min, -seaLevel), new Vector3(0, 0, 1), Color.SandyBrown);
+                    shapeArray[k + 1] = new VertexPositionNormalColor(new Vector3(i + min + 1, j + min + 1, -seaLevel), new Vector3(0, 0, 1), Color.SandyBrown);
+                    shapeArray[k + 2] = new VertexPositionNormalColor(new Vector3(i + min + 1, j + min, -seaLevel), new Vector3(0, 0, 1), Color.SandyBrown);
 
-                //Top Triangle
-                shapeArray[i + 3] = new VertexPositionNormalColor(new Vector3(i + min, i + min, -seaLevel), new Vector3(0, 0, 1), Color.SeaGreen);
-                shapeArray[i + 4] = new VertexPositionNormalColor(new Vector3(i + min, i + min + 1, -seaLevel), new Vector3(0, 0, 1), Color.SeaGreen);
-                shapeArray[i + 5] = new VertexPositionNormalColor(new Vector3(i + min + 1, i + min + 1, -seaLevel), new Vector3(0, 0, 1), Color.SeaGreen);
-                i += 6;
+                    //Top Triangle
+                    shapeArray[k + 3] = new VertexPositionNormalColor(new Vector3(i + min, j + min, -seaLevel), new Vector3(0, 0, 1), Color.SandyBrown);
+                    shapeArray[k + 4] = new VertexPositionNormalColor(new Vector3(i + min, j + min + 1, -seaLevel), new Vector3(0, 0, 1), Color.SandyBrown);
+                    shapeArray[k + 5] = new VertexPositionNormalColor(new Vector3(i + min + 1, j + min + 1, -seaLevel), new Vector3(0, 0, 1), Color.SandyBrown);
+
+                    k += 6;
+                }
             }
 
             return new MyModel(game, shapeArray, collisionRadius);

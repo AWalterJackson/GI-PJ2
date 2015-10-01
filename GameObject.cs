@@ -12,7 +12,7 @@ namespace Project
     using SharpDX.Toolkit.Graphics;
     public enum GameObjectType
     {
-        None, Player, Enemy
+        None, Player, Enemy, Ocean, Terrain, Powerup
     }
 
     // Super class for all game objects.
@@ -33,6 +33,11 @@ namespace Project
                 // Setup the vertices
                 game.GraphicsDevice.SetVertexBuffer(0, myModel.vertices, myModel.vertexStride);
                 game.GraphicsDevice.SetVertexInputLayout(myModel.inputLayout);
+
+                if (type == GameObjectType.Ocean)
+                {
+                    game.GraphicsDevice.SetBlendState(game.GraphicsDevice.BlendStates.AlphaBlend);
+                }
 
                 // Apply the basic effect technique and draw the object
                 basicEffect.CurrentTechnique.Passes[0].Apply();

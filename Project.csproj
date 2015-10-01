@@ -53,6 +53,7 @@
       <DependentUpon>Instructions.xaml</DependentUpon>
     </Compile>
     <Compile Include="MyModel.cs" />
+    <Compile Include="Ocean.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Projectile.cs" />
     <Compile Include="MainPage.xaml.cs">

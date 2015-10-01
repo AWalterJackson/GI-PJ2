@@ -47,6 +47,7 @@ namespace Project
         public int score;
         public bool gameOver;
         private Land worldBase;
+        private Ocean ocean;
         public MainPage mainPage;
 
         // TASK 4: Use this to represent difficulty
@@ -115,6 +116,8 @@ namespace Project
             // Create game objects.
             worldBase = new Land(this);
             gameObjects.Add(worldBase);
+            ocean = new Ocean(this);
+            gameObjects.Add(ocean);
             //player = new Player(this);
             //gameObjects.Add(player);
             //gameObjects.Add(new EnemyController(this));
