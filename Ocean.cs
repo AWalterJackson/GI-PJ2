@@ -11,20 +11,28 @@ namespace Project
 {
     class Ocean : GameObject
     {
+        float prevxr;
+        float prevyr;
         public Ocean(LabGame game)
         {
             this.game = game;
-            this.pos = new Vector3(0, 0, 1);
+            this.pos = new Vector3(0, 0, 0);
             type = GameObjectType.Ocean;
-            myModel = game.assets.CreateOcean(8,1);
+            myModel = game.assets.CreateOcean(2,1);
             GetParamsFromModel();
 
             basicEffect.Alpha = 0.75f;
+
+            prevxr = 0;
+            prevyr = 0;
         }
 
         public override void Update(GameTime gametime)
         {
-            return;
+            float yr = (float)game.accelerometerReading.AccelerationX;
+            float xr = (float)game.accelerometerReading.AccelerationY;
+
+            basicEffect.World = Matrix.RotationX(xr) + Matrix.RotationY(-yr);
         }
     }
 }
