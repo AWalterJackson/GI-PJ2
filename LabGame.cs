@@ -46,6 +46,8 @@ namespace Project
         public GameInput input;
         public int score;
         public bool gameOver;
+        public int size;
+        public int edgemax;
         private Land worldBase;
         private Ocean ocean;
         public MainPage mainPage;
@@ -104,6 +106,8 @@ namespace Project
             score = 0;
             difficulty = 1;
             gameOver = false;
+            size = 3;
+            edgemax = (int)Math.Pow(2, size);
         }
 
         protected override void LoadContent()
@@ -114,12 +118,12 @@ namespace Project
             removedGameObjects = new Stack<GameObject>();
 
             // Create game objects.
-            worldBase = new Land(this);
+            worldBase = new Land(this, this.size);
             gameObjects.Add(worldBase);
-            ocean = new Ocean(this);
+            ocean = new Ocean(this, this.size);
             gameObjects.Add(ocean);
-            //player = new Player(this);
-            //gameObjects.Add(player);
+            player = new Player(this);
+            gameObjects.Add(player);
             //gameObjects.Add(new EnemyController(this));
 
             // Create an input layout from the vertices

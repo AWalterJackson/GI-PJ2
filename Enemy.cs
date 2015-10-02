@@ -10,7 +10,7 @@ namespace Project
     // Enemy class
     // Basically just shoots randomly, see EnemyController for enemy movement.
     using SharpDX.Toolkit.Graphics;
-    class Enemy : GameObject
+    class Enemy : PhysicalObject
     {
         private float projectileSpeed = 10;
 
