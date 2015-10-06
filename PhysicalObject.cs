@@ -11,11 +11,12 @@ namespace Project
     abstract public class PhysicalObject : GameObject
     {
         public Vector3 velocity; //Speed relative to the map
-        public Vector3 direction; //Unit vector in the direction of velocity
+        public Vector2 direction; //Unit vector in the direction of velocity
         public Vector3 acceleration; //Rate at which velocity is changing
         public int hitpoints; //Health of the object, if it goes below 0, object dies
         public float armour; //A value between 0 and 1 to indicate a percentage reduction in damage taken
         public float maxspeed; //A value that the magnitude of velocity cannot exceed
+        public float heading; //Angle in radians from north
 
         //public abstract void Update(GameTime gametime);
 
@@ -26,6 +27,12 @@ namespace Project
             float vz = (float)Math.Pow(this.velocity.Z, 2);
 
             return (float)Math.Sqrt(vx + vy + vz);
+        }
+
+        public void setDirection()
+        {
+            throw new NotImplementedException();
+            
         }
 
         public void velocityLimiter(float max)
