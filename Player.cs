@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -63,8 +64,8 @@ namespace Project
             // TASK 1: Determine velocity based on accelerometer reading
             acceleration.X = (float)game.accelerometerReading.AccelerationX*0.01f;
             acceleration.Y = (float)game.accelerometerReading.AccelerationY*0.01f;
-            Console.WriteLine(acceleration.X);
-            Console.Writeline(acceleration.Y);
+            Debug.WriteLine(acceleration.X);
+            Debug.WriteLine(acceleration.Y);
             velocity += acceleration;
 
             if (absVelocity() > maxspeed)
