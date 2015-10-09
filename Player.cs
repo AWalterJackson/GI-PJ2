@@ -12,6 +12,8 @@ namespace Project
 {
     using SharpDX.Toolkit.Graphics;
     using SharpDX.Toolkit.Input;
+    using System.Diagnostics;
+
     // Player class.
     class Player : PhysicalObject
     {
@@ -29,7 +31,7 @@ namespace Project
             acceleration = new Vector3(0, 0, 0);
             hitpoints = 1;
             armour = 1;
-            maxspeed = 0.1f;
+            maxspeed = 0.5f;
             GetParamsFromModel();
         }
 
@@ -61,11 +63,25 @@ namespace Project
             if (game.keyboardState.IsKeyDown(Keys.Space)) { fire(); }
 
             // TASK 1: Determine velocity based on accelerometer reading
-            acceleration.X = (float)game.accelerometerReading.AccelerationX*0.01f;
-            acceleration.Y = (float)game.accelerometerReading.AccelerationY*0.01f;
-            Console.WriteLine(acceleration.X);
-            Console.Writeline(acceleration.Y);
-            velocity += acceleration;
+            acceleration.X = (float)game.accelerometerReading.AccelerationX;
+            acceleration.Y = (float)game.accelerometerReading.AccelerationY;
+
+            if (absAcceleration() > 1.4f)
+            {
+                accelerationLimiter(1.4f);
+            }
+
+            // Multiplying by acceleration.Length() means that smaller movements are quadratically smaller
+            // This means there's no juddering with small input, and makes fine input control easier
+            acceleration *= maxspeed * acceleration.Length();
+
+            int time = gameTime.ElapsedGameTime.Milliseconds;
+            // Fine details on multipliers such as /1000 below can be ironed out as the game progresses, this was just a nice number that made the controls about right
+            velocity += (acceleration - velocity)*time/1000;
+            /*Other method, independant of time, both are good:
+            velocity = acceleration;
+            Try them out and tell me what you think, but I like the momentum effect that multiplying by time gives.
+            They are esentially the same, just with and without time; as "velocity = acceleration" can be written as "velocity += (acceleration - velocity)*1" instead of *time */
 
             if (absVelocity() > maxspeed)
             {
@@ -81,10 +97,12 @@ namespace Project
                 if (velocity.X < 0)
                 {
                     pos.X = -game.edgemax;
+                    velocity.X = 0f;
                 }
                 if (velocity.X > 0)
                 {
                     pos.X = game.edgemax;
+                    velocity.X = 0f;
                 }
             }
             else
@@ -97,10 +115,12 @@ namespace Project
                 if (velocity.Y < 0)
                 {
                     pos.Y = -game.edgemax;
+                    velocity.Y = 0f;
                 }
                 if (velocity.Y > 0)
                 {
                     pos.Y = game.edgemax;
+                    velocity.Y = 0f;
                 }
             }
             else

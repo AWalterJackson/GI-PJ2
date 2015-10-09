@@ -39,6 +39,18 @@ namespace Project
         {
             this.velocity *= max / absVelocity();
         }
+        public float absAcceleration()
+        {
+            float vx = (float)Math.Pow(this.acceleration.X, 2);
+            float vy = (float)Math.Pow(this.acceleration.Y, 2);
+            float vz = (float)Math.Pow(this.acceleration.Z, 2);
+
+            return (float)Math.Sqrt(vx + vy + vz);
+        }
+        public void accelerationLimiter(float max)
+        {
+            this.acceleration *= max / absAcceleration();
+        }
         public bool isColliding(PhysicalObject obj)
         {
             throw new NotImplementedException();

@@ -25,7 +25,7 @@ namespace Project
             yr = (float)game.accelerometerReading.AccelerationX;
             xr =  (float)game.accelerometerReading.AccelerationY;
 
-            basicEffect.World = Matrix.RotationX(xr)+Matrix.RotationY(-yr);
+            //basicEffect.World = Matrix.RotationX(xr)+Matrix.RotationY(-yr);
         }
     }
 }
