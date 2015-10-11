@@ -333,7 +333,7 @@ namespace Project
 			c = Color.SeaGreen;
 			return c;
 		}
-
+		
 		/// <summary>
 		/// Apply the daimond square algorithm to map.
 		/// </summary>
