@@ -164,30 +164,18 @@ namespace Project
                 {
                     //Each step creates a square in the map mesh
                     //Bottom triangle
-					nextNormal = normals[i][j];
-					nextPoint = points[i][j];
                     shapeArray[k] = new VertexPositionNormalColor(points[i][j], normals[i][j],
 						Color.SandyBrown);
-					nextNormal = normals[i+1][j+1];
-					nextPoint = points[i+1][j+1];
                     shapeArray[k + 1] = new VertexPositionNormalColor(points[i+1][j+1], normals[i+1][j+1],
 						Color.SandyBrown);
-					nextNormal = normals[i+1][j];
-					nextPoint = points[i+1][j];
                     shapeArray[k + 2] = new VertexPositionNormalColor(points[i+1][j], normals[i+1][j],
 						Color.SandyBrown);
 
                     //Top Triangle
-					nextNormal = normals[i][j];
-					nextPoint = points[i][j];
                     shapeArray[k + 3] = new VertexPositionNormalColor(points[i][j], normals[i][j],
 						Color.SandyBrown);
-					nextNormal = normals[i][j+1];
-					nextPoint = points[i][j+1];
                     shapeArray[k + 4] = new VertexPositionNormalColor(points[i][j+1], normals[i][j+1], 
 						Color.SandyBrown);
-					nextNormal = normals[i+1][j+1];
-					nextPoint = points[i+1][j+1];
                     shapeArray[k + 5] = new VertexPositionNormalColor(points[i+1][j+1], normals[i+1][j+1], 
 						Color.SandyBrown);
 
