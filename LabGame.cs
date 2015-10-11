@@ -110,6 +110,9 @@ namespace Project
             edgemax = (int)Math.Pow(2, size);
         }
 
+		/// <summary>
+		/// Load game content.
+		/// </summary>
         protected override void LoadContent()
         {
             // Initialise game object containers.
@@ -131,6 +134,9 @@ namespace Project
             base.LoadContent();
         }
 
+		/// <summary>
+		/// Initialize method.
+		/// </summary>
         protected override void Initialize()
         {
             Window.Title = "Lab 4";
@@ -139,6 +145,10 @@ namespace Project
             base.Initialize();
         }
 
+		/// <summary>
+		/// Frame update method.
+		/// </summary>
+		/// <param name="gameTime">Time since last update.</param>
         protected override void Update(GameTime gameTime)
         {
             if (started)
@@ -173,6 +183,10 @@ namespace Project
 
         }
 
+		/// <summary>
+		/// Render everything that needs to be rendered.
+		/// </summary>
+		/// <param name="gameTime"></param>
         protected override void Draw(GameTime gameTime)
         {
             if (started)
@@ -188,7 +202,12 @@ namespace Project
             // Handle base.Draw
             base.Draw(gameTime);
         }
-        // Count the number of game objects for a certain type.
+
+		/// <summary>
+		/// Count the number of game objects for a certain type.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
         public int Count(GameObjectType type)
         {
             int count = 0;
@@ -199,7 +218,10 @@ namespace Project
             return count;
         }
 
-        // Add a new game object.
+		/// <summary>
+		/// Add a new game object.
+		/// </summary>
+		/// <param name="obj"></param>
         public void Add(GameObject obj)
         {
             if (!gameObjects.Contains(obj) && !addedGameObjects.Contains(obj))
@@ -208,7 +230,10 @@ namespace Project
             }
         }
 
-        // Remove a game object.
+		/// <summary>
+		/// Remove a game object.
+		/// </summary>
+		/// <param name="obj"></param>
         public void Remove(GameObject obj)
         {
             if (gameObjects.Contains(obj) && !removedGameObjects.Contains(obj))
@@ -217,19 +242,31 @@ namespace Project
             }
         }
 
-        // Process the buffers of game objects that need to be added/removed.
+		/// <summary>
+		/// Process the buffers of game objects that need to be added/removed.
+		/// </summary>
         private void flushAddedAndRemovedGameObjects()
         {
             while (addedGameObjects.Count > 0) { gameObjects.Add(addedGameObjects.Pop()); }
             while (removedGameObjects.Count > 0) { gameObjects.Remove(removedGameObjects.Pop()); }
         }
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="args"></param>
         public void OnManipulationStarted(GestureRecognizer sender, ManipulationStartedEventArgs args)
         {
             // Pass Manipulation events to the game objects.
 
         }
 
+		/// <summary>
+		/// Initiate event upon recieving a tap input.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="args"></param>
         public void Tapped(GestureRecognizer sender, TappedEventArgs args)
         {
             // Pass Manipulation events to the game objects.
@@ -239,6 +276,11 @@ namespace Project
             }
         }
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="args"></param>
         public void OnManipulationUpdated(GestureRecognizer sender, ManipulationUpdatedEventArgs args)
         {
             camera.pos.Z = camera.pos.Z * args.Delta.Scale;
@@ -252,6 +294,7 @@ namespace Project
 
         public void OnManipulationCompleted(GestureRecognizer sender, ManipulationCompletedEventArgs args)
         {
+
         }
 
     }

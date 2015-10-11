@@ -334,6 +334,17 @@ namespace Project
 			return c;
 		}
 
+		/// <summary>
+		/// Apply the daimond square algorithm to map.
+		/// </summary>
+		/// <param name="map"></param>
+		/// <param name="rand"></param>
+		/// <param name="magnitude"></param>
+		/// <param name="x1"></param>
+		/// <param name="x2"></param>
+		/// <param name="y1"></param>
+		/// <param name="y2"></param>
+		/// <returns></returns>
 		private Vector3[][] diamondSquare(Vector3[][] map, Random rand,
 			float magnitude, int x1, int x2, int y1, int y2) {
 			if (x1 >= x2 || y1 >= y2) {
