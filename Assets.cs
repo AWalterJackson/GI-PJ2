@@ -126,7 +126,29 @@ namespace Project
             int sidelength = (int)Math.Pow(2, size);
             int min = -sidelength / 2;
             int k = 0;
+			// Data structures for generating vertice heightmap
+			Vector3[][] points = new Vector3[sidelength][];
+			Vector3[][] normals = new Vector3[sidelength][];
+			for (int i = 0; i < sidelength; i++) {
+				points[i] = new Vector3[sidelength];
+				normals[i] = new Vector3[sidelength];
+			}
 
+			// TO-DO: generate a two dimensional array of vertices
+			for (int i = 0; i < sidelength; i++) {
+				for (int j = 0; j < sidelength; j++) {
+					points[i][j] = new Vector3(i + min, j + min, 0);
+					normals[i][j] = new Vector3(0, 1, 0);
+				}
+			}
+
+			// TO-DO: Apply diamond square algorithm
+
+
+			// TO-DO: calculate vertex normals
+
+
+			// TO-DO: Refactor shapeArray code slightly to reference points[][] and normals[][] directly
             VertexPositionNormalColor[] shapeArray = new VertexPositionNormalColor[sidelength * sidelength*6];
 
             for (int i = 0; i < sidelength; i++)
@@ -148,7 +170,8 @@ namespace Project
                 }
             }
 
-                return new MyModel(game, shapeArray, collisionRadius);
+
+            return new MyModel(game, shapeArray, collisionRadius);
         }
 
 		/// <summary>
@@ -216,5 +239,6 @@ namespace Project
         {
             return CreateTexturedCube(texturePath, 1);
         }
+
     }
 }
