@@ -136,6 +136,7 @@ namespace Project
 			Vector3[][] points = new Vector3[sidelength][];
 			Vector3[][] normals = new Vector3[sidelength][];
 			Random rand = new Random();
+			Vector3 nextNormal, nextPoint;
 			for (int i = 0; i < sidelength; i++) {
 				points[i] = new Vector3[sidelength];
 				normals[i] = new Vector3[sidelength];
@@ -157,24 +158,36 @@ namespace Project
 
             VertexPositionNormalColor[] shapeArray = new VertexPositionNormalColor[sidelength * sidelength*6];
 
-            for (int i = 0; i < sidelength; i++)
+            for (int i = 0; i < sidelength - 1; i++)
             {
-                for (int j = 0; j < sidelength; j++)
+                for (int j = 0; j < sidelength - 1; j++)
                 {
                     //Each step creates a square in the map mesh
                     //Bottom triangle
+					nextNormal = normals[i][j];
+					nextPoint = points[i][j];
                     shapeArray[k] = new VertexPositionNormalColor(points[i][j], normals[i][j],
 						Color.SandyBrown);
+					nextNormal = normals[i+1][j+1];
+					nextPoint = points[i+1][j+1];
                     shapeArray[k + 1] = new VertexPositionNormalColor(points[i+1][j+1], normals[i+1][j+1],
 						Color.SandyBrown);
+					nextNormal = normals[i+1][j];
+					nextPoint = points[i+1][j];
                     shapeArray[k + 2] = new VertexPositionNormalColor(points[i+1][j], normals[i+1][j],
 						Color.SandyBrown);
 
                     //Top Triangle
+					nextNormal = normals[i][j];
+					nextPoint = points[i][j];
                     shapeArray[k + 3] = new VertexPositionNormalColor(points[i][j], normals[i][j],
 						Color.SandyBrown);
+					nextNormal = normals[i][j+1];
+					nextPoint = points[i][j+1];
                     shapeArray[k + 4] = new VertexPositionNormalColor(points[i][j+1], normals[i][j+1], 
 						Color.SandyBrown);
+					nextNormal = normals[i+1][j+1];
+					nextPoint = points[i+1][j+1];
                     shapeArray[k + 5] = new VertexPositionNormalColor(points[i+1][j+1], normals[i+1][j+1], 
 						Color.SandyBrown);
 
