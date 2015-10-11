@@ -24,6 +24,13 @@ namespace Project
         // Load a model from the model dictionary.
         // If the model name hasn't been loaded before then modelMaker will be called to generate the model.
         public delegate MyModel ModelMaker();
+
+		/// <summary>
+		/// Get a model by name.
+		/// </summary>
+		/// <param name="modelName">Name of model.</param>
+		/// <param name="modelMaker">Maker class used to make model.</param>
+		/// <returns>A model.</returns>
         public MyModel GetModel(String modelName, ModelMaker modelMaker)
         {
             if (!modelDict.ContainsKey(modelName))
@@ -33,12 +40,23 @@ namespace Project
             return modelDict[modelName];
         }
 
-        // Create a cube with one texture for all faces.
+		/// <summary>
+		/// Create a cube with one texture for all faces.
+		/// </summary>
+		/// <param name="textureName">Texture file to use.</param>
+		/// <param name="size">Size of cube.</param>
+		/// <returns>A textured cube.</returns>
         public MyModel CreateTexturedCube(String textureName, float size)
         {
             return CreateTexturedCube(textureName, new Vector3(size, size, size));
         }
 
+		/// <summary>
+		/// Create a cube with one texture for all faces.
+		/// </summary>
+		/// <param name="texturePath">Texture file to use.</param>
+		/// <param name="size">Size of cube.</param>
+		/// <returns>A textured cube.</returns>
         public MyModel CreateTexturedCube(String texturePath, Vector3 size)
         {
             VertexPositionTexture[] shapeArray = new VertexPositionTexture[]{
@@ -96,6 +114,11 @@ namespace Project
             return new MyModel(game, shapeArray, texturePath, collisionRadius);
         }
 
+		/// <summary>
+		/// Create a flat world base to use.
+		/// </summary>
+		/// <param name="size">Size of world.</param>
+		/// <returns>A world model.</returns>
         public MyModel CreateWorldBase(int size)
         {
             
@@ -128,6 +151,12 @@ namespace Project
                 return new MyModel(game, shapeArray, collisionRadius);
         }
 
+		/// <summary>
+		/// Create a new ocean.
+		/// </summary>
+		/// <param name="size">Size of ocean</param>
+		/// <param name="seaLevel">Height of ocean.</param>
+		/// <returns>An ocean model.</returns>
         public MyModel CreateOcean(int size, int seaLevel)
         {
             float collisionRadius = 1;
@@ -159,16 +188,30 @@ namespace Project
             return new MyModel(game, shapeArray, collisionRadius);
         }
 
+		/// <summary>
+		/// Create a new ship model.
+		/// </summary>
+		/// <param name="texturePath">Texture file to use.</param>
+		/// <returns>A ship model.</returns>
         public MyModel CreateShip(String texturePath)
         {
             return CreateTexturedCube("player.png",1);
         }
 
+		/// <summary>
+		/// Create a new cannonball model.
+		/// </summary>
+		/// <returns>A cannonball model.</returns>
         public MyModel CreateCannonBall()
         {
             return CreateTexturedCube("player_projectile.png",1);
         }
 
+		/// <summary>
+		/// Create a power-up model.
+		/// </summary>
+		/// <param name="texturePath">Texture file to use.</param>
+		/// <returns>A power-up model.</returns>
         public MyModel CreatePowerup(String texturePath)
         {
             return CreateTexturedCube(texturePath, 1);
