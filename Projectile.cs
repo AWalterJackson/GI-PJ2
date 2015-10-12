@@ -16,8 +16,15 @@ namespace Project
         private GameObjectType targetType;
         private float hitRadius = 0.5f;
         private float squareHitRadius;
-
-        // Constructor.
+		
+		/// <summary>
+		/// Create a new projectile.
+		/// </summary>
+		/// <param name="game"></param>
+		/// <param name="myModel"></param>
+		/// <param name="pos"></param>
+		/// <param name="vel"></param>
+		/// <param name="targetType"></param>
         public Projectile(LabGame game, MyModel myModel, Vector3 pos, Vector3 vel, GameObjectType targetType)
         {
             this.game = game;
@@ -29,8 +36,10 @@ namespace Project
             GetParamsFromModel();
         }
 
-        // TASK 3
-        // Frame update method.
+		/// <summary>
+		/// Frame update method.
+		/// </summary>
+		/// <param name="gameTime">Time since last update.</param>
         public override void Update(GameTime gameTime)
         {
             float timeDelta = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -56,7 +65,9 @@ namespace Project
             checkForCollisions();
         }
 
-        // Check if collided with the target type of object.
+		/// <summary>
+		/// Check if collided with the target type of object.
+		/// </summary>
         private void checkForCollisions()
         {
             foreach (var obj in game.gameObjects)
@@ -66,6 +77,7 @@ namespace Project
                 {
                     // Cast to object class and call Hit method.
                     switch (obj.type)
+
                     {
                         case GameObjectType.Player:
                             ((Player)obj).Hit();

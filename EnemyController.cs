@@ -32,8 +32,10 @@ namespace Project
             this.game = game;
             nextWave();
         }
-
-        // Set up the next wave.
+		
+		/// <summary>
+		/// Set up the next wave.
+		/// </summary>
         private void nextWave()
         {
             rows += 1;
@@ -42,7 +44,9 @@ namespace Project
             stepRight = true;
         }
 
-        // Create a grid of enemies for the current wave.
+		/// <summary>
+		/// Create a grid of enemies for the current wave.
+		/// </summary>
         private void createEnemies()
         {
             float y = game.boundaryTop;
@@ -58,7 +62,10 @@ namespace Project
             }
         }
 
-        // Frame update method.
+		/// <summary>
+		/// Frame update method.
+		/// </summary>
+		/// <param name="gameTime">Time since last update.</param>
         public override void Update(GameTime gameTime)
         {
             // Move the enemies a step once the step timer has run out and reset step timer.
@@ -78,13 +85,18 @@ namespace Project
             }
         }
 
-        // Return whether all enemies are dead or not.
+		/// <summary>
+		/// Return whether all enemies are dead or not.
+		/// </summary>
+		/// <returns>true if no enemies left, false otherwise.</returns>
         private bool allEnemiesAreDead()
         {
             return game.Count(GameObjectType.Enemy) == 0;
         }
 
-        // Move all the enemies, changing directions and stepping down when the edge of the screen is reached.
+		/// <summary>
+		/// Move all the enemies.
+		/// </summary>
         private void step()
         {
             bool stepDownNeeded = false;
@@ -127,7 +139,9 @@ namespace Project
             }
         }
 
-        // Method for when the game ends.
+		/// <summary>
+		/// Method for when the game ends.
+		/// </summary>
         private void gameOver()
         {
             game.Exit();

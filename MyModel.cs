@@ -22,6 +22,13 @@ namespace Project
         public Texture2D Texture;
         public float collisionRadius;
         
+		/// <summary>
+		/// Create a new model.
+		/// </summary>
+		/// <param name="game"></param>
+		/// <param name="shapeArray"></param>
+		/// <param name="textureName"></param>
+		/// <param name="collisionRadius"></param>
         public MyModel(LabGame game, VertexPositionColor[] shapeArray, String textureName, float collisionRadius)
         {
             this.vertices = Buffer.Vertex.New(game.GraphicsDevice, shapeArray);
@@ -31,6 +38,12 @@ namespace Project
             this.collisionRadius = collisionRadius;
         }
 
+		/// <summary>
+		/// Create a new model.
+		/// </summary>
+		/// <param name="game"></param>
+		/// <param name="shapeArray"></param>
+		/// <param name="collisionRadius"></param>
         public MyModel(LabGame game, VertexPositionNormalColor[] shapeArray, float collisionRadius)
         {
             this.vertices = Buffer.Vertex.New(game.GraphicsDevice, shapeArray);
@@ -40,6 +53,13 @@ namespace Project
             this.collisionRadius = collisionRadius;
         }
 
+		/// <summary>
+		/// Create a new model.
+		/// </summary>
+		/// <param name="game"></param>
+		/// <param name="shapeArray"></param>
+		/// <param name="textureName"></param>
+		/// <param name="collisionRadius"></param>
         public MyModel(LabGame game, VertexPositionTexture[] shapeArray, String textureName, float collisionRadius)
         {
             this.vertices = Buffer.Vertex.New(game.GraphicsDevice, shapeArray);

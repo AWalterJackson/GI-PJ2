@@ -11,6 +11,11 @@ namespace Project
 {
     class Ocean : GameObject
     {
+		/// <summary>
+		/// Create a new ocean.
+		/// </summary>
+		/// <param name="game"></param>
+		/// <param name="degree"></param>
         public Ocean(LabGame game, int degree)
         {
             this.game = game;
@@ -22,6 +27,10 @@ namespace Project
             basicEffect.Alpha = 0.75f;
         }
 
+		/// <summary>
+		/// Frame update method.
+		/// </summary>
+		/// <param name="gameTime">Time since last update.</param>
         public override void Update(GameTime gametime)
         {
             yr = (float)game.accelerometerReading.AccelerationX;

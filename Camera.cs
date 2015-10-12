@@ -15,7 +15,10 @@ namespace Project
         public Vector3 pos;
         public Vector3 oldPos;
 
-        // Ensures that all objects are being rendered from a consistent viewpoint
+		/// <summary>
+		/// Ensures that all objects are being rendered from a consistent viewpoint
+		/// </summary>
+		/// <param name="game"></param>
         public Camera(Game game) {
             pos = new Vector3(0, 0, -10);
             View = Matrix.LookAtLH(pos, new Vector3(0, 0, 0), Vector3.UnitY);
@@ -23,7 +26,9 @@ namespace Project
             this.game = game;
         }
 
-        // If the screen is resized, the projection matrix will change
+		/// <summary>
+		/// If the screen is resized, the projection matrix will change
+		/// </summary>
         public void Update()
         {
             Projection = Matrix.PerspectiveFovLH((float)Math.PI / 4.0f, (float)game.GraphicsDevice.BackBuffer.Width / game.GraphicsDevice.BackBuffer.Height, 0.1f, 100.0f);
