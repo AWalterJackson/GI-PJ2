@@ -1,0 +1,18 @@
+﻿<Page
+    x:Class="Project.Options"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Project"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"    
+    d:DesignWidth="1280"
+    d:DesignHeight="800">
+    <Grid>
+        <Button x:Name="cmdBack" Content="Back" HorizontalAlignment="Left" Height="77" Margin="954,70,0,0" VerticalAlignment="Top" Width="163" Click="GoBack"/>
+        <TextBlock x:Name="txtOptions" HorizontalAlignment="Left" Height="71" Margin="415,73,0,0" TextWrapping="Wrap" xml:space="preserve" VerticalAlignment="Top" Width="366" FontSize="24"
+>TEST TEST TEST</TextBlock>
+      <Slider x:Name="sldPlayerSpeed" HorizontalAlignment="Left" Height="38" Margin="415,144,0,0" VerticalAlignment="Top" Width="159" ValueChanged="changeSpeed" Value="0.5" IsTabStop="False" Minimum="0.1" Maximum="1" LargeChange="0.1" SmallChange="0.01" StepFrequency="0.01"/>
+
+    </Grid>
+</Page>

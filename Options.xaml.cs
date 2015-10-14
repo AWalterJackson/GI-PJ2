@@ -25,40 +25,27 @@ using SharpDX;
 namespace Project
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// A page with options that can be edited to edit game variables.
     /// </summary>
-    public sealed partial class MainPage
+    // Options Page
+    public sealed partial class Options
     {
-        public readonly LabGame game;
-        public MainMenu mainMenu;
-        public MainPage()
+        private MainPage parent;
+        public Options(MainPage parent)
         {
             InitializeComponent();
-            game = new LabGame(this);
-            game.Run(this);
-            mainMenu = new MainMenu(this);
-            this.Children.Add(mainMenu);
+            this.parent = parent;
         }
 
-        // TASK 1: Update the game's score
-        public void UpdateScore(int score)
+        private void changeSpeed(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
         {
-            txtScore.Text = "Score: " + score.ToString();
+            if (parent.game != null) { parent.game.playerSpeed = (float)e.NewValue; }
         }
 
-        private void LoadOptions(object sender, RoutedEventArgs e)
+        private void GoBack(object sender, RoutedEventArgs e)
         {
-            this.Children.Add(new Options(this));
-            //this.Children.Remove(this);
-        }
-
-        // TASK 2: Starts the game.  Not that it seems easier to simply move the game.Run(this) command to this function,
-        // however this seems to result in a reduction in texture quality on some machines.  Not sure why this is the case
-        // but this is an easy workaround.  Not we are also making the command button invisible after it is clicked
-        public void StartGame()
-        {
-            this.Children.Remove(mainMenu);
-            game.started = true;
+            parent.Children.Add(parent.mainMenu);
+            parent.Children.Remove(this);
         }
     }
 }

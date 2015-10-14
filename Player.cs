@@ -31,7 +31,8 @@ namespace Project
             acceleration = new Vector3(0, 0, 0);
             hitpoints = 1;
             armour = 1;
-            maxspeed = 0.5f;
+            maxspeed = game.playerSpeed;
+            maxaccel = 1.4f;
             GetParamsFromModel();
         }
 
@@ -80,9 +81,9 @@ namespace Project
             acceleration.Y = (float)game.accelerometerReading.AccelerationY;
 
 			// limit acceleration
-            if (absAcceleration() > 1.4f)
+            if (absAcceleration() > maxaccel)
             {
-                accelerationLimiter(1.4f);
+                accelerationLimiter(maxaccel);
             }
 
             // Multiplying by acceleration.Length() means that smaller movements are quadratically smaller

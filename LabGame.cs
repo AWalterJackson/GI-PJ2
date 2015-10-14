@@ -54,6 +54,7 @@ namespace Project
 
         // TASK 4: Use this to represent difficulty
         public float difficulty;
+        public float playerSpeed = 0.5f;
 
         // Represents the camera's position and orientation
         public Camera camera;
