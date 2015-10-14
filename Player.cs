@@ -26,7 +26,7 @@ namespace Project
             this.game = game;
             type = GameObjectType.Player;
             myModel = game.assets.GetModel("player", CreatePlayerModel);
-            pos = new SharpDX.Vector3(0, 0, -5);
+            pos = new SharpDX.Vector3(0, 0, -1);
             velocity = new Vector3(0, 0, 0);
             acceleration = new Vector3(0, 0, 0);
             hitpoints = 1;
@@ -89,14 +89,16 @@ namespace Project
             // This means there's no juddering with small input, and makes fine input control easier
             acceleration *= maxspeed * acceleration.Length();
 
-			// Get elapsed time in seconds
-            float time = (float)(gameTime.ElapsedGameTime.Milliseconds)/1000;
+			// Get elapsed time in milliseconds
+            float time = (float)(gameTime.ElapsedGameTime.Milliseconds);
+            // Arbitrary speed adjucstment
+            time /= 16;
 
-			/* Change the velocity with respect to acceleration and delta.
+            /* Change the velocity with respect to acceleration and delta.
 			 */
-			velocity += acceleration*time;
+            velocity += (acceleration - velocity) * time / 1000;
 
-			// Limit velocity to some predefined value
+            // Limit velocity to some predefined value
             if (absVelocity() > maxspeed)
             {
                 velocityLimiter(maxspeed);
@@ -147,8 +149,14 @@ namespace Project
 			// Set the direction vector
 			setDirection();
 
-			// Apply the basicEffect transformation
-            basicEffect.World = Matrix.Translation(pos) + Matrix.RotationX(xr) + Matrix.RotationY(-yr);
+            // Apply the basicEffect transformation
+            Matrix playerRotation = new Matrix(0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1) * new Matrix(direction.X, direction.Y, 0, 0, -direction.Y, direction.X, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            Matrix playerTilt = Matrix.RotationX(velocity.Length()/2);
+            Vector3 rollSize = acceleration - Vector3.Dot(velocity, acceleration) / Vector3.Dot(velocity, velocity) * velocity;
+            int rollDir = 1;
+            if(Vector3.Cross(rollSize, velocity).Z > 0) { rollDir = -1; }
+            Matrix playerRoll = Matrix.RotationY(rollDir*rollSize.Length());
+            basicEffect.World = playerTilt * playerRoll * playerRotation * Matrix.Translation(pos);
         }
 		
 		/// <summary>

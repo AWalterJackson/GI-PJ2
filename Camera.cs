@@ -11,7 +11,7 @@ namespace Project
     {
         public Matrix View;
         public Matrix Projection;
-        public Game game;
+        public LabGame game;
         public Vector3 pos;
         public Vector3 oldPos;
 
@@ -19,7 +19,7 @@ namespace Project
 		/// Ensures that all objects are being rendered from a consistent viewpoint
 		/// </summary>
 		/// <param name="game"></param>
-        public Camera(Game game) {
+        public Camera(LabGame game) {
             pos = new Vector3(0, 0, -10);
             View = Matrix.LookAtLH(pos, new Vector3(0, 0, 0), Vector3.UnitY);
             Projection = Matrix.PerspectiveFovLH((float)Math.PI / 4.0f, (float)game.GraphicsDevice.BackBuffer.Width / game.GraphicsDevice.BackBuffer.Height, 0.01f, 1000.0f);
@@ -31,8 +31,11 @@ namespace Project
 		/// </summary>
         public void Update()
         {
+            pos.X = game.gameObjects[2].pos.X;
+            pos.Y = game.gameObjects[2].pos.Y -1 ;
             Projection = Matrix.PerspectiveFovLH((float)Math.PI / 4.0f, (float)game.GraphicsDevice.BackBuffer.Width / game.GraphicsDevice.BackBuffer.Height, 0.1f, 100.0f);
-            View = Matrix.LookAtLH(pos, new Vector3(0, 0, 0), Vector3.UnitY);
+            Vector3 up = Vector3.Normalize(Vector3.Cross(game.gameObjects[2].pos - pos, Vector3.UnitX));
+            View = Matrix.LookAtLH(pos, game.gameObjects[2].pos, up);
         }
     }
 }

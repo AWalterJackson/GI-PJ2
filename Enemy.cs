@@ -75,10 +75,12 @@ namespace Project
 		/// </summary>
         private void fire()
         {
+            Vector3 dir = new Vector3(game.gameObjects[2].pos.X - pos.X, game.gameObjects[2].pos.Y - pos.Y, 0);
+            dir.Normalize();
             game.Add(new Projectile(game,
                 game.assets.GetModel("enemy projectile", CreateEnemyProjectileModel),
                 pos,
-                new Vector3(0, -projectileSpeed, 0),
+                dir *= projectileSpeed,
                 GameObjectType.Player
             ));
         }
