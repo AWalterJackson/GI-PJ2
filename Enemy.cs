@@ -12,28 +12,14 @@ namespace Project
     using SharpDX.Toolkit.Graphics;
     class Enemy : PhysicalObject
     {
-        private float projectileSpeed = 10;
-	//penis
-        float fireTimer;
-        float fireWaitMin = 2000;
-        float fireWaitMax = 20000;
 
-        public Enemy(LabGame game, Vector3 pos)
+        public Enemy(LabGame game, Vector3 pos) : base()
         {
             this.game = game;
             type = GameObjectType.Enemy;
-            myModel = game.assets.GetModel("ship", CreateEnemyModel);
+            myModel = game.assets.GetModel("player", CreateEnemyModel);
             this.pos = pos;
-            setFireTimer();
             GetParamsFromModel();
-        }
-
-		/// <summary>
-		/// Set the enemy fire timer.
-		/// </summary>
-        private void setFireTimer()
-        {
-            fireTimer = fireWaitMin + (float)game.random.NextDouble() * (fireWaitMax - fireWaitMin);
         }
 
 		/// <summary>
@@ -42,7 +28,7 @@ namespace Project
 		/// <returns>A new enemy model.</returns>
         public MyModel CreateEnemyModel()
         {
-            return game.assets.CreateTexturedCube("enemy.png", 0.5f);
+            return game.assets.CreateShip("boat.png");
         }
 
 		/// <summary>
@@ -60,13 +46,6 @@ namespace Project
 		/// <param name="gameTime">Time since last update.</param>
         public override void Update(GameTime gameTime)
         {
-            // TASK 3: Fire projectile
-            fireTimer -= gameTime.ElapsedGameTime.Milliseconds * game.difficulty;
-            if (fireTimer < 0)
-            {
-                fire();
-                setFireTimer();
-            }
             basicEffect.World = Matrix.Translation(pos);
         }
 
@@ -75,14 +54,7 @@ namespace Project
 		/// </summary>
         private void fire()
         {
-            Vector3 dir = new Vector3(game.gameObjects[2].pos.X - pos.X, game.gameObjects[2].pos.Y - pos.Y, 0);
-            dir.Normalize();
-            game.Add(new Projectile(game,
-                game.assets.GetModel("enemy projectile", CreateEnemyProjectileModel),
-                pos,
-                dir *= projectileSpeed,
-                GameObjectType.Player
-            ));
+            //throw new NotImplementedException();
         }
 
 		/// <summary>
@@ -90,8 +62,7 @@ namespace Project
 		/// </summary>
         public void Hit()
         {
-            game.score += 10;
-            game.Remove(this);
+            //throw new NotImplementedException();
         }
 
     }

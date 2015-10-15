@@ -13,7 +13,7 @@ namespace Project
     class Projectile : GameObject
     {
         private Vector3 vel;
-        private GameObjectType targetType;
+        private PhysicalObject target;
         private float hitRadius = 0.5f;
         private float squareHitRadius;
 		
@@ -25,13 +25,13 @@ namespace Project
 		/// <param name="pos"></param>
 		/// <param name="vel"></param>
 		/// <param name="targetType"></param>
-        public Projectile(LabGame game, MyModel myModel, Vector3 pos, Vector3 vel, GameObjectType targetType)
+        public Projectile(LabGame game, MyModel myModel, Vector3 pos, Vector3 vel, PhysicalObject target)
         {
             this.game = game;
             this.myModel = myModel;
             this.pos = pos;
             this.vel = vel;
-            this.targetType = targetType;
+            this.target = target;
             squareHitRadius = hitRadius * hitRadius;
             GetParamsFromModel();
         }
@@ -47,17 +47,6 @@ namespace Project
             // Apply velocity to position.
             pos += vel * timeDelta;
 
-            // Remove self if off screen.
-            if (
-                pos.X < game.boundaryLeft ||
-                pos.X > game.boundaryRight ||
-                pos.Y < game.boundaryBottom ||
-                pos.Y > game.boundaryTop
-                )
-            {
-                game.Remove(this);
-            }
-
             // Set local transformation to be spinning according to time for fun.
             basicEffect.World = Matrix.RotationY(time) * Matrix.RotationZ(time * time) * Matrix.Translation(pos);
 
@@ -72,7 +61,7 @@ namespace Project
         {
             foreach (var obj in game.gameObjects)
             {
-                if (obj.type == targetType && ((((GameObject)obj).pos - pos).LengthSquared() <= 
+                if (obj == target && ((((GameObject)obj).pos - pos).LengthSquared() <= 
                     Math.Pow(((GameObject)obj).myModel.collisionRadius + this.myModel.collisionRadius, 2)))
                 {
                     // Cast to object class and call Hit method.

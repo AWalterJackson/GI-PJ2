@@ -23,8 +23,6 @@ namespace Project
         public GameObjectType type = GameObjectType.None;
         public Vector3 pos;
         public BasicEffect basicEffect;
-        public float xr;
-        public float yr;
 
         public abstract void Update(GameTime gametime);
         public void Draw(GameTime gametime)
@@ -35,6 +33,9 @@ namespace Project
                 // Setup the vertices
                 game.GraphicsDevice.SetVertexBuffer(0, myModel.vertices, myModel.vertexStride);
                 game.GraphicsDevice.SetVertexInputLayout(myModel.inputLayout);
+
+                this.basicEffect.View = game.camera.View;
+                this.basicEffect.Projection = game.camera.Projection;
 
                 if (type == GameObjectType.Ocean)
                 {
