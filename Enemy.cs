@@ -13,7 +13,7 @@ namespace Project
     class Enemy : PhysicalObject
     {
         private float projectileSpeed = 10;
-
+	//penis
         float fireTimer;
         float fireWaitMin = 2000;
         float fireWaitMax = 20000;
