@@ -13,7 +13,7 @@ namespace Project
     class Projectile : GameObject
     {
         private Vector3 vel;
-        private PhysicalObject target;
+        private PhysicalObject shooter;	// The physical object that fired this projectile
         private float hitRadius = 0.5f;
         private float squareHitRadius;
 		
@@ -25,13 +25,13 @@ namespace Project
 		/// <param name="pos"></param>
 		/// <param name="vel"></param>
 		/// <param name="targetType"></param>
-        public Projectile(LabGame game, MyModel myModel, Vector3 pos, Vector3 vel, PhysicalObject target)
+        public Projectile(LabGame game, MyModel myModel, Vector3 pos, Vector3 vel, PhysicalObject shooter)
         {
             this.game = game;
             this.myModel = myModel;
             this.pos = pos;
             this.vel = vel;
-            this.target = target;
+            this.shooter = shooter;
             squareHitRadius = hitRadius * hitRadius;
             GetParamsFromModel();
         }
@@ -61,7 +61,7 @@ namespace Project
         {
             foreach (var obj in game.gameObjects)
             {
-                if (obj == target && ((((GameObject)obj).pos - pos).LengthSquared() <= 
+                if (obj != shooter && ((((GameObject)obj).pos - pos).LengthSquared() <= 
                     Math.Pow(((GameObject)obj).myModel.collisionRadius + this.myModel.collisionRadius, 2)))
                 {
                     // Cast to object class and call Hit method.
