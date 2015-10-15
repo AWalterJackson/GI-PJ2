@@ -51,10 +51,10 @@ namespace Project
         private Land worldBase;
         private Ocean ocean;
         public MainPage mainPage;
+        public bool powerups = true;
 
         // TASK 4: Use this to represent difficulty
         public float difficulty;
-        public float playerSpeed = 0.5f;
 
         // Represents the camera's position and orientation
         public Camera camera;
@@ -300,6 +300,14 @@ namespace Project
         public void OnManipulationCompleted(GestureRecognizer sender, ManipulationCompletedEventArgs args)
         {
 
+        }
+
+        public void start(float playerSpeed, float playerAcceleration, bool powerups)
+        {
+            started = true;
+            player.maxspeed = playerSpeed;
+            player.maxaccel = playerAcceleration;
+            this.powerups = powerups;
         }
 
     }

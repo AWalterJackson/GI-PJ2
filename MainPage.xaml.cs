@@ -31,11 +31,14 @@ namespace Project
     {
         public readonly LabGame game;
         public MainMenu mainMenu;
+        public Options options;
         public MainPage()
         {
             InitializeComponent();
             game = new LabGame(this);
             game.Run(this);
+            options = new Options(this);
+
             mainMenu = new MainMenu(this);
             this.Children.Add(mainMenu);
         }
@@ -48,8 +51,8 @@ namespace Project
 
         private void LoadOptions(object sender, RoutedEventArgs e)
         {
-            this.Children.Add(new Options(this));
-            //this.Children.Remove(this);
+            this.Children.Add(options);
+            this.Children.Remove(this);
         }
 
         // TASK 2: Starts the game.  Not that it seems easier to simply move the game.Run(this) command to this function,
@@ -58,7 +61,7 @@ namespace Project
         public void StartGame()
         {
             this.Children.Remove(mainMenu);
-            game.started = true;
+            game.start(options.playerSpeed, options.playerAcceleration, options.powerups);
         }
     }
 }

@@ -31,19 +31,37 @@ namespace Project
     public sealed partial class Options
     {
         private MainPage parent;
+        public float playerSpeed = 0.5f;
+        public float playerAcceleration = 1.4f;
+        public bool powerups = true;
         public Options(MainPage parent)
         {
-            InitializeComponent();
             this.parent = parent;
+            InitializeComponent();
         }
 
         private void changeSpeed(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
         {
-            if (parent.game != null) { parent.game.playerSpeed = (float)e.NewValue; }
+            playerSpeed = (float)e.NewValue;
+        }
+        private void changeAcceleration(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
+        {
+            playerAcceleration = (float)e.NewValue;
+        }
+        private void changePowerups(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
+        {
+            if ((int)e.NewValue == 1)
+            {
+                powerups = true;
+            } else
+            {
+                powerups = false;
+            }
         }
 
         private void GoBack(object sender, RoutedEventArgs e)
         {
+            parent.options = this;
             parent.Children.Add(parent.mainMenu);
             parent.Children.Remove(this);
         }

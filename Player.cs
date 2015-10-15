@@ -31,7 +31,7 @@ namespace Project
             acceleration = new Vector3(0, 0, 0);
             hitpoints = 1;
             armour = 1;
-            maxspeed = game.playerSpeed;
+            maxspeed = 0.5f;
             maxaccel = 1.4f;
             GetParamsFromModel();
         }
@@ -97,7 +97,7 @@ namespace Project
 
             /* Change the velocity with respect to acceleration and delta.
 			 */
-            velocity += (acceleration - velocity) * time / 1000;
+            velocity += (acceleration) * time / 1000;
 
             // Limit velocity to some predefined value
             if (absVelocity() > maxspeed)
