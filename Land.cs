@@ -22,10 +22,7 @@ namespace Project
 
         public override void Update(GameTime gametime)
         {
-            yr = (float)game.accelerometerReading.AccelerationX;
-            xr =  (float)game.accelerometerReading.AccelerationY;
 
-            //basicEffect.World = Matrix.RotationX(xr)+Matrix.RotationY(-yr);
         }
     }
 }

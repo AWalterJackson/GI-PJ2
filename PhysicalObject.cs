@@ -18,6 +18,7 @@ namespace Project
         public float maxspeed; //A value that the magnitude of velocity cannot exceed
 		public float maxaccel; //A value that the magnitude of acceleration cannot exceed
         public float heading; //Angle in radians from north
+        public float damagemodifier; //Damage modifier (multiplicative)
 
         //public abstract void Update(GameTime gametime);
 
@@ -25,6 +26,18 @@ namespace Project
 		/// Get the magnitude of velocity.
 		/// </summary>
 		/// <returns>Magnitude of velocity.</returns>
+        public PhysicalObject()
+        {
+            this.velocity = new Vector3(0, 0, 0);
+            this.direction = new Vector2(1, 0);
+            this.acceleration = new Vector3(0, 0, 0);
+            this.hitpoints = 1;
+            this.armour = 1;
+            this.maxspeed = 1;
+            this.maxaccel = 1;
+            this.heading = 0;
+            this.damagemodifier = 1;
+        }
         public float absVelocity()
         {
 			return velocity.Length();
@@ -115,6 +128,86 @@ namespace Project
             }
 
             return false;
+        }
+
+        public void physicsUpdate(GameTime gameTime)
+        {
+            // limit acceleration
+            if (absAcceleration() > 1.4f)
+            {
+                accelerationLimiter(1.4f);
+            }
+
+            // Multiplying by acceleration.Length() means that smaller movements are quadratically smaller
+            // This means there's no juddering with small input, and makes fine input control easier
+            acceleration *= maxspeed * acceleration.Length();
+
+            // Get elapsed time in milliseconds
+            float time = (float)(gameTime.ElapsedGameTime.Milliseconds);
+            // Arbitrary speed adjucstment
+            time /= 16;
+
+            /* Change the velocity with respect to acceleration and delta.
+			 */
+            velocity += (acceleration - velocity) * time / 1000;
+
+            // Limit velocity to some predefined value
+            if (absVelocity() > maxspeed)
+            {
+                velocityLimiter(maxspeed);
+            }
+
+            // Calculate horizontal displacement and keep within the boundaries.
+            if (edgeBoundingGeneric(pos.X + velocity.X * time))
+            {
+                if (velocity.X < 0)
+                {
+                    pos.X = -game.edgemax;
+                    velocity.X = 0f;
+                }
+                if (velocity.X > 0)
+                {
+                    pos.X = game.edgemax;
+                    velocity.X = 0f;
+                }
+            }
+            else
+            {
+                pos.X += velocity.X * time;
+            }
+
+            // Calculate vertical displacement and keep within the boundaries.
+            if (edgeBoundingGeneric(pos.Y + velocity.Y * time))
+            {
+                if (velocity.Y < 0)
+                {
+                    pos.Y = -game.edgemax;
+                    velocity.Y = 0f;
+                }
+                if (velocity.Y > 0)
+                {
+                    pos.Y = game.edgemax;
+                    velocity.Y = 0f;
+                }
+            }
+            else
+            {
+                pos.Y += velocity.Y * time;
+            }
+        }
+
+        public void transform()
+        {
+            this.setDirection();
+
+            Matrix Rotation = new Matrix(0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1) * new Matrix(direction.X, direction.Y, 0, 0, -direction.Y, direction.X, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            Matrix Tilt = Matrix.RotationX(velocity.Length()/2);
+            Vector3 rollSize = acceleration - Vector3.Dot(velocity, acceleration) / Vector3.Dot(velocity, velocity) * velocity;
+            int rollDir = 1;
+            if(Vector3.Cross(rollSize, velocity).Z > 0) { rollDir = -1; }
+            Matrix playerRoll = Matrix.RotationY(rollDir*rollSize.Length());
+
+            this.basicEffect.World = Tilt * playerRoll * Rotation * Matrix.Translation(pos);
         }
 
 		/// <summary>
