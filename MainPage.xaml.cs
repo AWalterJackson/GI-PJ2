@@ -61,7 +61,7 @@ namespace Project
         public void StartGame()
         {
             this.Children.Remove(mainMenu);
-            game.start(options.playerSpeed, options.playerAcceleration, options.powerups);
+            game.start(options.playerSpeed, options.playerAcceleration, options.powerups, options.difficulty);
         }
     }
 }

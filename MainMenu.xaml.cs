@@ -52,10 +52,5 @@ namespace Project
             parent.Children.Remove(this);
         }
 
-        // TASK 3: Function for setting difficulty
-        private void changeDifficulty(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
-        {
-            if (parent.game != null) { parent.game.difficulty = (float)e.NewValue; }
-        }
     }
 }

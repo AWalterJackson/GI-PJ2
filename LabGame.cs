@@ -302,12 +302,13 @@ namespace Project
 
         }
 
-        public void start(float playerSpeed, float playerAcceleration, bool powerups)
+        public void start(float playerSpeed, float playerAcceleration, bool powerups, float difficulty)
         {
             started = true;
             player.maxspeed = playerSpeed;
             player.maxaccel = playerAcceleration;
             this.powerups = powerups;
+            this.difficulty = difficulty;
         }
 
     }

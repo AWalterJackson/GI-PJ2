@@ -34,6 +34,8 @@ namespace Project
         public float playerSpeed = 0.5f;
         public float playerAcceleration = 1.4f;
         public bool powerups = true;
+        public float difficulty = 1;
+
         public Options(MainPage parent)
         {
             this.parent = parent;
@@ -44,10 +46,12 @@ namespace Project
         {
             playerSpeed = (float)e.NewValue;
         }
+
         private void changeAcceleration(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
         {
             playerAcceleration = (float)e.NewValue;
         }
+
         private void changePowerups(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
         {
             if ((int)e.NewValue == 1)
@@ -57,6 +61,11 @@ namespace Project
             {
                 powerups = false;
             }
+        }
+
+        private void changeDifficulty(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
+        {
+            difficulty = (float)e.NewValue;
         }
 
         private void GoBack(object sender, RoutedEventArgs e)
