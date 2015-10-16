@@ -44,6 +44,7 @@ namespace Project
         private Player player;
         public AccelerometerReading accelerometerReading;
         public GameInput input;
+        private EnemyController controller;
         public int score;
         public bool gameOver;
         public int size;
@@ -128,6 +129,8 @@ namespace Project
             gameObjects.Add(ocean);
             player = new Player(this);
             gameObjects.Add(player);
+            controller = new EnemyController(this);
+            gameObjects.Add(controller);
             //Enemy enemy = new Enemy(this, new Vector3(1, 1, -5));
             //gameObjects.Add(enemy);
             //gameObjects.Add(new EnemyController(this));
@@ -200,8 +203,6 @@ namespace Project
                 for (int i = 0; i < gameObjects.Count; i++)
                 {
                     gameObjects[i].Draw(gameTime);
-                    gameObjects[i].basicEffect.View = camera.View;
-                    gameObjects[i].basicEffect.Projection = camera.Projection;
                 }
             }
             // Handle base.Draw

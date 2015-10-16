@@ -59,12 +59,12 @@ namespace Project
 		/// </summary>
         private void fire()
         {
-            game.Add(new Projectile(game,
+            /*game.Add(new Projectile(game,
                 game.assets.GetModel("player projectile", CreatePlayerProjectileModel),
                 pos,
                 new Vector3(0, projectileSpeed, 0),
                 GameObjectType.Enemy
-            ));
+            ));*/
         }
 		
 		/// <summary>
@@ -80,84 +80,9 @@ namespace Project
             acceleration.X = (float)game.accelerometerReading.AccelerationX;
             acceleration.Y = (float)game.accelerometerReading.AccelerationY;
 
-			// limit acceleration
-            if (absAcceleration() > maxaccel)
-            {
-                accelerationLimiter(maxaccel);
-            }
+            physicsUpdate(gameTime);
 
-            // Multiplying by acceleration.Length() means that smaller movements are quadratically smaller
-            // This means there's no juddering with small input, and makes fine input control easier
-            acceleration *= maxspeed * acceleration.Length();
-
-			// Get elapsed time in milliseconds
-            float time = (float)(gameTime.ElapsedGameTime.Milliseconds);
-            // Arbitrary speed adjucstment
-            time /= 16;
-
-            /* Change the velocity with respect to acceleration and delta.
-			 */
-            velocity += (acceleration) * time / 1000;
-
-            // Limit velocity to some predefined value
-            if (absVelocity() > maxspeed)
-            {
-                velocityLimiter(maxspeed);
-            }
-
-			// Get accelerometer readings
-            yr = (float)game.accelerometerReading.AccelerationX;
-            xr = (float)game.accelerometerReading.AccelerationY;
-
-            // Calculate horizontal displacement and keep within the boundaries.
-            if (edgeBoundingGeneric(pos.X + velocity.X*time))
-            {
-                if (velocity.X < 0)
-                {
-                    pos.X = -game.edgemax;
-                    velocity.X = 0f;
-                }
-                if (velocity.X > 0)
-                {
-                    pos.X = game.edgemax;
-                    velocity.X = 0f;
-                }
-            }
-            else
-            {
-                pos.X += velocity.X*time;
-            }
-
-			// Calculate vertical displacement and keep within the boundaries.
-            if (edgeBoundingGeneric(pos.Y + velocity.Y*time))
-            {
-                if (velocity.Y < 0)
-                {
-                    pos.Y = -game.edgemax;
-                    velocity.Y = 0f;
-                }
-                if (velocity.Y > 0)
-                {
-                    pos.Y = game.edgemax;
-                    velocity.Y = 0f;
-                }
-            }
-            else
-            {
-                pos.Y += velocity.Y*time;
-            }
-
-			// Set the direction vector
-			setDirection();
-
-            // Apply the basicEffect transformation
-            Matrix playerRotation = new Matrix(0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1) * new Matrix(direction.X, direction.Y, 0, 0, -direction.Y, direction.X, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-            Matrix playerTilt = Matrix.RotationX(velocity.Length()/2);
-            Vector3 rollSize = acceleration - Vector3.Dot(velocity, acceleration) / Vector3.Dot(velocity, velocity) * velocity;
-            int rollDir = 1;
-            if(Vector3.Cross(rollSize, velocity).Z > 0) { rollDir = -1; }
-            Matrix playerRoll = Matrix.RotationY(rollDir*rollSize.Length());
-            basicEffect.World = playerTilt * playerRoll * playerRotation * Matrix.Translation(pos);
+            transform();
         }
 		
 		/// <summary>

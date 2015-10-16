@@ -14,51 +14,41 @@ namespace Project
     // Enemy Controller class.
     class EnemyController : GameObject
     {
-        // Spacing and counts.
-        private int rows = 0;
-        private int enemiesPerRow = 8;
-        private float rowSpacing = 0.6f;
-        private float colSpacing = 0.6f;
-
-        // Timing and movement.
-        private float stepSize = 1f;
-        private float stepWait = 0;
-        private float stepTimer = 0;
-        private bool stepRight;
-
+        int round;
+        Random RNGesus;
+        float damageincrease;
+        float armourincrease;
         // Constructor.
         public EnemyController(LabGame game)
         {
             this.game = game;
-            nextWave();
+            this.round = 0;
+            this.RNGesus = new Random();
+            this.type = GameObjectType.None;
+
         }
 		
 		/// <summary>
 		/// Set up the next wave.
 		/// </summary>
-        private void nextWave()
+        private void nextRound()
         {
-            rows += 1;
-            stepWait = 1000f / (1 + rows / 3f);
-            createEnemies();
-            stepRight = true;
+            this.round++;
+            createEnemies(1, 1, this.round);
         }
 
 		/// <summary>
-		/// Create a grid of enemies for the current wave.
+		/// Spawn enemies at the beginning of each round
 		/// </summary>
-        private void createEnemies()
+        private void createEnemies(float dmgmod, float armmod, int numenemies)
         {
-            float y = game.boundaryTop;
-            for (int row = 0; row < rows; row++)
+            int i = numenemies;
+            Vector3 newpos;
+            while (i > 0)
             {
-                float x = game.boundaryLeft;
-                for (int col = 0; col < enemiesPerRow; col++)
-                {
-                    game.Add(new Enemy(game, new Vector3(x, y, 0)));
-                    x += colSpacing;
-                }
-                y -= rowSpacing;
+                newpos = new Vector3(RNGesus.Next(-game.edgemax,game.edgemax),RNGesus.Next(-game.edgemax, game.edgemax),-1);
+                game.gameObjects.Add(new Enemy(this.game, new Vector3(0,0,-1)));
+                i--;
             }
         }
 
@@ -68,30 +58,10 @@ namespace Project
 		/// <param name="gameTime">Time since last update.</param>
         public override void Update(GameTime gameTime)
         {
-            // Move the enemies a step once the step timer has run out and reset step timer.
-            // TASK 3: Moves according to game difficulty.  N.B.  This is a simple way of achieving this, you may prefer to impletement
-            // SetDifficulty methods in a manner similar to Tapped if you were to do more complicated things with the difficulty
-            stepTimer -= gameTime.ElapsedGameTime.Milliseconds * game.difficulty;
-            if (stepTimer <= 0)
+            if (game.Count(GameObjectType.Enemy) == 0)
             {
-                step();
-                stepTimer = stepWait;
+                nextRound();
             }
-
-            // Invoke next wave once current one has ended.
-            if (allEnemiesAreDead())
-            {
-                nextWave();
-            }
-        }
-
-		/// <summary>
-		/// Return whether all enemies are dead or not.
-		/// </summary>
-		/// <returns>true if no enemies left, false otherwise.</returns>
-        private bool allEnemiesAreDead()
-        {
-            return game.Count(GameObjectType.Enemy) == 0;
         }
 
 		/// <summary>
@@ -99,52 +69,7 @@ namespace Project
 		/// </summary>
         private void step()
         {
-            bool stepDownNeeded = false;
-            foreach (var obj in game.gameObjects)
-            {
-                if (obj.type == GameObjectType.Enemy)
-                {
-                    Enemy enemy = (Enemy)obj;
-                    if (stepRight)
-                    {
-                        enemy.pos.X += stepSize;
-                        if (enemy.pos.X > game.boundaryRight) { stepDownNeeded = true; }
-                    }
-                    else
-                    {
-                        enemy.pos.X -= stepSize;
-                        if (enemy.pos.X < game.boundaryLeft) { stepDownNeeded = true; }
-                    }
-                }
-            }
-
-            if (stepDownNeeded)
-            {
-                stepRight = !stepRight;
-                stepDown();
-            }
-        }
-
-        // Step all enemies down one.
-        private void stepDown()
-        {
-            foreach (var obj in game.gameObjects)
-            {
-                if (obj.type == GameObjectType.Enemy)
-                {
-                    Enemy enemy = (Enemy)obj;
-                    enemy.pos.Y -= stepSize;
-                    if (enemy.pos.Y < game.boundaryBottom) { gameOver(); }
-                }
-            }
-        }
-
-		/// <summary>
-		/// Method for when the game ends.
-		/// </summary>
-        private void gameOver()
-        {
-            game.Exit();
+            throw new NotImplementedException();
         }
     }
 }
