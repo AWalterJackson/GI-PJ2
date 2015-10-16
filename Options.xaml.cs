@@ -25,32 +25,54 @@ using SharpDX;
 namespace Project
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// A page with options that can be edited to edit game variables.
     /// </summary>
-    // TASK 4: Instructions Page
-    public sealed partial class MainMenu
+    // Options Page
+    public sealed partial class Options
     {
         private MainPage parent;
-        public MainMenu(MainPage parent)
+        public float playerSpeed = 0.5f;
+        public float playerAcceleration = 1.4f;
+        public bool powerups = true;
+        public float difficulty = 1;
+
+        public Options(MainPage parent)
         {
             this.parent = parent;
             InitializeComponent();
         }
-        private void StartGame(object sender, RoutedEventArgs e)
+
+        private void changeSpeed(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
         {
-            parent.StartGame();
+            playerSpeed = (float)e.NewValue;
         }
 
-        private void LoadInstructions(object sender, RoutedEventArgs e)
+        private void changeAcceleration(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
         {
-            parent.Children.Add(new Instructions(parent));
-            parent.Children.Remove(this);
-        }
-        private void LoadOptions(object sender, RoutedEventArgs e)
-        {
-            parent.Children.Add(new Options(parent));
-            parent.Children.Remove(this);
+            playerAcceleration = (float)e.NewValue;
         }
 
+        private void changePowerups(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
+        {
+            if ((int)e.NewValue == 1)
+            {
+                powerups = true;
+            } else
+            {
+                powerups = false;
+            }
+        }
+
+        private void changeDifficulty(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
+        {
+            difficulty = (float)e.NewValue;
+        }
+
+        private void GoBack(object sender, RoutedEventArgs e)
+        {
+            parent.options = this;
+            parent.Children.Add(parent.mainMenu);
+            parent.Children.Remove(this);
+        }
     }
 }

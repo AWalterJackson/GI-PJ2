@@ -1,0 +1,24 @@
+﻿<Page
+    x:Class="Project.Options"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Project"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"    
+    d:DesignWidth="1280"
+    d:DesignHeight="800">
+    <Grid>
+        <Button x:Name="cmdBack" Content="Back" HorizontalAlignment="Left" Height="77" Margin="954,70,0,0" VerticalAlignment="Top" Width="163" Click="GoBack"/>
+        <TextBlock x:Name="txtOptions" HorizontalAlignment="Left" Height="71" Margin="415,73,0,0" TextWrapping="Wrap" xml:space="preserve" VerticalAlignment="Top" Width="366" FontSize="24">Options Menu</TextBlock>
+        <TextBlock x:Name="txtPlayerSpeed" HorizontalAlignment="Left" Height="71" Margin="415,150,0,0" TextWrapping="Wrap" xml:space="preserve" VerticalAlignment="Top" Width="366" FontSize="24">Player Speed</TextBlock>
+        <Slider x:Name="sldPlayerSpeed" HorizontalAlignment="Left" Height="38" Margin="700,150,0,0" VerticalAlignment="Top" Width="159" ValueChanged="changeSpeed" Value="0.5" IsTabStop="False" Minimum="0.1" Maximum="1" LargeChange="0.1" SmallChange="0.01" StepFrequency="0.01"/>
+        <TextBlock x:Name="txtPlayerAcceleration" HorizontalAlignment="Left" Height="71" Margin="415,200,0,0" TextWrapping="Wrap" xml:space="preserve" VerticalAlignment="Top" Width="366" FontSize="24">Player Acceleration</TextBlock>
+        <Slider x:Name="sldPlayerAcceleration" HorizontalAlignment="Left" Height="38" Margin="700,200,0,0" VerticalAlignment="Top" Width="159" ValueChanged="changeAcceleration" Value="1.4" IsTabStop="False" Minimum="0.1" Maximum="5" LargeChange="0.1" SmallChange="0.01" StepFrequency="0.01"/>
+        <TextBlock x:Name="txtPowerups" HorizontalAlignment="Left" Height="71" Margin="415,250,0,0" TextWrapping="Wrap" xml:space="preserve" VerticalAlignment="Top" Width="366" FontSize="24">Powerups off/on</TextBlock>
+        <Slider x:Name="sldPowerups" HorizontalAlignment="Left" Height="38" Margin="700,250,0,0" VerticalAlignment="Top" Width="159" ValueChanged="changePowerups" Value="1" IsTabStop="False" Minimum="0" Maximum="1" LargeChange="1" SmallChange="1" StepFrequency="1"/>
+        <TextBlock x:Name="txtDifficulty" HorizontalAlignment="Left" Height="71" Margin="415,300,0,0" TextWrapping="Wrap" xml:space="preserve" VerticalAlignment="Top" Width="366" FontSize="24">Difficulty</TextBlock>
+        <Slider x:Name="sldDifficulty" HorizontalAlignment="Left" Height="38" Margin="700,300,0,0" VerticalAlignment="Top" Width="159" ValueChanged="changeDifficulty" Value="1" IsTabStop="False" Minimum="0.5" Maximum="3" LargeChange="0.1" SmallChange="0.01" StepFrequency="0.01"/>
+
+    </Grid>
+</Page>
