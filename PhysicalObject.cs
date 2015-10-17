@@ -148,9 +148,11 @@ namespace Project
                     hitpoints -= damage;
                     ((PhysicalObject)game.gameObjects[i]).hitpoints -= damage;
                     pos = game.gameObjects[i].pos - Vector3.Normalize(velocity) * (myModel.collisionRadius + game.gameObjects[i].myModel.collisionRadius);
-                    Vector3 tempdir = ((PhysicalObject)game.gameObjects[i]).velocity;
+                    velocity = velocity / -2;
+                    ((PhysicalObject)game.gameObjects[i]).velocity = ((PhysicalObject)game.gameObjects[i]).velocity / -2;
+                    /*Vector3 tempdir = ((PhysicalObject)game.gameObjects[i]).velocity;
                     ((PhysicalObject)game.gameObjects[i]).velocity = velocity / 2;
-                    velocity = tempdir / 2;
+                    velocity = tempdir / 2;*/
                     return true;
                 }
             }

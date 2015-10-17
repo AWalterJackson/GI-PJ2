@@ -10,12 +10,14 @@ namespace Project
 {
     using SharpDX.Toolkit.Graphics;
     // Projectile classed, used by both player and enemy.
-    class Projectile : GameObject
+    class Projectile : PhysicalObject
     {
         private Vector3 vel;
         private PhysicalObject shooter;	// The physical object that fired this projectile
         private float hitRadius = 0.5f;
         private float squareHitRadius;
+        private Vector3 initPos;
+        private float maxDist = 5;
 		
 		/// <summary>
 		/// Create a new projectile.
@@ -34,6 +36,7 @@ namespace Project
             this.shooter = shooter;
             squareHitRadius = hitRadius * hitRadius;
             GetParamsFromModel();
+            initPos = pos;
         }
 
 		/// <summary>
@@ -46,6 +49,11 @@ namespace Project
             float time = (float)gameTime.TotalGameTime.TotalSeconds;
             // Apply velocity to position.
             pos += vel * timeDelta;
+            if((pos - initPos).Length() > maxDist)
+            {
+                game.Remove(this);
+                return;
+            }
 
             // Set local transformation to be spinning according to time for fun.
             basicEffect.World = Matrix.RotationY(time) * Matrix.RotationZ(time * time) * Matrix.Translation(pos);
@@ -61,6 +69,10 @@ namespace Project
         {
             foreach (var obj in game.gameObjects)
             {
+                if (obj.type != GameObjectType.Enemy && obj.type != GameObjectType.Player)
+                {
+                    continue;
+                }
                 if (obj != shooter && ((((GameObject)obj).pos - pos).LengthSquared() <= 
                     Math.Pow(((GameObject)obj).myModel.collisionRadius + this.myModel.collisionRadius, 2)))
                 {
