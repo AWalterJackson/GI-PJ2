@@ -130,12 +130,39 @@ namespace Project
             return false;
         }
 
+        public bool collisionHandling(float time)
+        {
+            for (int i = 0; i < game.gameObjects.Count; i++)
+            {
+                if(game.gameObjects[i].type != GameObjectType.Enemy && game.gameObjects[i].type != GameObjectType.Player)
+                {
+                    continue;
+                }
+                if (game.gameObjects[i] == this)
+                {
+                    continue;
+                }
+                if (Vector3.Distance(pos + (velocity * time), game.gameObjects[i].pos) <= (myModel.collisionRadius + game.gameObjects[i].myModel.collisionRadius))
+                {
+                    int damage = (int)(velocity - ((PhysicalObject)game.gameObjects[i]).velocity).Length();
+                    hitpoints -= damage;
+                    ((PhysicalObject)game.gameObjects[i]).hitpoints -= damage;
+                    pos = game.gameObjects[i].pos - Vector3.Normalize(velocity) * (myModel.collisionRadius + game.gameObjects[i].myModel.collisionRadius);
+                    Vector3 tempdir = ((PhysicalObject)game.gameObjects[i]).velocity;
+                    ((PhysicalObject)game.gameObjects[i]).velocity = velocity / 2;
+                    velocity = tempdir / 2;
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public void physicsUpdate(GameTime gameTime)
         {
             // limit acceleration
-            if (absAcceleration() > 1.4f)
+            if (absAcceleration() > maxaccel)
             {
-                accelerationLimiter(1.4f);
+                accelerationLimiter(maxaccel);
             }
 
             // Multiplying by acceleration.Length() means that smaller movements are quadratically smaller
@@ -149,12 +176,17 @@ namespace Project
 
             /* Change the velocity with respect to acceleration and delta.
 			 */
-            velocity += (acceleration - velocity) * time / 1000;
+            velocity += (acceleration) * time / 1000;
 
             // Limit velocity to some predefined value
             if (absVelocity() > maxspeed)
             {
                 velocityLimiter(maxspeed);
+            }
+
+            if (collisionHandling(time))
+            {
+                return;
             }
 
             // Calculate horizontal displacement and keep within the boundaries.
@@ -175,6 +207,8 @@ namespace Project
             {
                 pos.X += velocity.X * time;
             }
+
+
 
             // Calculate vertical displacement and keep within the boundaries.
             if (edgeBoundingGeneric(pos.Y + velocity.Y * time))
