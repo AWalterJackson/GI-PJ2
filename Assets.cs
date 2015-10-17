@@ -13,9 +13,9 @@ namespace Project
         LabGame game;
 
 		// Private variables used by functions
-		public static int HEIGHT_MIN = -100;
-		public static int HEIGHT_MAX = 50;
-		public static int HEIGHT_INIT = 70;
+		public static int HEIGHT_MIN = -5;
+		public static int HEIGHT_MAX = 10;
+		public static int HEIGHT_INIT = 2;
 
         public Assets(LabGame game)
         {
@@ -111,7 +111,7 @@ namespace Project
             for (int i = 0; i < shapeArray.Length; i++)
             {
                 shapeArray[i].Position.X *= size.X / 2;
-                shapeArray[i].Position.Y *= size.Y / 2;
+                shapeArray[i].Position.Z *= size.Y / 2;
                 shapeArray[i].Position.Z *= size.Z / 2;
             }
 
@@ -282,8 +282,8 @@ namespace Project
 					v1 = new Vector3(map[i][j].X, map[i][j].Y, map[i][j].Z);
 					v2 = new Vector3(map[i+1][j].X, map[i+1][j].Y, map[i+1][j].Z);
 					v3 = new Vector3(map[i][j+1].X, map[i+1][j+1].Y, map[i][j+1].Z);
-					p1 = new Vector3(v1.X - v3.X, v1.Y-v3.Y, v1.Z-v3.Z);
-					p2 = new Vector3(v3.X - v2.X, v3.Y-v2.Y, v3.Z-v2.Z);
+					p1 = new Vector3(v1.X - v3.X, v1.Z-v3.Y, v1.Z-v3.Z);
+					p2 = new Vector3(v3.X - v2.X, v3.Z-v2.Y, v3.Z-v2.Z);
 					point = Vector3.Cross(p1, p2);
 					s[c++] = point;
 				}
@@ -365,10 +365,10 @@ namespace Project
 			squares[0][1] = new Vector2((float)x2,(float)y1);
 			squares[0][2] = new Vector2((float)x1,(float)y2);
 			squares[0][3] = new Vector2((float)x2,(float)y2);
-			map[(int)squares[0][0].X][(int)squares[0][0].Y].Y = rand.NextFloat(min, max);
-			map[(int)squares[0][1].X][(int)squares[0][1].Y].Y = rand.NextFloat(min, max);
-			map[(int)squares[0][2].X][(int)squares[0][2].Y].Y = rand.NextFloat(min, max);
-			map[(int)squares[0][3].X][(int)squares[0][3].Y].Y = rand.NextFloat(min, max);
+			map[(int)squares[0][0].X][(int)squares[0][0].Z].Z = rand.NextFloat(min, max);
+			map[(int)squares[0][1].X][(int)squares[0][1].Z].Z = rand.NextFloat(min, max);
+			map[(int)squares[0][2].X][(int)squares[0][2].Z].Z = rand.NextFloat(min, max);
+			map[(int)squares[0][3].X][(int)squares[0][3].Z].Z = rand.NextFloat(min, max);
 			bool done = false;
 			mainGap = (x2-x1);
 			while (!done) {
@@ -383,11 +383,11 @@ namespace Project
 					bottomLeft = squares[i][2];
 					bottomRight = squares[i][3];
 					// take the average of the four corner points of square
-					map[(int)(topLeft.X+gap)][(int)(topLeft.Y + gap)].Y = (
-						map[(int)topLeft.X][(int)topLeft.Y].Y + 
-						map[(int)topRight.X][(int)topRight.Y].Y + 
-						map[(int)bottomLeft.X][(int)bottomLeft.Y].Y + 
-						map[(int)bottomRight.X][(int)bottomRight.Y].Y
+					map[(int)(topLeft.X+gap)][(int)(topLeft.Z + gap)].Z = (
+						map[(int)topLeft.X][(int)topLeft.Z].Z + 
+						map[(int)topRight.X][(int)topRight.Z].Z + 
+						map[(int)bottomLeft.X][(int)bottomLeft.Z].Z + 
+						map[(int)bottomRight.X][(int)bottomRight.Z].Z
 						)/4 + rand.NextFloat(min, max);
 				}
 				// perform square step for every diamond
@@ -401,70 +401,70 @@ namespace Project
 					bottomLeft = squares[i][2];
 					bottomRight = squares[i][3];
 					topMiddle = new Vector2(topLeft.X + gap,
-						topLeft.Y);
+						topLeft.Z);
 					midLeft = new Vector2(topLeft.X,
-						topLeft.Y + gap);
+						topLeft.Z + gap);
 					midPoint = new Vector2(topLeft.X + gap,
-						topLeft.Y + gap);
+						topLeft.Z + gap);
 					midRight = new Vector2(topRight.X,
-						topLeft.Y + gap);
+						topLeft.Z + gap);
 					bottomMiddle = new Vector2(topLeft.X + gap,
-						bottomLeft.Y);
+						bottomLeft.Z);
 					// average out topMiddle
 					avg = 0;
 					avgItms = 0;
-					if (topMiddle.Y - gap >= y1) {
+					if (topMiddle.Z - gap >= y1) {
 						// if a top diamond corner exists, include it in average
-						avg += map[(int)(topMiddle.X)][(int)(topMiddle.Y-gap)].Y;
+						avg += map[(int)(topMiddle.X)][(int)(topMiddle.Z-gap)].Z;
 						avgItms += 1;
 					}
-					avg += map[(int)(topMiddle.X)][(int)(topMiddle.Y+gap)].Y;
-					avg += map[(int)(topMiddle.X-gap)][(int)(topMiddle.Y)].Y;
-					avg += map[(int)(topMiddle.X+gap)][(int)(topMiddle.Y)].Y;
+					avg += map[(int)(topMiddle.X)][(int)(topMiddle.Z+gap)].Z;
+					avg += map[(int)(topMiddle.X-gap)][(int)(topMiddle.Z)].Z;
+					avg += map[(int)(topMiddle.X+gap)][(int)(topMiddle.Z)].Z;
 					avgItms += 3;
-					map[(int)(topMiddle.X)][(int)(topMiddle.Y)].Y = (
+					map[(int)(topMiddle.X)][(int)(topMiddle.Z)].Z = (
 						(avg/avgItms) + rand.NextFloat(min, max));
 					// average out middleLeft
 					avg = 0;
 					avgItms = 0;
 					if (midLeft.X - gap >= x1) {
 						// if a top diamond corner exists, include it in average
-						avg += map[(int)(midLeft.X-gap)][(int)(midLeft.Y)].Y;
+						avg += map[(int)(midLeft.X-gap)][(int)(midLeft.Z)].Z;
 						avgItms += 1;
 					}
-					avg += map[(int)(midLeft.X)][(int)(midLeft.Y+gap)].Y;
-					avg += map[(int)(midLeft.X)][(int)(midLeft.Y-gap)].Y;
-					avg += map[(int)(midLeft.X+gap)][(int)(midLeft.Y)].Y;
+					avg += map[(int)(midLeft.X)][(int)(midLeft.Z+gap)].Z;
+					avg += map[(int)(midLeft.X)][(int)(midLeft.Z-gap)].Z;
+					avg += map[(int)(midLeft.X+gap)][(int)(midLeft.Z)].Z;
 					avgItms += 3;
-					map[(int)(midLeft.X)][(int)(midLeft.Y)].Y = (
+					map[(int)(midLeft.X)][(int)(midLeft.Z)].Z = (
 						(avg/avgItms) + rand.NextFloat(min, max));
 					// average out middleRight
 					avg = 0;
 					avgItms = 0;
 					if (midRight.X + gap <= x2) {
 						// if a top diamond corner exists, include it in average
-						avg += map[(int)(midRight.X+gap)][(int)(midRight.Y)].Y;
+						avg += map[(int)(midRight.X+gap)][(int)(midRight.Z)].Z;
 						avgItms += 1;
 					}
-					avg += map[(int)(midRight.X)][(int)(midRight.Y+gap)].Y;
-					avg += map[(int)(midRight.X-gap)][(int)(midRight.Y)].Y;
-					avg += map[(int)(midRight.X)][(int)(midRight.Y-gap)].Y;
+					avg += map[(int)(midRight.X)][(int)(midRight.Z+gap)].Z;
+					avg += map[(int)(midRight.X-gap)][(int)(midRight.Z)].Z;
+					avg += map[(int)(midRight.X)][(int)(midRight.Z-gap)].Z;
 					avgItms += 3;
-					map[(int)(midRight.X)][(int)(midRight.Y)].Y = (
+					map[(int)(midRight.X)][(int)(midRight.Z)].Z = (
 						(avg/avgItms) + rand.NextFloat(min, max));
 					// average out bottomMiddle
 					avg = 0;
 					avgItms = 0;
-					if (bottomMiddle.Y + gap <= y2) {
+					if (bottomMiddle.Z + gap <= y2) {
 						// if a bottom diamond corner exists, include it in average
-						avg += map[(int)(bottomMiddle.X)][(int)(bottomMiddle.Y+gap)].Y;
+						avg += map[(int)(bottomMiddle.X)][(int)(bottomMiddle.Z+gap)].Z;
 						avgItms += 1;
 					}
-					avg += map[(int)(bottomMiddle.X)][(int)(bottomMiddle.Y-gap)].Y;
-					avg += map[(int)(bottomMiddle.X-gap)][(int)(bottomMiddle.Y)].Y;
-					avg += map[(int)(bottomMiddle.X+gap)][(int)(bottomMiddle.Y)].Y;
+					avg += map[(int)(bottomMiddle.X)][(int)(bottomMiddle.Z-gap)].Z;
+					avg += map[(int)(bottomMiddle.X-gap)][(int)(bottomMiddle.Z)].Z;
+					avg += map[(int)(bottomMiddle.X+gap)][(int)(bottomMiddle.Z)].Z;
 					avgItms += 3;
-					map[(int)(bottomMiddle.X)][(int)(bottomMiddle.Y)].Y = (
+					map[(int)(bottomMiddle.X)][(int)(bottomMiddle.Z)].Z = (
 						(avg/avgItms) + rand.NextFloat(min, max));
 				}
 				// stop upon making size 1 squares and return
@@ -478,15 +478,15 @@ namespace Project
 					topLeft = squares[i][0]; topRight = squares[i][1];
 					bottomLeft = squares[i][2]; bottomRight = squares[i][3];
 					topMiddle = new Vector2(topLeft.X + gap,
-						topLeft.Y);
+						topLeft.Z);
 					midLeft = new Vector2(topLeft.X,
-						topLeft.Y + gap);
+						topLeft.Z + gap);
 					midPoint = new Vector2(topLeft.X + gap,
-						topLeft.Y + gap);
+						topLeft.Z + gap);
 					midRight = new Vector2(topRight.X,
-						topLeft.Y + gap);
+						topLeft.Z + gap);
 					bottomMiddle = new Vector2(topLeft.X + gap,
-						bottomLeft.Y);
+						bottomLeft.Z);
 					// TO-DO: split current square into 4 smaller squares of size gap;
 					// TOPLEFT SQUARE
 					newSquares[c] = new Vector2[4];
