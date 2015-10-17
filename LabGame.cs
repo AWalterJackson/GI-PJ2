@@ -139,7 +139,7 @@ namespace Project
 		/// </summary>
         protected override void Initialize()
         {
-            Window.Title = "Lab 4";
+            Window.Title = "Piracy!";
             camera = new Camera(this);
 
             base.Initialize();
