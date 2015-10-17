@@ -149,12 +149,18 @@ namespace Project
 					normals[i][j] = new Vector3(0, 1, 0);
 				}
 			}
+			
+			// Define x and y boundaries for diamond square.
+			float x1 = min, x2 = -min+1, y1 = min, y2 = -min+1;
+
+			// Generate a map by calling the function
+			points = genMap(sidelength, x1, x2, y1, y2, 0.0f);
 
 			// Apply diamond square algorithm
-			//points = diamondSquare(points, rand, magnitude, 0, size-1, 0, size-1);
+			points = diamondSquare(points, rand, HEIGHT_INIT, 0, sidelength, 0, sidelength);
 
 			// Calculate vertex normals
-			//normals = getNormals(points);
+			normals = getNormals(points);
 
             VertexPositionNormalColor[] shapeArray = new VertexPositionNormalColor[sidelength * sidelength*6];
 
@@ -365,10 +371,10 @@ namespace Project
 			squares[0][1] = new Vector2((float)x2,(float)y1);
 			squares[0][2] = new Vector2((float)x1,(float)y2);
 			squares[0][3] = new Vector2((float)x2,(float)y2);
-			map[(int)squares[0][0].X][(int)squares[0][0].Z].Z = rand.NextFloat(min, max);
-			map[(int)squares[0][1].X][(int)squares[0][1].Z].Z = rand.NextFloat(min, max);
-			map[(int)squares[0][2].X][(int)squares[0][2].Z].Z = rand.NextFloat(min, max);
-			map[(int)squares[0][3].X][(int)squares[0][3].Z].Z = rand.NextFloat(min, max);
+			map[(int)squares[0][0].X][(int)squares[0][0].Y].Z = rand.NextFloat(min, max);
+			map[(int)squares[0][1].X][(int)squares[0][1].Y].Z = rand.NextFloat(min, max);
+			map[(int)squares[0][2].X][(int)squares[0][2].Y].Z = rand.NextFloat(min, max);
+			map[(int)squares[0][3].X][(int)squares[0][3].Y].Z = rand.NextFloat(min, max);
 			bool done = false;
 			mainGap = (x2-x1);
 			while (!done) {
@@ -383,11 +389,11 @@ namespace Project
 					bottomLeft = squares[i][2];
 					bottomRight = squares[i][3];
 					// take the average of the four corner points of square
-					map[(int)(topLeft.X+gap)][(int)(topLeft.Z + gap)].Z = (
-						map[(int)topLeft.X][(int)topLeft.Z].Z + 
-						map[(int)topRight.X][(int)topRight.Z].Z + 
-						map[(int)bottomLeft.X][(int)bottomLeft.Z].Z + 
-						map[(int)bottomRight.X][(int)bottomRight.Z].Z
+					map[(int)(topLeft.X+gap)][(int)(topLeft.Y + gap)].Z = (
+						map[(int)topLeft.X][(int)topLeft.Y].Z + 
+						map[(int)topRight.X][(int)topRight.Y].Z + 
+						map[(int)bottomLeft.X][(int)bottomLeft.Y].Z + 
+						map[(int)bottomRight.X][(int)bottomRight.Y].Z
 						)/4 + rand.NextFloat(min, max);
 				}
 				// perform square step for every diamond
@@ -401,26 +407,26 @@ namespace Project
 					bottomLeft = squares[i][2];
 					bottomRight = squares[i][3];
 					topMiddle = new Vector2(topLeft.X + gap,
-						topLeft.Z);
+						topLeft.Y);
 					midLeft = new Vector2(topLeft.X,
-						topLeft.Z + gap);
+						topLeft.Y + gap);
 					midPoint = new Vector2(topLeft.X + gap,
-						topLeft.Z + gap);
+						topLeft.Y + gap);
 					midRight = new Vector2(topRight.X,
-						topLeft.Z + gap);
+						topLeft.Y + gap);
 					bottomMiddle = new Vector2(topLeft.X + gap,
-						bottomLeft.Z);
+						bottomLeft.Y);
 					// average out topMiddle
 					avg = 0;
 					avgItms = 0;
 					if (topMiddle.Z - gap >= y1) {
 						// if a top diamond corner exists, include it in average
-						avg += map[(int)(topMiddle.X)][(int)(topMiddle.Z-gap)].Z;
+						avg += map[(int)(topMiddle.X)][(int)(topMiddle.Y-gap)].Z;
 						avgItms += 1;
 					}
-					avg += map[(int)(topMiddle.X)][(int)(topMiddle.Z+gap)].Z;
-					avg += map[(int)(topMiddle.X-gap)][(int)(topMiddle.Z)].Z;
-					avg += map[(int)(topMiddle.X+gap)][(int)(topMiddle.Z)].Z;
+					avg += map[(int)(topMiddle.X)][(int)(topMiddle.Y+gap)].Z;
+					avg += map[(int)(topMiddle.X-gap)][(int)(topMiddle.Y)].Z;
+					avg += map[(int)(topMiddle.X+gap)][(int)(topMiddle.Y)].Z;
 					avgItms += 3;
 					map[(int)(topMiddle.X)][(int)(topMiddle.Z)].Z = (
 						(avg/avgItms) + rand.NextFloat(min, max));
@@ -429,42 +435,42 @@ namespace Project
 					avgItms = 0;
 					if (midLeft.X - gap >= x1) {
 						// if a top diamond corner exists, include it in average
-						avg += map[(int)(midLeft.X-gap)][(int)(midLeft.Z)].Z;
+						avg += map[(int)(midLeft.X-gap)][(int)(midLeft.Y)].Z;
 						avgItms += 1;
 					}
-					avg += map[(int)(midLeft.X)][(int)(midLeft.Z+gap)].Z;
-					avg += map[(int)(midLeft.X)][(int)(midLeft.Z-gap)].Z;
-					avg += map[(int)(midLeft.X+gap)][(int)(midLeft.Z)].Z;
+					avg += map[(int)(midLeft.X)][(int)(midLeft.Y+gap)].Z;
+					avg += map[(int)(midLeft.X)][(int)(midLeft.Y-gap)].Z;
+					avg += map[(int)(midLeft.X+gap)][(int)(midLeft.Y)].Z;
 					avgItms += 3;
-					map[(int)(midLeft.X)][(int)(midLeft.Z)].Z = (
+					map[(int)(midLeft.X)][(int)(midLeft.Y)].Z = (
 						(avg/avgItms) + rand.NextFloat(min, max));
 					// average out middleRight
 					avg = 0;
 					avgItms = 0;
 					if (midRight.X + gap <= x2) {
 						// if a top diamond corner exists, include it in average
-						avg += map[(int)(midRight.X+gap)][(int)(midRight.Z)].Z;
+						avg += map[(int)(midRight.X+gap)][(int)(midRight.Y)].Z;
 						avgItms += 1;
 					}
-					avg += map[(int)(midRight.X)][(int)(midRight.Z+gap)].Z;
-					avg += map[(int)(midRight.X-gap)][(int)(midRight.Z)].Z;
-					avg += map[(int)(midRight.X)][(int)(midRight.Z-gap)].Z;
+					avg += map[(int)(midRight.X)][(int)(midRight.Y+gap)].Z;
+					avg += map[(int)(midRight.X-gap)][(int)(midRight.Y)].Z;
+					avg += map[(int)(midRight.X)][(int)(midRight.Y-gap)].Z;
 					avgItms += 3;
-					map[(int)(midRight.X)][(int)(midRight.Z)].Z = (
+					map[(int)(midRight.X)][(int)(midRight.Y)].Z = (
 						(avg/avgItms) + rand.NextFloat(min, max));
 					// average out bottomMiddle
 					avg = 0;
 					avgItms = 0;
 					if (bottomMiddle.Z + gap <= y2) {
 						// if a bottom diamond corner exists, include it in average
-						avg += map[(int)(bottomMiddle.X)][(int)(bottomMiddle.Z+gap)].Z;
+						avg += map[(int)(bottomMiddle.X)][(int)(bottomMiddle.Y+gap)].Z;
 						avgItms += 1;
 					}
-					avg += map[(int)(bottomMiddle.X)][(int)(bottomMiddle.Z-gap)].Z;
-					avg += map[(int)(bottomMiddle.X-gap)][(int)(bottomMiddle.Z)].Z;
-					avg += map[(int)(bottomMiddle.X+gap)][(int)(bottomMiddle.Z)].Z;
+					avg += map[(int)(bottomMiddle.X)][(int)(bottomMiddle.Y-gap)].Z;
+					avg += map[(int)(bottomMiddle.X-gap)][(int)(bottomMiddle.Y)].Z;
+					avg += map[(int)(bottomMiddle.X+gap)][(int)(bottomMiddle.Y)].Z;
 					avgItms += 3;
-					map[(int)(bottomMiddle.X)][(int)(bottomMiddle.Z)].Z = (
+					map[(int)(bottomMiddle.X)][(int)(bottomMiddle.Y)].Z = (
 						(avg/avgItms) + rand.NextFloat(min, max));
 				}
 				// stop upon making size 1 squares and return
@@ -478,15 +484,15 @@ namespace Project
 					topLeft = squares[i][0]; topRight = squares[i][1];
 					bottomLeft = squares[i][2]; bottomRight = squares[i][3];
 					topMiddle = new Vector2(topLeft.X + gap,
-						topLeft.Z);
+						topLeft.Y);
 					midLeft = new Vector2(topLeft.X,
-						topLeft.Z + gap);
+						topLeft.Y + gap);
 					midPoint = new Vector2(topLeft.X + gap,
-						topLeft.Z + gap);
+						topLeft.Y + gap);
 					midRight = new Vector2(topRight.X,
-						topLeft.Z + gap);
+						topLeft.Y + gap);
 					bottomMiddle = new Vector2(topLeft.X + gap,
-						bottomLeft.Z);
+						bottomLeft.Y);
 					// TO-DO: split current square into 4 smaller squares of size gap;
 					// TOPLEFT SQUARE
 					newSquares[c] = new Vector2[4];
@@ -515,7 +521,55 @@ namespace Project
 				mainGap = gap;
 			}
 			return map;
-		}		
+		}
+		
+		/// <summary>
+		/// Lower parts of the sea floor that would cause grounding if a boat were in the sea.
+		/// </summary>
+		/// <param name="map"></param>
+		/// <param name="n"></param>
+		/// <param name="height"></param>
+		/// <returns></returns>
+		private Vector3[][] lowerSeaFloor(Vector3[][] map, int n, float seaLevel, float minDepth){
+			// Add vertices to array
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++){
+					// Check the point height, lower if necessary
+					if (map[i][j].Z < seaLevel && map[i][j].Z > seaLevel - minDepth){
+						map[i][j].Z = seaLevel - minDepth;
+					}
+				}
+			}
+			return map;
+		}
+		
+		/// <summary>
+		/// Generate a flat (n x n) vertice map from (xLeft,0,zFront) to (xRight, 0, zBack)
+		/// </summary>
+		/// <param name="n"></param>
+		/// <param name="xLeft"></param>
+		/// <param name="xRight"></param>
+		/// <param name="zFront"></param>
+		/// <param name="zBack"></param>
+		/// <param name="height"></param>
+		/// <returns></returns>
+		private Vector3[][] genMap(int n, float xLeft, float xRight, float zFront, float zBack, float height) {
+			// Return a new flat plane of size n*n + 1 covering (xleft, 0, zBack) to (xRight, 0, zFront)
+			Vector3[][] vertices = new Vector3[n][];
+			// Determine spacing between x and z boundaries
+			float xGap = Math.Abs(xRight - xLeft);
+			float zGap = Math.Abs(zFront - zBack);
+			// Add vertices to array
+			for (int i = 0; i < n; i++) {
+				vertices[i] = new Vector3[n];
+				for (int j = 0; j < n; j++){
+					// Generate a vertice in the array
+					vertices[i][j] = new Vector3(xLeft + (xGap*((float)i/n)), 
+						zFront + (zGap*((float)j/n)), height);
+				}
+			}
+			return vertices;
+		}
 
     }
 }
