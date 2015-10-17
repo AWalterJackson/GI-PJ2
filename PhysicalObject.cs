@@ -130,6 +130,25 @@ namespace Project
             return false;
         }
 
+        public bool collisionHandling(float time)
+        {
+            for (int i = 0; i < game.gameObjects.Count; i++)
+            {
+                if(game.gameObjects[i].type != GameObjectType.Enemy && game.gameObjects[i].type != GameObjectType.Player)
+                {
+                    continue;
+                }
+                if(Vector3.Distance(pos + velocity * time, game.gameObjects[i].pos) < myModel.collisionRadius + game.gameObjects[i].myModel.collisionRadius)
+                {
+                    pos = game.gameObjects[i].pos - Vector3.Normalize(velocity) * (myModel.collisionRadius + game.gameObjects[i].myModel.collisionRadius);
+                    velocity = velocity / -2;
+                    ((PhysicalObject)game.gameObjects[i]).velocity = ((PhysicalObject)game.gameObjects[i]).velocity / -2;
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public void physicsUpdate(GameTime gameTime)
         {
             // limit acceleration
@@ -149,12 +168,17 @@ namespace Project
 
             /* Change the velocity with respect to acceleration and delta.
 			 */
-            velocity += (acceleration - velocity) * time / 1000;
+            velocity += (acceleration) * time / 1000;
 
             // Limit velocity to some predefined value
             if (absVelocity() > maxspeed)
             {
                 velocityLimiter(maxspeed);
+            }
+
+            if (collisionHandling(time))
+            {
+                return;
             }
 
             // Calculate horizontal displacement and keep within the boundaries.
@@ -175,6 +199,8 @@ namespace Project
             {
                 pos.X += velocity.X * time;
             }
+
+
 
             // Calculate vertical displacement and keep within the boundaries.
             if (edgeBoundingGeneric(pos.Y + velocity.Y * time))
