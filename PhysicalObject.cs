@@ -149,7 +149,7 @@ namespace Project
 
             /* Change the velocity with respect to acceleration and delta.
 			 */
-            velocity += (acceleration - velocity) * time / 1000;
+            velocity += (acceleration) * time / 1000;
 
             // Limit velocity to some predefined value
             if (absVelocity() > maxspeed)
