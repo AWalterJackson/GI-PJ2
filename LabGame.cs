@@ -102,8 +102,8 @@ namespace Project
             score = 0;
             difficulty = 1;
             gameOver = false;
-            size = 4;
-            edgemax = (int)Math.Pow(2, size-1);
+            size = 7;
+			edgemax = (int)Assets.WORLD_WIDTH;
         }
 
 		/// <summary>
