@@ -53,6 +53,7 @@ namespace Project
         private Ocean ocean;
         public MainPage mainPage;
         public bool powerups = true;
+        public int windowHeight, windowWidth;
 
         // TASK 4: Use this to represent difficulty
         public float difficulty;
@@ -179,6 +180,11 @@ namespace Project
                 }
                 // Handle base.Update
             }
+            else
+            {
+                windowHeight = Window.ClientBounds.Height;
+                windowWidth = Window.ClientBounds.Width;
+            }
             base.Update(gameTime);
 
         }
@@ -284,11 +290,12 @@ namespace Project
 		/// <param name="args"></param>
         public void Tapped(GestureRecognizer sender, TappedEventArgs args)
         {
+            player.Tapped(sender, args);
             // Pass Manipulation events to the game objects.
-            foreach (var obj in gameObjects)
+            /*foreach (var obj in gameObjects)
             {
                 obj.Tapped(sender, args);
-            }
+            }*/
         }
 
 		/// <summary>
@@ -300,11 +307,11 @@ namespace Project
         {
             camera.pos.Z = camera.pos.Z * args.Delta.Scale;
             // Update camera position for all game objects
-            foreach (var obj in gameObjects)
+            /*foreach (var obj in gameObjects)
             {
                 if (obj.basicEffect != null) { obj.basicEffect.View = camera.View; }
                 obj.OnManipulationUpdated(sender, args);
-            }
+            }*/
         }
 
         public void OnManipulationCompleted(GestureRecognizer sender, ManipulationCompletedEventArgs args)
