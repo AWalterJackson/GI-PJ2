@@ -138,11 +138,19 @@ namespace Project
                 {
                     continue;
                 }
-                if(Vector3.Distance(pos + velocity * time, game.gameObjects[i].pos) < myModel.collisionRadius + game.gameObjects[i].myModel.collisionRadius)
+                if (game.gameObjects[i] == this)
                 {
+                    continue;
+                }
+                if (Vector3.Distance(pos + (velocity * time), game.gameObjects[i].pos) <= (myModel.collisionRadius + game.gameObjects[i].myModel.collisionRadius))
+                {
+                    int damage = (int)(velocity - ((PhysicalObject)game.gameObjects[i]).velocity).Length();
+                    hitpoints -= damage;
+                    ((PhysicalObject)game.gameObjects[i]).hitpoints -= damage;
                     pos = game.gameObjects[i].pos - Vector3.Normalize(velocity) * (myModel.collisionRadius + game.gameObjects[i].myModel.collisionRadius);
-                    velocity = velocity / -2;
-                    ((PhysicalObject)game.gameObjects[i]).velocity = ((PhysicalObject)game.gameObjects[i]).velocity / -2;
+                    Vector3 tempdir = ((PhysicalObject)game.gameObjects[i]).velocity;
+                    ((PhysicalObject)game.gameObjects[i]).velocity = velocity / 2;
+                    velocity = tempdir / 2;
                     return true;
                 }
             }
@@ -152,9 +160,9 @@ namespace Project
         public void physicsUpdate(GameTime gameTime)
         {
             // limit acceleration
-            if (absAcceleration() > 1.4f)
+            if (absAcceleration() > maxaccel)
             {
-                accelerationLimiter(1.4f);
+                accelerationLimiter(maxaccel);
             }
 
             // Multiplying by acceleration.Length() means that smaller movements are quadratically smaller
