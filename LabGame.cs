@@ -91,12 +91,6 @@ namespace Project
             random = new Random();
             input = new GameInput();
 
-            // Set boundaries.
-            boundaryLeft = -4.5f;
-            boundaryRight = 4.5f;
-            boundaryTop = 4;
-            boundaryBottom = -4.5f;
-
             // Initialise event handling.
             input.gestureRecognizer.Tapped += Tapped;
             input.gestureRecognizer.ManipulationStarted += OnManipulationStarted;
@@ -108,8 +102,8 @@ namespace Project
             score = 0;
             difficulty = 1;
             gameOver = false;
-            size = 3;
-            edgemax = (int)Math.Pow(2, size);
+            size = 4;
+            edgemax = (int)Math.Pow(2, size-1);
         }
 
 		/// <summary>
@@ -255,6 +249,21 @@ namespace Project
         {
             while (addedGameObjects.Count > 0) { gameObjects.Add(addedGameObjects.Pop()); }
             while (removedGameObjects.Count > 0) { gameObjects.Remove(removedGameObjects.Pop()); }
+        }
+
+        public Vector3 getPlayerPos()
+        {
+            return this.player.pos;
+        }
+
+        public Vector3 getPlayerVel()
+        {
+            return this.player.velocity;
+        }
+
+        public Vector3 getPlayeraccel()
+        {
+            return this.player.acceleration;
         }
 
 		/// <summary>

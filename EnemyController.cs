@@ -15,7 +15,7 @@ namespace Project
     class EnemyController : GameObject
     {
         int round;
-        Random RNGesus;
+        public Random RNGesus;
         float damageincrease;
         float armourincrease;
         // Constructor.
@@ -37,6 +37,11 @@ namespace Project
             createEnemies(1, 1, this.round);
         }
 
+        private int coord()
+        {
+            return RNGesus.Next(-game.edgemax, game.edgemax);
+        }
+
 		/// <summary>
 		/// Spawn enemies at the beginning of each round
 		/// </summary>
@@ -46,10 +51,17 @@ namespace Project
             Vector3 newpos;
             while (i > 0)
             {
-                newpos = new Vector3(RNGesus.Next(-game.edgemax,game.edgemax),RNGesus.Next(-game.edgemax, game.edgemax),-1);
-                game.gameObjects.Add(new Enemy(this.game, new Vector3(0,0,-1)));
+                newpos = new Vector3(coord(),coord(),-1);
+                game.gameObjects.Add(new Enemy(this.game, this, EnemyType.galleon, newpos));
+                newpos = new Vector3(coord(),coord(),-1);
+                game.gameObjects.Add(new Enemy(this.game, this, EnemyType.demoship, newpos));
                 i--;
             }
+        }
+
+        public Vector3 newSearch()
+        {
+            return new Vector3(coord(), coord(), -1);
         }
 
 		/// <summary>

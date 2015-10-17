@@ -79,7 +79,7 @@ namespace Project
             // TASK 1: Determine velocity based on accelerometer reading
             acceleration.X = (float)game.accelerometerReading.AccelerationX;
             acceleration.Y = (float)game.accelerometerReading.AccelerationY;
-
+            
             physicsUpdate(gameTime);
 
             transform();
