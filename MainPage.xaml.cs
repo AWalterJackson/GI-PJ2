@@ -31,14 +31,11 @@ namespace Project
     {
         public readonly LabGame game;
         public MainMenu mainMenu;
-        public Options options;
         public MainPage()
         {
             InitializeComponent();
             game = new LabGame(this);
             game.Run(this);
-            options = new Options(this);
-
             mainMenu = new MainMenu(this);
             this.Children.Add(mainMenu);
         }
@@ -49,19 +46,13 @@ namespace Project
             txtScore.Text = "Score: " + score.ToString();
         }
 
-        private void LoadOptions(object sender, RoutedEventArgs e)
-        {
-            this.Children.Add(options);
-            this.Children.Remove(this);
-        }
-
         // TASK 2: Starts the game.  Not that it seems easier to simply move the game.Run(this) command to this function,
         // however this seems to result in a reduction in texture quality on some machines.  Not sure why this is the case
         // but this is an easy workaround.  Not we are also making the command button invisible after it is clicked
         public void StartGame()
         {
             this.Children.Remove(mainMenu);
-            game.start(options.playerSpeed, options.playerAcceleration, options.powerups, options.difficulty);
+            game.started = true;
         }
     }
 }

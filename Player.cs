@@ -32,7 +32,6 @@ namespace Project
             hitpoints = 1;
             armour = 1;
             maxspeed = 0.5f;
-            maxaccel = 1.4f;
             GetParamsFromModel();
         }
 
