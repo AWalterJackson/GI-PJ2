@@ -210,7 +210,7 @@
     <ToolkitModel Include="Content\projectile.fbx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </ToolkitModel>
-    <ToolkitModel Include="Content\ship.dae">
+    <ToolkitModel Include="Content\ship.x">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </ToolkitModel>
     <None Include="tempKeyFile.pfx" />

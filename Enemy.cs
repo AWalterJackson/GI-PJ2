@@ -52,7 +52,7 @@ namespace Project
 		/// <returns>A new enemy model.</returns>
         public MyModel CreateEnemyModel()
         {
-            return game.assets.CreateShip("ship");
+            return game.assets.CreateTexturedCube("enemy.png",1);
         }
 
 		/// <summary>

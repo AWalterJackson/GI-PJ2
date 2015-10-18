@@ -32,6 +32,9 @@ namespace Project
             {
                 if (myModel.wasLoaded)
                 {
+					this.basicEffect.View = game.camera.View;
+                    this.basicEffect.Projection = game.camera.Projection;
+					this.basicEffect.World = Matrix.Identity;
                     myModel.model.Draw(game.GraphicsDevice,
                         basicEffect.World, basicEffect.View, basicEffect.Projection);
                 }
@@ -52,6 +55,7 @@ namespace Project
 
                     this.basicEffect.View = game.camera.View;
                     this.basicEffect.Projection = game.camera.Projection;
+					this.basicEffect.World = Matrix.Identity;
 
                     if (type == GameObjectType.Ocean)
                     {
