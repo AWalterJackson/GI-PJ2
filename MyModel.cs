@@ -15,6 +15,7 @@ namespace Project
     }
     public class MyModel
     {
+		public bool wasLoaded = false;
         public Buffer vertices;
         public VertexInputLayout inputLayout;
 		public Model model;
@@ -79,6 +80,7 @@ namespace Project
         public MyModel(LabGame game, string modelName)
         {
 			model = game.Content.Load<Model>(modelName);
+			wasLoaded = true;
             modelType = ModelType.Colored;
         }
     }
