@@ -30,21 +30,26 @@ namespace Project
             // Some objects such as the Enemy Controller have no model and thus will not be drawn
             if (myModel != null)
             {
-                // Setup the vertices
-                game.GraphicsDevice.SetVertexBuffer(0, myModel.vertices, myModel.vertexStride);
-                game.GraphicsDevice.SetVertexInputLayout(myModel.inputLayout);
+				if (myModel.model != null) {
+					myModel.model.Draw(game.GraphicsDevice, 
+						basicEffect.World, basicEffect.View, basicEffect.Projection);
+				} else {
+					// Setup the vertices
+					game.GraphicsDevice.SetVertexBuffer(0, myModel.vertices, myModel.vertexStride);
+					game.GraphicsDevice.SetVertexInputLayout(myModel.inputLayout);
 
-                this.basicEffect.View = game.camera.View;
-                this.basicEffect.Projection = game.camera.Projection;
+					this.basicEffect.View = game.camera.View;
+					this.basicEffect.Projection = game.camera.Projection;
 
-                if (type == GameObjectType.Ocean)
-                {
-                    game.GraphicsDevice.SetBlendState(game.GraphicsDevice.BlendStates.AlphaBlend);
-                }
+					if (type == GameObjectType.Ocean)
+					{
+						game.GraphicsDevice.SetBlendState(game.GraphicsDevice.BlendStates.AlphaBlend);
+					}
 
-                // Apply the basic effect technique and draw the object
-                basicEffect.CurrentTechnique.Passes[0].Apply();
-                game.GraphicsDevice.Draw(PrimitiveType.TriangleList, myModel.vertices.ElementCount);
+					// Apply the basic effect technique and draw the object
+					basicEffect.CurrentTechnique.Passes[0].Apply();
+					game.GraphicsDevice.Draw(PrimitiveType.TriangleList, myModel.vertices.ElementCount);
+				}
             }
         }
 

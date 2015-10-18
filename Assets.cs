@@ -18,6 +18,10 @@ namespace Project
 		public static int CORNER = -7;
 		public static int HEIGHT_INIT = 7;
 		public static float WORLD_WIDTH = 20.0f;
+		
+		// List of specific model types to load
+		private Model shipModel, projectileModel;
+		private BoundingSphere modelBounds;
 
         public Assets(LabGame game)
         {
@@ -246,9 +250,9 @@ namespace Project
 		/// </summary>
 		/// <param name="texturePath">Texture file to use.</param>
 		/// <returns>A ship model.</returns>
-        public MyModel CreateShip(String texturePath)
+        public MyModel CreateShip(String modelPath)
         {
-            return CreateTexturedCube("player.png",1);
+            return new MyModel(game, modelPath);
         }
 
 		/// <summary>
