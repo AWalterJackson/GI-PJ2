@@ -29,7 +29,7 @@ namespace Project
             pos = new SharpDX.Vector3(0, 0, -1);
             velocity = new Vector3(0, 0, 0);
             acceleration = new Vector3(0, 0, 0);
-            hitpoints = 1;
+            hitpoints = 10;
             armour = 1;
             maxspeed = 0.5f;
             maxaccel = 1.4f;
@@ -57,14 +57,19 @@ namespace Project
 		/// <summary>
 		/// Shoot a projectile.
 		/// </summary>
-        private void fire()
+        private void fire(Vector2 dir)
         {
-            /*game.Add(new Projectile(game,
+
+            //System.Diagnostics.Debug.WriteLine("dirx="+dir.X+" diry="+dir.Y+"window height="+game.windowHeight+" window width="+game.windowWidth);
+
+            Vector3 direction = new Vector3(dir.X - 1542 / 2, -dir.Y + 1024 / 2, 0);
+            direction.Normalize();
+            game.Add(new Projectile(game,
                 game.assets.GetModel("player projectile", CreatePlayerProjectileModel),
                 pos,
-                new Vector3(0, projectileSpeed, 0),
-                GameObjectType.Enemy
-            ));*/
+                direction*10,
+                this
+            ));
         }
 		
 		/// <summary>
@@ -73,9 +78,11 @@ namespace Project
 		/// <param name="gameTime">Time since last update.</param>
         public override void Update(GameTime gameTime)
         {
-			// TO-DO: If the user is tapping, allow them to fire
-            if (game.keyboardState.IsKeyDown(Keys.Space)) { fire(); }
-
+            //System.Diagnostics.Debug.WriteLine(hitpoints);
+            if (hitpoints <= 0)
+            {
+                Hit();
+            }
             // TASK 1: Determine velocity based on accelerometer reading
             acceleration.X = (float)game.accelerometerReading.AccelerationX;
             acceleration.Y = (float)game.accelerometerReading.AccelerationY;
@@ -100,7 +107,7 @@ namespace Project
 		/// <param name="args"></param>
         public override void Tapped(GestureRecognizer sender, TappedEventArgs args)
         {
-            //fire();
+            fire(new Vector2((float)args.Position.X, (float)args.Position.Y));
         }
 
 		// Initiate event upon recieving a swipe input

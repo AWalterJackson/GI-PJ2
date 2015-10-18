@@ -2,8 +2,8 @@
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
   <Identity Name="BF719CB4-F851-4D0C-92F7-A997B8B0C7C4" Publisher="CN=Home" Version="1.0.0.0" />
   <Properties>
-    <DisplayName>MiniCube.WinRTXaml</DisplayName>
-    <PublisherDisplayName>Home</PublisherDisplayName>
+    <DisplayName>Piracy!</DisplayName>
+    <PublisherDisplayName>COMP30019</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Prerequisites>
@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="MiniCube.App">
-      <m2:VisualElements DisplayName="Piracy!" Description="MiniCube.WinRTXaml" BackgroundColor="#464646" ForegroundText="light" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png">
+      <m2:VisualElements DisplayName="Piracy!" Description="Piracy! A game by A. Jackson, A. Priestley and D. Toulmin" BackgroundColor="#464646" ForegroundText="light" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png">
         <m2:DefaultTile>
           <m2:ShowNameOnTiles>
             <m2:ShowOn Tile="square150x150Logo" />
