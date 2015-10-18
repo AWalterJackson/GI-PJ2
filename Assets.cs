@@ -16,7 +16,7 @@ namespace Project
 		public static int HEIGHT_MIN = 5;
 		public static int HEIGHT_MAX = -5;
 		public static int CORNER = -7;
-		public static int HEIGHT_INIT = 10;
+		public static int HEIGHT_INIT = 7;
 		public static float WORLD_WIDTH = 20.0f;
 
         public Assets(LabGame game)
@@ -143,7 +143,12 @@ namespace Project
 			points = genMap(sidelength, -WORLD_WIDTH, WORLD_WIDTH, -WORLD_WIDTH, WORLD_WIDTH, 0.0f);
 
 			// Apply diamond square algorithm
-			points = diamondSquare(points, rand, HEIGHT_INIT, 0, sidelength, 0, sidelength);
+			points = diamondSquare(points, rand, 3, 0, sidelength, 0, sidelength, 0);
+
+			// Apply diamond square algorithm again for islands
+			// TAKE NOTE: Do not spawn anything withing specified ranges.
+			points = diamondSquare(points, rand, HEIGHT_INIT, 32, 41, 32, 41, -CORNER);
+			points = diamondSquare(points, rand, HEIGHT_INIT, 87, 96, 87, 96, -CORNER);
 
 			// Lower points
 			points = lowerMap(points, sidelength, 1);
@@ -359,7 +364,7 @@ namespace Project
 		/// <param name="y2"></param>
 		/// <returns></returns>
 		private Vector3[][] diamondSquare(Vector3[][] map, Random rand,
-			float magnitude, int x1, int x2, int y1, int y2) {
+			float magnitude, int x1, int x2, int y1, int y2, float corner) {
 			if (x1 >= x2 || y1 >= y2) {
 				return map;
 			}
@@ -377,10 +382,10 @@ namespace Project
 			squares[0][1] = new Vector2((float)x2,(float)y1);
 			squares[0][2] = new Vector2((float)x1,(float)y2);
 			squares[0][3] = new Vector2((float)x2,(float)y2);
-			map[(int)squares[0][0].X][(int)squares[0][0].Y].Z = CORNER;
-			map[(int)squares[0][1].X][(int)squares[0][1].Y].Z = CORNER;
-			map[(int)squares[0][2].X][(int)squares[0][2].Y].Z = CORNER;
-			map[(int)squares[0][3].X][(int)squares[0][3].Y].Z = CORNER;
+			map[(int)squares[0][0].X][(int)squares[0][0].Y].Z = corner;
+			map[(int)squares[0][1].X][(int)squares[0][1].Y].Z = corner;
+			map[(int)squares[0][2].X][(int)squares[0][2].Y].Z = corner;
+			map[(int)squares[0][3].X][(int)squares[0][3].Y].Z = corner;
 			/*
 			map[(int)squares[0][0].X][(int)squares[0][0].Y].Z = rand.NextFloat(min, max);
 			map[(int)squares[0][1].X][(int)squares[0][1].Y].Z = rand.NextFloat(min, max);
