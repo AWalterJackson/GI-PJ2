@@ -166,7 +166,7 @@ namespace Project
 			points = diamondSquare(points, rand, 1, 87, 96, 87, 96, -4);
 
 			// Lower points
-			points = lowerMap(points, sidelength, 1);
+			points = lowerSeaFloor(points, sidelength, 1, 1.5f);
 
 			// Calculate vertex normals
 			normals = getNormals(points);
@@ -198,8 +198,12 @@ namespace Project
                 }
             }
 
+			MyModel m = new MyModel(game, shapeArray, collisionRadius);
 
-            return new MyModel(game, shapeArray, collisionRadius);
+			// Make reference to points
+			m.modelMap = points;
+
+            return m;
         }
 
 		/// <summary>
@@ -363,7 +367,7 @@ namespace Project
 			// Get the color for a vertice
 			Color c = new Color();
 			// TO-DO: Implement height specific colouring
-			if (vertice.Z >= 0) {
+			if (vertice.Z >= 1) {
 				c = Color.SeaGreen;
 			} else {
 				c = Color.LawnGreen;
@@ -594,37 +598,6 @@ namespace Project
 					if (i >= i1 && i <= i2 && j >= j1 && j <= j2){
 						map[i][j].Z = 0;
 					}
-				}
-			}
-			return map;
-		}
-
-		/// <summary>
-		/// Lower parts of the sea floor that would cause grounding if a boat were in the sea.
-		/// </summary>
-		/// <param name="map"></param>
-		/// <param name="n"></param>
-		/// <param name="height"></param>
-		/// <returns></returns>
-		private Vector3[][] lowerMap(Vector3[][] map, int n, float seaLevel){
-			float min = map[0][0].Z, max = map[0][0].Z;
-			for (int i = 0; i <= n; i++) {
-				for (int j = 0; j <= n; j++){
-					if (map[i][j].Z < min) {
-						min = map[i][j].Z;
-					}
-					if (map[i][j].Z > max) {
-						max = map[i][j].Z;
-					}
-				}
-			}
-			if (min < 0) {
-				min = -min;
-			}
-			for (int i = 0; i <= n; i++) {
-				for (int j = 0; j <= n; j++){
-					// lower to average height
-					// map[i][j].Z = map[i][j].Z - min;
 				}
 			}
 			return map;

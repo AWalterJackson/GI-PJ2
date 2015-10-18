@@ -49,7 +49,7 @@ namespace Project
         public bool gameOver;
         public int size;
         public int edgemax;
-        private Land worldBase;
+        public Land worldBase;
         private Ocean ocean;
         public MainPage mainPage;
         public bool powerups = true;
@@ -128,9 +128,9 @@ namespace Project
             gameObjects.Add(player);
             controller = new EnemyController(this);
             gameObjects.Add(controller);
-            //Enemy enemy = new Enemy(this, new Vector3(1, 1, -5));
-            //gameObjects.Add(enemy);
-            //gameObjects.Add(new EnemyController(this));
+            Enemy enemy = new Enemy(this, controller, EnemyType.demoship, new Vector3(1, 1, -5));
+            gameObjects.Add(enemy);
+            gameObjects.Add(new EnemyController(this));
 
             // Create an input layout from the vertices
 

@@ -23,6 +23,7 @@ namespace Project
         public ModelType modelType;
         public Texture2D Texture;
         public float collisionRadius;
+		public Vector3[][] modelMap;
 
 		/// <summary>
 		/// Create a new model.

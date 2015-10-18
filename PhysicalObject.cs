@@ -168,6 +168,12 @@ namespace Project
                     return true;
                 }
             }
+			// Land coliision handling
+			if (game.worldBase.isColiding(pos, myModel.collisionRadius)) {
+				// TO-DO
+
+				
+			}
             return false;
         }
 

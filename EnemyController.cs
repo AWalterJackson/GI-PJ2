@@ -39,7 +39,9 @@ namespace Project
 
         private int coord()
         {
-            return RNGesus.Next(-game.edgemax, game.edgemax);
+			// Pick a spawn spot in the upper portion of the map
+            return RNGesus.Next(-game.edgemax, -game.edgemax + 
+				((2*game.edgemax)*((int)Math.Pow(2, game.size)+1)));
         }
 
 		/// <summary>

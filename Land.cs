@@ -10,6 +10,8 @@ namespace Project
 {
     class Land : GameObject
     {
+		int sidelength;
+
         public Land(LabGame game, int degree)
         {
             this.game = game;
@@ -24,5 +26,19 @@ namespace Project
         {
 
         }
+
+		// Check if a point collides with the land
+		public bool isColiding(Vector3 pt, float collisionRadius) {
+			Vector3[][] map = this.myModel.modelMap;
+			for (int i = 0; i < map.Length; i++) {
+					for (int j = 0; i < map[i].Length;j++) {  
+					// Check if point collides
+					if (Vector3.Distance(map[i][j], pt) <= collisionRadius) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
     }
 }
