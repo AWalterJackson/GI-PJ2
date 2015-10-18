@@ -54,6 +54,7 @@ namespace Project
         public MainPage mainPage;
         public bool powerups = true;
         public int windowHeight, windowWidth;
+        private Sun lightsource;
 
         // TASK 4: Use this to represent difficulty
         public float difficulty;
@@ -122,6 +123,7 @@ namespace Project
             gameObjects.Add(worldBase);
             ocean = new Ocean(this, this.size);
             gameObjects.Add(ocean);
+            lightsource = new Sun(this);
             player = new Player(this);
             gameObjects.Add(player);
             controller = new EnemyController(this);
@@ -164,6 +166,7 @@ namespace Project
                 keyboardState = keyboardManager.GetState();
                 flushAddedAndRemovedGameObjects();
                 camera.Update();
+                lightsource.Update(gameTime);
                 accelerometerReading = input.accelerometer.GetCurrentReading();
                 for (int i = 0; i < gameObjects.Count; i++)
                 {
@@ -326,6 +329,22 @@ namespace Project
             player.maxaccel = playerAcceleration;
             this.powerups = powerups;
             this.difficulty = difficulty;
+        }
+
+        //Functions to send various light values
+        public Vector3 ambient()
+        {
+            return this.lightsource.getAmbient();
+        }
+
+        public Vector3 specular()
+        {
+            return this.lightsource.getSpecular();
+        }
+
+        public Vector3 diffuse()
+        {
+            return this.lightsource.getDiffuse();
         }
 
     }
