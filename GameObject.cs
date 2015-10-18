@@ -28,8 +28,10 @@ namespace Project
         public void Draw(GameTime gametime)
         {
             // Some objects such as the Enemy Controller have no model and thus will not be drawn
-            if (myModel != null)
-            {
+            if (myModel.wasLoaded) {
+					myModel.model.Draw(game.GraphicsDevice, 
+						basicEffect.World, basicEffect.View, basicEffect.Projection);
+				} else {
 
                 this.basicEffect.LightingEnabled = true;
 
@@ -43,9 +45,8 @@ namespace Project
                 game.GraphicsDevice.SetVertexBuffer(0, myModel.vertices, myModel.vertexStride);
                 game.GraphicsDevice.SetVertexInputLayout(myModel.inputLayout);
 
-                this.basicEffect.View = game.camera.View;
-                this.basicEffect.Projection = game.camera.Projection;
-
+				this.basicEffect.View = game.camera.View;
+				this.basicEffect.Projection = game.camera.Projection;
 
                 if (type == GameObjectType.Ocean)
                 {

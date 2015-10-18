@@ -13,9 +13,15 @@ namespace Project
         LabGame game;
 
 		// Private variables used by functions
-		public static int HEIGHT_MIN = -100;
-		public static int HEIGHT_MAX = 50;
-		public static int HEIGHT_INIT = 70;
+		public static int HEIGHT_MIN = 5;
+		public static int HEIGHT_MAX = -5;
+		public static int CORNER = -1;
+		public static int HEIGHT_INIT = 3;
+		public static float WORLD_WIDTH = 20.0f;
+		
+		// List of specific model types to load
+		private Model shipModel, projectileModel;
+		private BoundingSphere modelBounds;
 
         public Assets(LabGame game)
         {
@@ -111,7 +117,7 @@ namespace Project
             for (int i = 0; i < shapeArray.Length; i++)
             {
                 shapeArray[i].Position.X *= size.X / 2;
-                shapeArray[i].Position.Y *= size.Y / 2;
+                shapeArray[i].Position.Z *= size.Y / 2;
                 shapeArray[i].Position.Z *= size.Z / 2;
             }
 
@@ -136,48 +142,57 @@ namespace Project
 			Vector3[][] points = new Vector3[sidelength][];
 			Vector3[][] normals = new Vector3[sidelength][];
 			Random rand = new Random();
-			Vector3 nextNormal, nextPoint;
-			for (int i = 0; i < sidelength; i++) {
-				points[i] = new Vector3[sidelength];
-				normals[i] = new Vector3[sidelength];
-			}
-
-			// Generate a two dimensional array of vertices
-			for (int i = 0; i < sidelength; i++) {
-				for (int j = 0; j < sidelength; j++) {
-					points[i][j] = new Vector3(i + min, j + min, 0);
-					normals[i][j] = new Vector3(0, 0, -1);
-				}
-			}
+			
+			// Generate a map by calling the function
+			points = genMap(sidelength, -WORLD_WIDTH, WORLD_WIDTH, -WORLD_WIDTH, WORLD_WIDTH, 0.0f);
 
 			// Apply diamond square algorithm
-			//points = diamondSquare(points, rand, magnitude, 0, size-1, 0, size-1);
+			points = diamondSquare(points, rand, HEIGHT_INIT, 0, sidelength, 0, sidelength, CORNER);
+
+			// Apply diamond square algorithm
+			points = flattenSection(points, sidelength, 32,49,32,49);
+			points = diamondSquare(points, rand, 1, 32, 49, 32, 49, -4);
+
+			// Apply diamond square algorithm
+			points = flattenSection(points, sidelength, 32,49,87,96);
+			points = diamondSquare(points, rand, 1, 32, 49, 87, 96, -4);
+
+			// Apply diamond square algorithm
+			points = flattenSection(points, sidelength, 87,96,32,49);
+			points = diamondSquare(points, rand, 1, 87, 96, 32, 49, -4);
+
+			// Apply diamond square algorithm
+			points = flattenSection(points, sidelength, 87,96,87,96);
+			points = diamondSquare(points, rand, 1, 87, 96, 87, 96, -4);
+
+			// Lower points
+			points = lowerMap(points, sidelength, 1);
 
 			// Calculate vertex normals
-			//normals = getNormals(points);
+			normals = getNormals(points);
 
-            VertexPositionNormalColor[] shapeArray = new VertexPositionNormalColor[sidelength * sidelength*6];
+            VertexPositionNormalColor[] shapeArray = new VertexPositionNormalColor[(sidelength + 1) * (sidelength + 1) *6];
 
-            for (int i = 0; i < sidelength - 1; i++)
+            for (int i = 0; i < sidelength; i++)
             {
-                for (int j = 0; j < sidelength - 1; j++)
+                for (int j = 0; j < sidelength; j++)
                 {
                     //Each step creates a square in the map mesh
                     //Bottom triangle
                     shapeArray[k] = new VertexPositionNormalColor(points[i][j], normals[i][j],
-						Color.SandyBrown);
+						Color.Purple);
                     shapeArray[k + 1] = new VertexPositionNormalColor(points[i+1][j+1], normals[i+1][j+1],
-						Color.SandyBrown);
+						Color.Purple);
                     shapeArray[k + 2] = new VertexPositionNormalColor(points[i+1][j], normals[i+1][j],
-						Color.SandyBrown);
+						Color.Purple);
 
                     //Top Triangle
                     shapeArray[k + 3] = new VertexPositionNormalColor(points[i][j], normals[i][j],
-						Color.SandyBrown);
+						getColor(points[i][j]));
                     shapeArray[k + 4] = new VertexPositionNormalColor(points[i][j+1], normals[i][j+1], 
-						Color.SandyBrown);
+						getColor(points[i][j+1]));
                     shapeArray[k + 5] = new VertexPositionNormalColor(points[i+1][j+1], normals[i+1][j+1], 
-						Color.SandyBrown);
+						getColor(points[i+1][j+1]));
 
                     k += 6;
                 }
@@ -195,27 +210,44 @@ namespace Project
 		/// <returns>An ocean model.</returns>
         public MyModel CreateOcean(int size, int seaLevel)
         {
-            float collisionRadius = 1;
+
+			float collisionRadius = 1;
             int sidelength = (int)Math.Pow(2, size);
             int min = -sidelength / 2;
             int k = 0;
+			// Data structures for generating vertice heightmap
+			Vector3[][] points = new Vector3[sidelength][];
+			Vector3[][] normals = new Vector3[sidelength][];
+			Random rand = new Random();
+
+			// Generate an ocean by calling the function
+			points = genMap(sidelength, -WORLD_WIDTH, WORLD_WIDTH, -WORLD_WIDTH, WORLD_WIDTH, -seaLevel);
+
+			// Calculate vertex normals
+			normals = getNormals(points);
 
             VertexPositionNormalColor[] shapeArray = new VertexPositionNormalColor[sidelength * sidelength * 6];
 
-            for (int i = 0; i < sidelength; i++)
+			for (int i = 0; i < sidelength; i++)
             {
                 for (int j = 0; j < sidelength; j++)
                 {
                     //Each step creates a square in the map mesh
                     //Bottom triangle
-                    shapeArray[k] = new VertexPositionNormalColor(new Vector3(i + min, j + min, -seaLevel), new Vector3(0, 0, -1), Color.SeaGreen);
-                    shapeArray[k + 1] = new VertexPositionNormalColor(new Vector3(i + min + 1, j + min + 1, -seaLevel), new Vector3(0, 0, -1), Color.SeaGreen);
-                    shapeArray[k + 2] = new VertexPositionNormalColor(new Vector3(i + min + 1, j + min, -seaLevel), new Vector3(0, 0, -1), Color.SeaGreen);
+                    shapeArray[k] = new VertexPositionNormalColor(points[i][j], normals[i][j],
+						Color.SeaGreen);
+                    shapeArray[k + 1] = new VertexPositionNormalColor(points[i+1][j+1], normals[i+1][j+1],
+						Color.SeaGreen);
+                    shapeArray[k + 2] = new VertexPositionNormalColor(points[i+1][j], normals[i+1][j],
+						Color.SeaGreen);
 
                     //Top Triangle
-                    shapeArray[k + 3] = new VertexPositionNormalColor(new Vector3(i + min, j + min, -seaLevel), new Vector3(0, 0, -1), Color.SeaGreen);
-                    shapeArray[k + 4] = new VertexPositionNormalColor(new Vector3(i + min, j + min + 1, -seaLevel), new Vector3(0, 0, -1), Color.SeaGreen);
-                    shapeArray[k + 5] = new VertexPositionNormalColor(new Vector3(i + min + 1, j + min + 1, -seaLevel), new Vector3(0, 0, -1), Color.SeaGreen);
+                    shapeArray[k + 3] = new VertexPositionNormalColor(points[i][j], normals[i][j],
+						Color.SeaGreen);
+                    shapeArray[k + 4] = new VertexPositionNormalColor(points[i][j+1], normals[i][j+1], 
+						Color.SeaGreen);
+                    shapeArray[k + 5] = new VertexPositionNormalColor(points[i+1][j+1], normals[i+1][j+1], 
+						Color.SeaGreen);
 
                     k += 6;
                 }
@@ -229,9 +261,9 @@ namespace Project
 		/// </summary>
 		/// <param name="texturePath">Texture file to use.</param>
 		/// <returns>A ship model.</returns>
-        public MyModel CreateShip(String texturePath)
+        public MyModel CreateShip(String modelPath)
         {
-            return CreateTexturedCube("player.png",1);
+            return new MyModel(game, modelPath);
         }
 
 		/// <summary>
@@ -240,7 +272,7 @@ namespace Project
 		/// <returns>A cannonball model.</returns>
         public MyModel CreateCannonBall()
         {
-            return CreateTexturedCube("player_projectile.png",1);
+             return new MyModel(game, "projectile");
         }
 
 		/// <summary>
@@ -331,7 +363,11 @@ namespace Project
 			// Get the color for a vertice
 			Color c = new Color();
 			// TO-DO: Implement height specific colouring
-			c = Color.SeaGreen;
+			if (vertice.Z >= 0) {
+				c = Color.SeaGreen;
+			} else {
+				c = Color.LawnGreen;
+			}
 			return c;
 		}
 		
@@ -347,7 +383,7 @@ namespace Project
 		/// <param name="y2"></param>
 		/// <returns></returns>
 		private Vector3[][] diamondSquare(Vector3[][] map, Random rand,
-			float magnitude, int x1, int x2, int y1, int y2) {
+			float magnitude, int x1, int x2, int y1, int y2, float corner) {
 			if (x1 >= x2 || y1 >= y2) {
 				return map;
 			}
@@ -365,15 +401,21 @@ namespace Project
 			squares[0][1] = new Vector2((float)x2,(float)y1);
 			squares[0][2] = new Vector2((float)x1,(float)y2);
 			squares[0][3] = new Vector2((float)x2,(float)y2);
-			map[(int)squares[0][0].X][(int)squares[0][0].Y].Y = rand.NextFloat(min, max);
-			map[(int)squares[0][1].X][(int)squares[0][1].Y].Y = rand.NextFloat(min, max);
-			map[(int)squares[0][2].X][(int)squares[0][2].Y].Y = rand.NextFloat(min, max);
-			map[(int)squares[0][3].X][(int)squares[0][3].Y].Y = rand.NextFloat(min, max);
+			map[(int)squares[0][0].X][(int)squares[0][0].Y].Z = corner;
+			map[(int)squares[0][1].X][(int)squares[0][1].Y].Z = corner;
+			map[(int)squares[0][2].X][(int)squares[0][2].Y].Z = corner;
+			map[(int)squares[0][3].X][(int)squares[0][3].Y].Z = corner;
+			/*
+			map[(int)squares[0][0].X][(int)squares[0][0].Y].Z = rand.NextFloat(min, max);
+			map[(int)squares[0][1].X][(int)squares[0][1].Y].Z = rand.NextFloat(min, max);
+			map[(int)squares[0][2].X][(int)squares[0][2].Y].Z = rand.NextFloat(min, max);
+			map[(int)squares[0][3].X][(int)squares[0][3].Y].Z = rand.NextFloat(min, max);
+			*/
 			bool done = false;
 			mainGap = (x2-x1);
 			while (!done) {
-				min = Math.Max(-magnitude, HEIGHT_MIN);
-				max = Math.Min(magnitude, HEIGHT_MAX);
+				min = 0;
+				max = magnitude;
 				gap = (int)mainGap/2;
 				// perform diamond step for every square
 				for (i = 0; i < squares.Length; i++) {
@@ -383,11 +425,11 @@ namespace Project
 					bottomLeft = squares[i][2];
 					bottomRight = squares[i][3];
 					// take the average of the four corner points of square
-					map[(int)(topLeft.X+gap)][(int)(topLeft.Y + gap)].Y = (
-						map[(int)topLeft.X][(int)topLeft.Y].Y + 
-						map[(int)topRight.X][(int)topRight.Y].Y + 
-						map[(int)bottomLeft.X][(int)bottomLeft.Y].Y + 
-						map[(int)bottomRight.X][(int)bottomRight.Y].Y
+					map[(int)(topLeft.X+gap)][(int)(topLeft.Y + gap)].Z = (
+						map[(int)topLeft.X][(int)topLeft.Y].Z + 
+						map[(int)topRight.X][(int)topRight.Y].Z + 
+						map[(int)bottomLeft.X][(int)bottomLeft.Y].Z + 
+						map[(int)bottomRight.X][(int)bottomRight.Y].Z
 						)/4 + rand.NextFloat(min, max);
 				}
 				// perform square step for every diamond
@@ -415,56 +457,56 @@ namespace Project
 					avgItms = 0;
 					if (topMiddle.Y - gap >= y1) {
 						// if a top diamond corner exists, include it in average
-						avg += map[(int)(topMiddle.X)][(int)(topMiddle.Y-gap)].Y;
+						avg += map[(int)(topMiddle.X)][(int)(topMiddle.Y-gap)].Z;
 						avgItms += 1;
 					}
-					avg += map[(int)(topMiddle.X)][(int)(topMiddle.Y+gap)].Y;
-					avg += map[(int)(topMiddle.X-gap)][(int)(topMiddle.Y)].Y;
-					avg += map[(int)(topMiddle.X+gap)][(int)(topMiddle.Y)].Y;
+					avg += map[(int)(topMiddle.X)][(int)(topMiddle.Y+gap)].Z;
+					avg += map[(int)(topMiddle.X-gap)][(int)(topMiddle.Y)].Z;
+					avg += map[(int)(topMiddle.X+gap)][(int)(topMiddle.Y)].Z;
 					avgItms += 3;
-					map[(int)(topMiddle.X)][(int)(topMiddle.Y)].Y = (
+					map[(int)(topMiddle.X)][(int)(topMiddle.Y)].Z = (
 						(avg/avgItms) + rand.NextFloat(min, max));
 					// average out middleLeft
 					avg = 0;
 					avgItms = 0;
 					if (midLeft.X - gap >= x1) {
 						// if a top diamond corner exists, include it in average
-						avg += map[(int)(midLeft.X-gap)][(int)(midLeft.Y)].Y;
+						avg += map[(int)(midLeft.X-gap)][(int)(midLeft.Y)].Z;
 						avgItms += 1;
 					}
-					avg += map[(int)(midLeft.X)][(int)(midLeft.Y+gap)].Y;
-					avg += map[(int)(midLeft.X)][(int)(midLeft.Y-gap)].Y;
-					avg += map[(int)(midLeft.X+gap)][(int)(midLeft.Y)].Y;
+					avg += map[(int)(midLeft.X)][(int)(midLeft.Y+gap)].Z;
+					avg += map[(int)(midLeft.X)][(int)(midLeft.Y-gap)].Z;
+					avg += map[(int)(midLeft.X+gap)][(int)(midLeft.Y)].Z;
 					avgItms += 3;
-					map[(int)(midLeft.X)][(int)(midLeft.Y)].Y = (
+					map[(int)(midLeft.X)][(int)(midLeft.Y)].Z = (
 						(avg/avgItms) + rand.NextFloat(min, max));
 					// average out middleRight
 					avg = 0;
 					avgItms = 0;
 					if (midRight.X + gap <= x2) {
 						// if a top diamond corner exists, include it in average
-						avg += map[(int)(midRight.X+gap)][(int)(midRight.Y)].Y;
+						avg += map[(int)(midRight.X+gap)][(int)(midRight.Y)].Z;
 						avgItms += 1;
 					}
-					avg += map[(int)(midRight.X)][(int)(midRight.Y+gap)].Y;
-					avg += map[(int)(midRight.X-gap)][(int)(midRight.Y)].Y;
-					avg += map[(int)(midRight.X)][(int)(midRight.Y-gap)].Y;
+					avg += map[(int)(midRight.X)][(int)(midRight.Y+gap)].Z;
+					avg += map[(int)(midRight.X-gap)][(int)(midRight.Y)].Z;
+					avg += map[(int)(midRight.X)][(int)(midRight.Y-gap)].Z;
 					avgItms += 3;
-					map[(int)(midRight.X)][(int)(midRight.Y)].Y = (
+					map[(int)(midRight.X)][(int)(midRight.Y)].Z = (
 						(avg/avgItms) + rand.NextFloat(min, max));
 					// average out bottomMiddle
 					avg = 0;
 					avgItms = 0;
 					if (bottomMiddle.Y + gap <= y2) {
 						// if a bottom diamond corner exists, include it in average
-						avg += map[(int)(bottomMiddle.X)][(int)(bottomMiddle.Y+gap)].Y;
+						avg += map[(int)(bottomMiddle.X)][(int)(bottomMiddle.Y+gap)].Z;
 						avgItms += 1;
 					}
-					avg += map[(int)(bottomMiddle.X)][(int)(bottomMiddle.Y-gap)].Y;
-					avg += map[(int)(bottomMiddle.X-gap)][(int)(bottomMiddle.Y)].Y;
-					avg += map[(int)(bottomMiddle.X+gap)][(int)(bottomMiddle.Y)].Y;
+					avg += map[(int)(bottomMiddle.X)][(int)(bottomMiddle.Y-gap)].Z;
+					avg += map[(int)(bottomMiddle.X-gap)][(int)(bottomMiddle.Y)].Z;
+					avg += map[(int)(bottomMiddle.X+gap)][(int)(bottomMiddle.Y)].Z;
 					avgItms += 3;
-					map[(int)(bottomMiddle.X)][(int)(bottomMiddle.Y)].Y = (
+					map[(int)(bottomMiddle.X)][(int)(bottomMiddle.Y)].Z = (
 						(avg/avgItms) + rand.NextFloat(min, max));
 				}
 				// stop upon making size 1 squares and return
@@ -511,11 +553,110 @@ namespace Project
 				}
 				// reduce the random magnitude
 				squares = newSquares;
-				magnitude = Math.Max(magnitude-10,1);
+				magnitude = Math.Max(magnitude/2,0.01f);
 				mainGap = gap;
 			}
 			return map;
-		}		
+		}
+		
+		/// <summary>
+		/// Lower parts of the sea floor that would cause grounding if a boat were in the sea.
+		/// </summary>
+		/// <param name="map"></param>
+		/// <param name="n"></param>
+		/// <param name="height"></param>
+		/// <returns></returns>
+		private Vector3[][] lowerSeaFloor(Vector3[][] map, int n, float seaLevel, float minDepth){
+			// Add vertices to array
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++){
+					// Check the point height, lower if necessary
+					if (map[i][j].Z < seaLevel && map[i][j].Z > seaLevel + minDepth){
+						map[i][j].Z = seaLevel + minDepth;
+					}
+				}
+			}
+			return map;
+		}
+
+		/// <summary>
+		/// Lower parts of the sea floor that would cause grounding if a boat were in the sea.
+		/// </summary>
+		/// <param name="map"></param>
+		/// <param name="n"></param>
+		/// <param name="height"></param>
+		/// <returns></returns>
+		private Vector3[][] flattenSection(Vector3[][] map, int n, int i1, int i2, int j1, int j2){
+			// Add vertices to array
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++){
+					// Check the point height, lower if necessary
+					if (i >= i1 && i <= i2 && j >= j1 && j <= j2){
+						map[i][j].Z = 0;
+					}
+				}
+			}
+			return map;
+		}
+
+		/// <summary>
+		/// Lower parts of the sea floor that would cause grounding if a boat were in the sea.
+		/// </summary>
+		/// <param name="map"></param>
+		/// <param name="n"></param>
+		/// <param name="height"></param>
+		/// <returns></returns>
+		private Vector3[][] lowerMap(Vector3[][] map, int n, float seaLevel){
+			float min = map[0][0].Z, max = map[0][0].Z;
+			for (int i = 0; i <= n; i++) {
+				for (int j = 0; j <= n; j++){
+					if (map[i][j].Z < min) {
+						min = map[i][j].Z;
+					}
+					if (map[i][j].Z > max) {
+						max = map[i][j].Z;
+					}
+				}
+			}
+			if (min < 0) {
+				min = -min;
+			}
+			for (int i = 0; i <= n; i++) {
+				for (int j = 0; j <= n; j++){
+					// lower to average height
+					// map[i][j].Z = map[i][j].Z - min;
+				}
+			}
+			return map;
+		}
+		
+		/// <summary>
+		/// Generate a flat (n x n) vertice map from (xLeft,0,zFront) to (xRight, 0, zBack)
+		/// </summary>
+		/// <param name="n"></param>
+		/// <param name="xLeft"></param>
+		/// <param name="xRight"></param>
+		/// <param name="zFront"></param>
+		/// <param name="zBack"></param>
+		/// <param name="height"></param>
+		/// <returns></returns>
+		private Vector3[][] genMap(int n, float xLeft, float xRight, float zFront, float zBack, float height) {
+			// Return a new flat plane of size n*n + 1 covering (xleft, 0, zBack) to (xRight, 0, zFront)
+			Vector3[][] vertices = new Vector3[n+1][];
+			// Determine spacing between x and z boundaries
+			float xGap = Math.Abs(xRight - xLeft);
+			float zGap = Math.Abs(zFront - zBack);
+			// Add vertices to array
+			for (int i = 0; i <= n; i++) {
+				vertices[i] = new Vector3[n+1];
+				for (int j = 0; j <= n; j++){
+					// Generate a vertice in the array
+					vertices[i][j] = new Vector3(xLeft + (xGap*((float)i/n)), 
+						zFront + (zGap*((float)j/n)), height);
+				}
+			}
+			return vertices;
+		}
 
     }
 }

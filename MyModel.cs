@@ -11,17 +11,19 @@ namespace Project
     
     public enum ModelType
     {
-        Colored, Textured
+        Colored, Textured, Loaded
     }
     public class MyModel
     {
+		public bool wasLoaded = false;
         public Buffer vertices;
         public VertexInputLayout inputLayout;
+		public Model model;
         public int vertexStride;
         public ModelType modelType;
         public Texture2D Texture;
         public float collisionRadius;
-        
+
 		/// <summary>
 		/// Create a new model.
 		/// </summary>
@@ -68,6 +70,18 @@ namespace Project
             modelType = ModelType.Textured;
             Texture = game.Content.Load<Texture2D>(textureName);
             this.collisionRadius = collisionRadius;
+        }
+
+		/// <summary>
+		/// Create a new model.
+		/// </summary>
+		/// <param name="game"></param>
+		/// <param name="modelName"></param>
+        public MyModel(LabGame game, string modelName)
+        {
+			model = game.Content.Load<Model>(modelName);
+			wasLoaded = true;
+            modelType = ModelType.Colored;
         }
     }
 }
