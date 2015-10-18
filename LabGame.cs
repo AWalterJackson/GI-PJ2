@@ -173,6 +173,7 @@ namespace Project
                 }
 
                 mainPage.UpdateScore(score);
+                mainPage.UpdateHitpoints(player.hitpoints);
 
                 if (keyboardState.IsKeyDown(Keys.Escape))
                 {

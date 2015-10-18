@@ -72,6 +72,7 @@ namespace Project
         {
             if(hitpoints <= 0)
             {
+                game.score += 1;
                 game.Remove(this);
             }
             int time = gameTime.ElapsedGameTime.Milliseconds;
