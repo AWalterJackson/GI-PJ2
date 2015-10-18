@@ -29,6 +29,12 @@ namespace Project
 
 		// Check if a point collides with the land
 		public bool isColiding(Vector3 pt, float collisionRadius) {
+			if (pt.X < -game.edgemax || pt.X > game.edgemax) {
+				return true;
+			}
+			if (pt.Y < -game.edgemax || pt.Y > game.edgemax) {
+				return true;
+			}
 			Vector3[][] map = this.myModel.modelMap;
 			for (int i = 0; i < map.Length; i++) {
 					for (int j = 0; i < map[i].Length;j++) {  

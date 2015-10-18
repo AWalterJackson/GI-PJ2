@@ -169,10 +169,13 @@ namespace Project
                 }
             }
 			// Land coliision handling
-			if (game.worldBase.isColiding(pos, myModel.collisionRadius)) {
-				// TO-DO
-
-				
+			if (game.worldBase.isColiding(pos + (velocity * time), myModel.collisionRadius)){
+				// deal damage
+				float damage = velocity.Length() * 100;
+				hitpoints -= (int)damage;
+				// adjust physics appropriately
+				pos = - Vector3.Normalize(velocity) * (myModel.collisionRadius + 0.001f);
+                velocity = velocity / -2;
 			}
             return false;
         }
