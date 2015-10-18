@@ -150,19 +150,23 @@ namespace Project
 			points = diamondSquare(points, rand, HEIGHT_INIT, 0, sidelength, 0, sidelength, CORNER);
 
 			// Apply diamond square algorithm
+			points = flattenSection(points, sidelength, 32,49,32,49);
 			points = diamondSquare(points, rand, 1, 32, 49, 32, 49, -4);
 
 			// Apply diamond square algorithm
+			points = flattenSection(points, sidelength, 32,49,87,96);
 			points = diamondSquare(points, rand, 1, 32, 49, 87, 96, -4);
 
 			// Apply diamond square algorithm
+			points = flattenSection(points, sidelength, 87,96,32,49);
 			points = diamondSquare(points, rand, 1, 87, 96, 32, 49, -4);
 
 			// Apply diamond square algorithm
+			points = flattenSection(points, sidelength, 87,96,87,96);
 			points = diamondSquare(points, rand, 1, 87, 96, 87, 96, -4);
 
 			// Lower points
-			// points = lowerMap(points, sidelength, 1);
+			points = lowerMap(points, sidelength, 1);
 
 			// Calculate vertex normals
 			normals = getNormals(points);
@@ -567,8 +571,28 @@ namespace Project
 			for (int i = 0; i < n; i++) {
 				for (int j = 0; j < n; j++){
 					// Check the point height, lower if necessary
-					if (map[i][j].Z < seaLevel && map[i][j].Z > seaLevel - minDepth){
-						map[i][j].Z = seaLevel - minDepth;
+					if (map[i][j].Z < seaLevel && map[i][j].Z > seaLevel + minDepth){
+						map[i][j].Z = seaLevel + minDepth;
+					}
+				}
+			}
+			return map;
+		}
+
+		/// <summary>
+		/// Lower parts of the sea floor that would cause grounding if a boat were in the sea.
+		/// </summary>
+		/// <param name="map"></param>
+		/// <param name="n"></param>
+		/// <param name="height"></param>
+		/// <returns></returns>
+		private Vector3[][] flattenSection(Vector3[][] map, int n, int i1, int i2, int j1, int j2){
+			// Add vertices to array
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++){
+					// Check the point height, lower if necessary
+					if (i >= i1 && i <= i2 && j >= j1 && j <= j2){
+						map[i][j].Z = 0;
 					}
 				}
 			}
