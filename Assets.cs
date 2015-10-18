@@ -352,7 +352,7 @@ namespace Project
 			// Get the color for a vertice
 			Color c = new Color();
 			// TO-DO: Implement height specific colouring
-			if (vertice.Z > 0) {
+			if (vertice.Z >= 0) {
 				c = Color.SeaGreen;
 			} else {
 				c = Color.LawnGreen;
