@@ -29,7 +29,7 @@ namespace Project
             pos = new SharpDX.Vector3(0, 0, -1);
             velocity = new Vector3(0, 0, 0);
             acceleration = new Vector3(0, 0, 0);
-            hitpoints = 1;
+            hitpoints = 10;
             armour = 1;
             maxspeed = 0.5f;
             maxaccel = 1.4f;
@@ -60,7 +60,7 @@ namespace Project
         private void fire(Vector2 dir)
         {
 
-            System.Diagnostics.Debug.WriteLine("dirx="+dir.X+" diry="+dir.Y+"window height="+game.windowHeight+" window width="+game.windowWidth);
+            //System.Diagnostics.Debug.WriteLine("dirx="+dir.X+" diry="+dir.Y+"window height="+game.windowHeight+" window width="+game.windowWidth);
 
             Vector3 direction = new Vector3(dir.X - 1542 / 2, -dir.Y + 1024 / 2, 0);
             direction.Normalize();
@@ -78,6 +78,11 @@ namespace Project
 		/// <param name="gameTime">Time since last update.</param>
         public override void Update(GameTime gameTime)
         {
+            //System.Diagnostics.Debug.WriteLine(hitpoints);
+            if (hitpoints <= 0)
+            {
+                Hit();
+            }
             // TASK 1: Determine velocity based on accelerometer reading
             acceleration.X = (float)game.accelerometerReading.AccelerationX;
             acceleration.Y = (float)game.accelerometerReading.AccelerationY;

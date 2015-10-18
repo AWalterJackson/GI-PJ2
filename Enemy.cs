@@ -66,6 +66,10 @@ namespace Project
 		/// <param name="gameTime">Time since last update.</param>
         public override void Update(GameTime gameTime)
         {
+            if(hitpoints <= 0)
+            {
+                game.Remove(this);
+            }
             Vector3 playerpos = game.getPlayerPos();
             Vector3 playervel = game.getPlayerVel();
             Vector2 toPlayer = new Vector2(playerpos.X-this.pos.X, playerpos.Y-this.pos.Y);
@@ -143,7 +147,7 @@ namespace Project
 		/// </summary>
         public void Hit()
         {
-            //throw new NotImplementedException();
+            hitpoints -= 5;
         }
 
     }

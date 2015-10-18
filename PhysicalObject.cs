@@ -144,11 +144,16 @@ namespace Project
                 }
                 if (Vector3.Distance(pos + (velocity * time), game.gameObjects[i].pos) <= (myModel.collisionRadius + game.gameObjects[i].myModel.collisionRadius))
                 {
-                    int damage = (int)(velocity - ((PhysicalObject)game.gameObjects[i]).velocity).Length();
-                    hitpoints -= damage;
-                    ((PhysicalObject)game.gameObjects[i]).hitpoints -= damage;
-                    pos = game.gameObjects[i].pos - Vector3.Normalize(velocity) * (myModel.collisionRadius + game.gameObjects[i].myModel.collisionRadius);
-                    velocity = velocity / -2;
+                    float damage = (velocity - ((PhysicalObject)game.gameObjects[i]).velocity).Length() * 100;
+                    System.Diagnostics.Debug.WriteLine(damage);
+                    //System.Diagnostics.Debug.WriteLine(hitpoints);
+                    hitpoints -= (int)damage;
+                    ((PhysicalObject)game.gameObjects[i]).hitpoints -= (int)damage;
+                    pos = game.gameObjects[i].pos - Vector3.Normalize(velocity) * (myModel.collisionRadius + game.gameObjects[i].myModel.collisionRadius + 0.001f);
+                    /*Vector3 tempdir = Vector3.Normalize(game.gameObjects[i].pos - pos);
+                    velocity = -tempdir * velocity.Length();
+                    ((PhysicalObject)game.gameObjects[i]).velocity = tempdir * ((PhysicalObject)game.gameObjects[i]).velocity.Length();
+                    */velocity = velocity / -2;
                     ((PhysicalObject)game.gameObjects[i]).velocity = ((PhysicalObject)game.gameObjects[i]).velocity / -2;
                     /*Vector3 tempdir = ((PhysicalObject)game.gameObjects[i]).velocity;
                     ((PhysicalObject)game.gameObjects[i]).velocity = velocity / 2;
