@@ -180,11 +180,11 @@ namespace Project
                     //Each step creates a square in the map mesh
                     //Bottom triangle
                     shapeArray[k] = new VertexPositionNormalColor(points[i][j], normals[i][j],
-						Color.Purple);
+						getColor(points[i][j]));
                     shapeArray[k + 1] = new VertexPositionNormalColor(points[i+1][j+1], normals[i+1][j+1],
-						Color.Purple);
+						getColor(points[i+1][j+1]));
                     shapeArray[k + 2] = new VertexPositionNormalColor(points[i+1][j], normals[i+1][j],
-						Color.Purple);
+						getColor(points[i+1][j]));
 
                     //Top Triangle
                     shapeArray[k + 3] = new VertexPositionNormalColor(points[i][j], normals[i][j],

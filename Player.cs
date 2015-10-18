@@ -42,7 +42,7 @@ namespace Project
 		/// <returns></returns>
         public MyModel CreatePlayerModel()
         {
-            return game.assets.CreateShip("player");
+            return game.assets.CreateTexturedCube("player.png",1);
         }
 
 		/// <summary>
