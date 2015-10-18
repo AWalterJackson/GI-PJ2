@@ -70,48 +70,48 @@ namespace Project
 		/// <returns>A textured cube.</returns>
         public MyModel CreateTexturedCube(String texturePath, Vector3 size)
         {
-            VertexPositionTexture[] shapeArray = new VertexPositionTexture[]{
-            new VertexPositionTexture(new Vector3(-1.0f, -1.0f, -1.0f), new Vector2(0.0f, 1.0f)), // Front
-            new VertexPositionTexture(new Vector3(-1.0f, 1.0f, -1.0f), new Vector2(0.0f, 0.0f)),
-            new VertexPositionTexture(new Vector3(1.0f, 1.0f, -1.0f), new Vector2(1.0f, 0.0f)),
-            new VertexPositionTexture(new Vector3(-1.0f, -1.0f, -1.0f), new Vector2(0.0f, 1.0f)),
-            new VertexPositionTexture(new Vector3(1.0f, 1.0f, -1.0f), new Vector2(1.0f, 0.0f)),
-            new VertexPositionTexture(new Vector3(1.0f, -1.0f, -1.0f), new Vector2(1.0f, 1.0f)),
+            VertexPositionNormalTexture[] shapeArray = new VertexPositionNormalTexture[]{
+            new VertexPositionNormalTexture(new Vector3(-1.0f, -1.0f, -1.0f), -Vector3.UnitZ, new Vector2(0.0f, 1.0f)), // Front
+            new VertexPositionNormalTexture(new Vector3(-1.0f, 1.0f, -1.0f), -Vector3.UnitZ, new Vector2(0.0f, 0.0f)),
+            new VertexPositionNormalTexture(new Vector3(1.0f, 1.0f, -1.0f), -Vector3.UnitZ, new Vector2(1.0f, 0.0f)),
+            new VertexPositionNormalTexture(new Vector3(-1.0f, -1.0f, -1.0f), -Vector3.UnitZ, new Vector2(0.0f, 1.0f)),
+            new VertexPositionNormalTexture(new Vector3(1.0f, 1.0f, -1.0f), -Vector3.UnitZ, new Vector2(1.0f, 0.0f)),
+            new VertexPositionNormalTexture(new Vector3(1.0f, -1.0f, -1.0f), -Vector3.UnitZ, new Vector2(1.0f, 1.0f)),
 
-            new VertexPositionTexture(new Vector3(-1.0f, -1.0f, 1.0f), new Vector2(1.0f, 1.0f)), // BACK
-            new VertexPositionTexture(new Vector3(1.0f, 1.0f, 1.0f), new Vector2(0.0f, 0.0f)),
-            new VertexPositionTexture(new Vector3(-1.0f, 1.0f, 1.0f), new Vector2(1.0f, 0.0f)),
-            new VertexPositionTexture(new Vector3(-1.0f, -1.0f, 1.0f), new Vector2(1.0f, 1.0f)),
-            new VertexPositionTexture(new Vector3(1.0f, -1.0f, 1.0f), new Vector2(0.0f, 1.0f)),
-            new VertexPositionTexture(new Vector3(1.0f, 1.0f, 1.0f), new Vector2(0.0f, 0.0f)),
+            new VertexPositionNormalTexture(new Vector3(-1.0f, -1.0f, 1.0f), Vector3.UnitZ, new Vector2(1.0f, 1.0f)), // BACK
+            new VertexPositionNormalTexture(new Vector3(1.0f, 1.0f, 1.0f), Vector3.UnitZ, new Vector2(0.0f, 0.0f)),
+            new VertexPositionNormalTexture(new Vector3(-1.0f, 1.0f, 1.0f), Vector3.UnitZ, new Vector2(1.0f, 0.0f)),
+            new VertexPositionNormalTexture(new Vector3(-1.0f, -1.0f, 1.0f), Vector3.UnitZ, new Vector2(1.0f, 1.0f)),
+            new VertexPositionNormalTexture(new Vector3(1.0f, -1.0f, 1.0f), Vector3.UnitZ, new Vector2(0.0f, 1.0f)),
+            new VertexPositionNormalTexture(new Vector3(1.0f, 1.0f, 1.0f), Vector3.UnitZ, new Vector2(0.0f, 0.0f)),
 
-            new VertexPositionTexture(new Vector3(-1.0f, 1.0f, -1.0f), new Vector2(0.0f, 1.0f)), // Top
-            new VertexPositionTexture(new Vector3(-1.0f, 1.0f, 1.0f), new Vector2(0.0f, 0.0f)),
-            new VertexPositionTexture(new Vector3(1.0f, 1.0f, 1.0f), new Vector2(1.0f, 0.0f)),
-            new VertexPositionTexture(new Vector3(-1.0f, 1.0f, -1.0f), new Vector2(0.0f, 1.0f)),
-            new VertexPositionTexture(new Vector3(1.0f, 1.0f, 1.0f), new Vector2(1.0f, 0.0f)),
-            new VertexPositionTexture(new Vector3(1.0f, 1.0f, -1.0f), new Vector2(1.0f, 1.0f)),
+            new VertexPositionNormalTexture(new Vector3(-1.0f, 1.0f, -1.0f), Vector3.UnitY, new Vector2(0.0f, 1.0f)), // Top
+            new VertexPositionNormalTexture(new Vector3(-1.0f, 1.0f, 1.0f), Vector3.UnitY, new Vector2(0.0f, 0.0f)),
+            new VertexPositionNormalTexture(new Vector3(1.0f, 1.0f, 1.0f), Vector3.UnitY, new Vector2(1.0f, 0.0f)),
+            new VertexPositionNormalTexture(new Vector3(-1.0f, 1.0f, -1.0f), Vector3.UnitY, new Vector2(0.0f, 1.0f)),
+            new VertexPositionNormalTexture(new Vector3(1.0f, 1.0f, 1.0f), Vector3.UnitY, new Vector2(1.0f, 0.0f)),
+            new VertexPositionNormalTexture(new Vector3(1.0f, 1.0f, -1.0f), Vector3.UnitY, new Vector2(1.0f, 1.0f)),
 
-            new VertexPositionTexture(new Vector3(-1.0f, -1.0f, -1.0f), new Vector2(0.0f, 0.0f)), // Bottom
-            new VertexPositionTexture(new Vector3(1.0f, -1.0f, 1.0f), new Vector2(1.0f, 1.0f)),
-            new VertexPositionTexture(new Vector3(-1.0f, -1.0f, 1.0f), new Vector2(0.0f, 1.0f)),
-            new VertexPositionTexture(new Vector3(-1.0f, -1.0f, -1.0f), new Vector2(0.0f, 0.0f)),
-            new VertexPositionTexture(new Vector3(1.0f, -1.0f, -1.0f), new Vector2(1.0f, 0.0f)),
-            new VertexPositionTexture(new Vector3(1.0f, -1.0f, 1.0f), new Vector2(1.0f, 1.0f)),
+            new VertexPositionNormalTexture(new Vector3(-1.0f, -1.0f, -1.0f), -Vector3.UnitY, new Vector2(0.0f, 0.0f)), // Bottom
+            new VertexPositionNormalTexture(new Vector3(1.0f, -1.0f, 1.0f), -Vector3.UnitY, new Vector2(1.0f, 1.0f)),
+            new VertexPositionNormalTexture(new Vector3(-1.0f, -1.0f, 1.0f), -Vector3.UnitY, new Vector2(0.0f, 1.0f)),
+            new VertexPositionNormalTexture(new Vector3(-1.0f, -1.0f, -1.0f), -Vector3.UnitY, new Vector2(0.0f, 0.0f)),
+            new VertexPositionNormalTexture(new Vector3(1.0f, -1.0f, -1.0f), -Vector3.UnitY, new Vector2(1.0f, 0.0f)),
+            new VertexPositionNormalTexture(new Vector3(1.0f, -1.0f, 1.0f), -Vector3.UnitY, new Vector2(1.0f, 1.0f)),
 
-            new VertexPositionTexture(new Vector3(-1.0f, -1.0f, -1.0f), new Vector2(1.0f, 1.0f)), // Left
-            new VertexPositionTexture(new Vector3(-1.0f, -1.0f, 1.0f), new Vector2(0.0f, 1.0f)),
-            new VertexPositionTexture(new Vector3(-1.0f, 1.0f, 1.0f), new Vector2(0.0f, 0.0f)),
-            new VertexPositionTexture(new Vector3(-1.0f, -1.0f, -1.0f), new Vector2(1.0f, 1.0f)),
-            new VertexPositionTexture(new Vector3(-1.0f, 1.0f, 1.0f), new Vector2(0.0f, 0.0f)),
-            new VertexPositionTexture(new Vector3(-1.0f, 1.0f, -1.0f), new Vector2(1.0f, 0.0f)),
+            new VertexPositionNormalTexture(new Vector3(-1.0f, -1.0f, -1.0f), -Vector3.UnitX, new Vector2(1.0f, 1.0f)), // Left
+            new VertexPositionNormalTexture(new Vector3(-1.0f, -1.0f, 1.0f), -Vector3.UnitX, new Vector2(0.0f, 1.0f)),
+            new VertexPositionNormalTexture(new Vector3(-1.0f, 1.0f, 1.0f), -Vector3.UnitX, new Vector2(0.0f, 0.0f)),
+            new VertexPositionNormalTexture(new Vector3(-1.0f, -1.0f, -1.0f), -Vector3.UnitX, new Vector2(1.0f, 1.0f)),
+            new VertexPositionNormalTexture(new Vector3(-1.0f, 1.0f, 1.0f), -Vector3.UnitX, new Vector2(0.0f, 0.0f)),
+            new VertexPositionNormalTexture(new Vector3(-1.0f, 1.0f, -1.0f), -Vector3.UnitX, new Vector2(1.0f, 0.0f)),
 
-            new VertexPositionTexture(new Vector3(1.0f, -1.0f, -1.0f), new Vector2(0.0f, 1.0f)), // Right
-            new VertexPositionTexture(new Vector3(1.0f, 1.0f, 1.0f), new Vector2(1.0f, 0.0f)),
-            new VertexPositionTexture(new Vector3(1.0f, -1.0f, 1.0f), new Vector2(1.0f, 1.0f)),
-            new VertexPositionTexture(new Vector3(1.0f, -1.0f, -1.0f), new Vector2(0.0f, 1.0f)),
-            new VertexPositionTexture(new Vector3(1.0f, 1.0f, -1.0f), new Vector2(0.0f, 0.0f)),
-            new VertexPositionTexture(new Vector3(1.0f, 1.0f, 1.0f), new Vector2(1.0f, 0.0f)),
+            new VertexPositionNormalTexture(new Vector3(1.0f, -1.0f, -1.0f), Vector3.UnitX, new Vector2(0.0f, 1.0f)), // Right
+            new VertexPositionNormalTexture(new Vector3(1.0f, 1.0f, 1.0f), Vector3.UnitX, new Vector2(1.0f, 0.0f)),
+            new VertexPositionNormalTexture(new Vector3(1.0f, -1.0f, 1.0f), Vector3.UnitX, new Vector2(1.0f, 1.0f)),
+            new VertexPositionNormalTexture(new Vector3(1.0f, -1.0f, -1.0f), Vector3.UnitX, new Vector2(0.0f, 1.0f)),
+            new VertexPositionNormalTexture(new Vector3(1.0f, 1.0f, -1.0f), Vector3.UnitX, new Vector2(0.0f, 0.0f)),
+            new VertexPositionNormalTexture(new Vector3(1.0f, 1.0f, 1.0f), Vector3.UnitX, new Vector2(1.0f, 0.0f)),
             };
 
             for (int i = 0; i < shapeArray.Length; i++)
@@ -142,7 +142,7 @@ namespace Project
 			Vector3[][] points = new Vector3[sidelength][];
 			Vector3[][] normals = new Vector3[sidelength][];
 			Random rand = new Random();
-
+			
 			// Generate a map by calling the function
 			points = genMap(sidelength, -WORLD_WIDTH, WORLD_WIDTH, -WORLD_WIDTH, WORLD_WIDTH, 0.0f);
 

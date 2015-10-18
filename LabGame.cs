@@ -54,6 +54,7 @@ namespace Project
         public MainPage mainPage;
         public bool powerups = true;
         public int windowHeight, windowWidth;
+        public Vector3 lightdirection;
 
         // TASK 4: Use this to represent difficulty
         public float difficulty;
@@ -91,6 +92,7 @@ namespace Project
             assets = new Assets(this);
             random = new Random();
             input = new GameInput();
+            lightdirection = new Vector3(0, 0, 0);
 
             // Initialise event handling.
             input.gestureRecognizer.Tapped += Tapped;
