@@ -15,16 +15,16 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="MiniCube.App">
-      <m2:VisualElements DisplayName="Piracy!" Description="Piracy! A game by A. Jackson, A. Priestley and D. Toulmin" BackgroundColor="#464646" ForegroundText="light" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png">
-        <m2:DefaultTile>
+      <m2:VisualElements DisplayName="Piracy!" Description="Piracy! A game by A. Jackson, A. Priestley and D. Toulmin" BackgroundColor="#464646" ForegroundText="light" Square150x150Logo="Assets\Square150x150Logo.png" Square30x30Logo="Assets\SmallLogo.png" ToastCapable="false">
+        <m2:DefaultTile Square70x70Logo="Assets\Square70x70Logo.png" Square310x310Logo="Assets\Square310x310Logo.png" Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="Piracy!">
           <m2:ShowNameOnTiles>
-            <m2:ShowOn Tile="square150x150Logo" />
+            <m2:ShowOn Tile="wide310x150Logo" />
           </m2:ShowNameOnTiles>
         </m2:DefaultTile>
         <m2:InitialRotationPreference>
           <m2:Rotation Preference="landscape" />
         </m2:InitialRotationPreference>
-        <m2:SplashScreen Image="Assets\SplashScreen.png" />
+        <m2:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#1C6BA0" />
       </m2:VisualElements>
     </Application>
   </Applications>
