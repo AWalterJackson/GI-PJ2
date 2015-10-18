@@ -261,7 +261,7 @@ namespace Project
 		/// <returns>A cannonball model.</returns>
         public MyModel CreateCannonBall()
         {
-            return CreateTexturedCube("player_projectile.png",1);
+             return new MyModel(game, "projectile");
         }
 
 		/// <summary>
