@@ -118,11 +118,11 @@ namespace Project
 		/// <returns>True if outside boundary.</returns>
         public bool edgeBoundingGeneric(float var)
         {
-            if (var >= game.edgemax)
+            if (var > game.edgemax)
             {
                 return true;
             }
-            if (var <= -game.edgemax)
+            if (var < -game.edgemax)
             {
                 return true;
             }
@@ -265,5 +265,23 @@ namespace Project
         {
             game.Remove(this);
         }
+        
+        /// <summary>
+        /// Method to create projectile texture to give to newly created projectiles.
+        /// </summary>
+        /// <returns></returns>
+        public MyModel CreateProjectileModel()
+        {
+            return game.assets.CreateTexturedCube("player projectile.png", new Vector3(0.3f, 0.2f, 0.25f));
+        }
+
+        /// <summary>
+        /// React to getting hit by an enemy bullet.
+        /// </summary>
+        public void Hit(int damage)
+        {
+            hitpoints -= damage;
+        }
+
     }
 }
