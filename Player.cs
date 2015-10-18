@@ -26,7 +26,7 @@ namespace Project
             this.game = game;
             type = GameObjectType.Player;
             myModel = game.assets.GetModel("player", CreatePlayerModel);
-            pos = new SharpDX.Vector3(0, 0, -1);
+            pos = new SharpDX.Vector3(0, 0, -1); // Islands are either side of the player so should fit
             velocity = new Vector3(0, 0, 0);
             acceleration = new Vector3(0, 0, 0);
             hitpoints = 10;

@@ -15,8 +15,8 @@ namespace Project
 		// Private variables used by functions
 		public static int HEIGHT_MIN = 5;
 		public static int HEIGHT_MAX = -5;
-		public static int CORNER = -7;
-		public static int HEIGHT_INIT = 7;
+		public static int CORNER = -1;
+		public static int HEIGHT_INIT = 3;
 		public static float WORLD_WIDTH = 20.0f;
 		
 		// List of specific model types to load
@@ -147,15 +147,22 @@ namespace Project
 			points = genMap(sidelength, -WORLD_WIDTH, WORLD_WIDTH, -WORLD_WIDTH, WORLD_WIDTH, 0.0f);
 
 			// Apply diamond square algorithm
-			points = diamondSquare(points, rand, 3, 0, sidelength, 0, sidelength, 0);
+			points = diamondSquare(points, rand, HEIGHT_INIT, 0, sidelength, 0, sidelength, CORNER);
 
-			// Apply diamond square algorithm again for islands
-			// TAKE NOTE: Do not spawn anything withing specified ranges.
-			points = diamondSquare(points, rand, HEIGHT_INIT, 32, 41, 32, 41, -CORNER);
-			points = diamondSquare(points, rand, HEIGHT_INIT, 87, 96, 87, 96, -CORNER);
+			// Apply diamond square algorithm
+			points = diamondSquare(points, rand, 1, 32, 49, 32, 49, -4);
+
+			// Apply diamond square algorithm
+			points = diamondSquare(points, rand, 1, 32, 49, 87, 96, -4);
+
+			// Apply diamond square algorithm
+			points = diamondSquare(points, rand, 1, 87, 96, 32, 49, -4);
+
+			// Apply diamond square algorithm
+			points = diamondSquare(points, rand, 1, 87, 96, 87, 96, -4);
 
 			// Lower points
-			points = lowerMap(points, sidelength, 1);
+			// points = lowerMap(points, sidelength, 1);
 
 			// Calculate vertex normals
 			normals = getNormals(points);
@@ -169,19 +176,19 @@ namespace Project
                     //Each step creates a square in the map mesh
                     //Bottom triangle
                     shapeArray[k] = new VertexPositionNormalColor(points[i][j], normals[i][j],
-						Color.SandyBrown);
+						Color.Purple);
                     shapeArray[k + 1] = new VertexPositionNormalColor(points[i+1][j+1], normals[i+1][j+1],
-						Color.SandyBrown);
+						Color.Purple);
                     shapeArray[k + 2] = new VertexPositionNormalColor(points[i+1][j], normals[i+1][j],
-						Color.SandyBrown);
+						Color.Purple);
 
                     //Top Triangle
                     shapeArray[k + 3] = new VertexPositionNormalColor(points[i][j], normals[i][j],
-						Color.SandyBrown);
+						getColor(points[i][j]));
                     shapeArray[k + 4] = new VertexPositionNormalColor(points[i][j+1], normals[i][j+1], 
-						Color.SandyBrown);
+						getColor(points[i][j+1]));
                     shapeArray[k + 5] = new VertexPositionNormalColor(points[i+1][j+1], normals[i+1][j+1], 
-						Color.SandyBrown);
+						getColor(points[i+1][j+1]));
 
                     k += 6;
                 }

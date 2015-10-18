@@ -30,7 +30,7 @@ namespace Project
             // Some objects such as the Enemy Controller have no model and thus will not be drawn
             if (myModel != null)
             {
-				if (!myModel.wasLoaded) {
+				if (myModel.wasLoaded) {
 					myModel.model.Draw(game.GraphicsDevice, 
 						basicEffect.World, basicEffect.View, basicEffect.Projection);
 				} else {

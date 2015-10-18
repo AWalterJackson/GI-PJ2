@@ -13,7 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>MiniCube.WinRTXaml_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <TargetPlatformVersion>8.1</TargetPlatformVersion>                                              
+    <TargetPlatformVersion>8.1</TargetPlatformVersion>
     <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
     <TargetFrameworkVersion />
   </PropertyGroup>
@@ -171,6 +171,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ToolkitModel Include="Content\enemy.fbx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </ToolkitModel>
+    <ToolkitModel Include="Content\player.fbx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </ToolkitModel>
+    <ToolkitModel Include="Content\projectile.fbx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </ToolkitModel>
+    <ToolkitModel Include="Content\ship.dae">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </ToolkitModel>
     <None Include="tempKeyFile.pfx" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">

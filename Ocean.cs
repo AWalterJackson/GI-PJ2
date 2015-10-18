@@ -28,10 +28,6 @@ namespace Project
 			basicEffect = new BasicEffect(game.GraphicsDevice);
             basicEffect.Alpha = 0.75f;
 			basicEffect.PreferPerPixelLighting = true;
-			basicEffect.SpecularPower = 1;
-			basicEffect.SpecularColor = new Vector3(1.0f, 1.0f, 1.0f);
-			basicEffect.DiffuseColor = new Vector4(1.0f, 1.0f, 1.0f, 0.75f);
-			basicEffect.EmissiveColor = new Vector3(1.0f, 1.0f, 1.0f);
         }
 
 		/// <summary>

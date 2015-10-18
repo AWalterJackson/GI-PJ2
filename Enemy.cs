@@ -48,7 +48,7 @@ namespace Project
 		/// <returns>A new enemy model.</returns>
         public MyModel CreateEnemyModel()
         {
-            return game.assets.CreateShip("enemy");
+            return game.assets.CreateShip("ship");
         }
 
 		/// <summary>
