@@ -24,7 +24,13 @@ namespace Project
             myModel = game.assets.CreateOcean(degree,1);
             GetParamsFromModel();
 
+			// Lighting properties
             basicEffect.Alpha = 0.75f;
+			basicEffect.PreferPerPixelLighting = true;
+			basicEffect.SpecularPower = 1;
+			basicEffect.SpecularColor = new Vector3(1.0f, 1.0f, 1.0f);
+			basicEffect.DiffuseColor = new Vector4(1.0f, 1.0f, 1.0f, 0.75f);
+			basicEffect.EmissiveColor = new Vector3(1.0f, 1.0f, 1.0f);
         }
 
 		/// <summary>
@@ -33,6 +39,7 @@ namespace Project
 		/// <param name="gameTime">Time since last update.</param>
         public override void Update(GameTime gametime)
         {
+			EffectTechniqueCollection e = basicEffect.Techniques;
 
         }
     }
