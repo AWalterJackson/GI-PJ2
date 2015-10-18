@@ -257,7 +257,12 @@ namespace Project
                 }
             }
 
-            return new MyModel(game, shapeArray, collisionRadius);
+            MyModel m = new MyModel(game, shapeArray, collisionRadius);
+
+			// Make reference to points
+			m.modelMap = points;
+
+            return m;
         }
 
 		/// <summary>

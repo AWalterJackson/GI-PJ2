@@ -41,7 +41,7 @@ namespace Project
         {
 			// Pick a spawn spot in the upper portion of the map
             return RNGesus.Next(-game.edgemax, -game.edgemax + 
-				((2*game.edgemax)*((int)Math.Pow(2, game.size)+1)));
+				(int)(((28.0f/128)*2*game.edgemax)*((int)Math.Pow(2, game.size)+1)));
         }
 
 		/// <summary>
