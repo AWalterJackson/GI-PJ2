@@ -150,23 +150,23 @@ namespace Project
 			points = diamondSquare(points, rand, HEIGHT_INIT, 0, sidelength, 0, sidelength, CORNER);
 
 			// Apply diamond square algorithm
-			points = flattenSection(points, sidelength, 32,49,32,49);
+			points = flattenSection(points, sidelength, 30,50,30,50);
 			points = diamondSquare(points, rand, 1, 32, 49, 32, 49, -4);
 
 			// Apply diamond square algorithm
-			points = flattenSection(points, sidelength, 32,49,87,96);
+			points = flattenSection(points, sidelength, 30,50,85,100);
 			points = diamondSquare(points, rand, 1, 32, 49, 87, 96, -4);
 
 			// Apply diamond square algorithm
-			points = flattenSection(points, sidelength, 87,96,32,49);
+			points = flattenSection(points, sidelength, 85,100,30,50);
 			points = diamondSquare(points, rand, 1, 87, 96, 32, 49, -4);
 
 			// Apply diamond square algorithm
-			points = flattenSection(points, sidelength, 87,96,87,96);
+			points = flattenSection(points, sidelength, 85,100,85,100);
 			points = diamondSquare(points, rand, 1, 87, 96, 87, 96, -4);
 
 			// Lower points
-			points = lowerMap(points, sidelength, 1);
+			points = lowerSeaFloor(points, sidelength, -1, 1.5f);
 
 			// Calculate vertex normals
 			normals = getNormals(points);
@@ -179,27 +179,31 @@ namespace Project
                 {
                     //Each step creates a square in the map mesh
                     //Bottom triangle
-                    shapeArray[k] = new VertexPositionNormalColor(points[i][j], normals[i][j],
-						Color.Purple);
-                    shapeArray[k + 1] = new VertexPositionNormalColor(points[i+1][j+1], normals[i+1][j+1],
-						Color.Purple);
-                    shapeArray[k + 2] = new VertexPositionNormalColor(points[i+1][j], normals[i+1][j],
-						Color.Purple);
+                    shapeArray[k] = new VertexPositionNormalColor(points[i][j], -Vector3.UnitZ,
+						getColor(points[i][j]));
+                    shapeArray[k + 1] = new VertexPositionNormalColor(points[i+1][j+1], -Vector3.UnitZ,
+						getColor(points[i+1][j+1]));
+                    shapeArray[k + 2] = new VertexPositionNormalColor(points[i+1][j], -Vector3.UnitZ,
+						getColor(points[i+1][j]));
 
                     //Top Triangle
-                    shapeArray[k + 3] = new VertexPositionNormalColor(points[i][j], normals[i][j],
+                    shapeArray[k + 3] = new VertexPositionNormalColor(points[i][j], -Vector3.UnitZ,
 						getColor(points[i][j]));
-                    shapeArray[k + 4] = new VertexPositionNormalColor(points[i][j+1], normals[i][j+1], 
+                    shapeArray[k + 4] = new VertexPositionNormalColor(points[i][j+1], -Vector3.UnitZ, 
 						getColor(points[i][j+1]));
-                    shapeArray[k + 5] = new VertexPositionNormalColor(points[i+1][j+1], normals[i+1][j+1], 
+                    shapeArray[k + 5] = new VertexPositionNormalColor(points[i+1][j+1], -Vector3.UnitZ, 
 						getColor(points[i+1][j+1]));
 
                     k += 6;
                 }
             }
 
+			MyModel m = new MyModel(game, shapeArray, collisionRadius);
 
-            return new MyModel(game, shapeArray, collisionRadius);
+			// Make reference to points
+			m.modelMap = points;
+
+            return m;
         }
 
 		/// <summary>
@@ -234,26 +238,31 @@ namespace Project
                 {
                     //Each step creates a square in the map mesh
                     //Bottom triangle
-                    shapeArray[k] = new VertexPositionNormalColor(points[i][j], normals[i][j],
-						Color.SeaGreen);
-                    shapeArray[k + 1] = new VertexPositionNormalColor(points[i+1][j+1], normals[i+1][j+1],
-						Color.SeaGreen);
-                    shapeArray[k + 2] = new VertexPositionNormalColor(points[i+1][j], normals[i+1][j],
-						Color.SeaGreen);
+                    shapeArray[k] = new VertexPositionNormalColor(points[i][j], -Vector3.UnitZ,
+						Color.SkyBlue);
+                    shapeArray[k + 1] = new VertexPositionNormalColor(points[i+1][j+1], -Vector3.UnitZ,
+						Color.SkyBlue);
+                    shapeArray[k + 2] = new VertexPositionNormalColor(points[i+1][j], -Vector3.UnitZ,
+						Color.SkyBlue);
 
                     //Top Triangle
-                    shapeArray[k + 3] = new VertexPositionNormalColor(points[i][j], normals[i][j],
-						Color.SeaGreen);
-                    shapeArray[k + 4] = new VertexPositionNormalColor(points[i][j+1], normals[i][j+1], 
-						Color.SeaGreen);
-                    shapeArray[k + 5] = new VertexPositionNormalColor(points[i+1][j+1], normals[i+1][j+1], 
-						Color.SeaGreen);
+                    shapeArray[k + 3] = new VertexPositionNormalColor(points[i][j], -Vector3.UnitZ,
+						Color.SkyBlue);
+                    shapeArray[k + 4] = new VertexPositionNormalColor(points[i][j+1], -Vector3.UnitZ, 
+						Color.SkyBlue);
+                    shapeArray[k + 5] = new VertexPositionNormalColor(points[i+1][j+1], -Vector3.UnitZ, 
+						Color.SkyBlue);
 
                     k += 6;
                 }
             }
 
-            return new MyModel(game, shapeArray, collisionRadius);
+            MyModel m = new MyModel(game, shapeArray, collisionRadius);
+
+			// Make reference to points
+			m.modelMap = points;
+
+            return m;
         }
 
 		/// <summary>
@@ -264,7 +273,6 @@ namespace Project
         public MyModel CreateShip(String texturePath)
         {
             return CreateTexturedCube(texturePath, 0.7f);
-            //return new MyModel(game, modelPath);
         }
 
 		/// <summary>
@@ -364,10 +372,10 @@ namespace Project
 			// Get the color for a vertice
 			Color c = new Color();
 			// TO-DO: Implement height specific colouring
-			if (vertice.Z >= 0) {
-				c = Color.SeaGreen;
+			if (vertice.Z <= -1) {
+				c = Color.ForestGreen;
 			} else {
-				c = Color.LawnGreen;
+				c = Color.SandyBrown;
 			}
 			return c;
 		}
@@ -572,7 +580,7 @@ namespace Project
 			for (int i = 0; i < n; i++) {
 				for (int j = 0; j < n; j++){
 					// Check the point height, lower if necessary
-					if (map[i][j].Z < seaLevel && map[i][j].Z > seaLevel + minDepth){
+					if (map[i][j].Z > seaLevel && map[i][j].Z > seaLevel + minDepth){
 						map[i][j].Z = seaLevel + minDepth;
 					}
 				}
@@ -595,37 +603,6 @@ namespace Project
 					if (i >= i1 && i <= i2 && j >= j1 && j <= j2){
 						map[i][j].Z = 0;
 					}
-				}
-			}
-			return map;
-		}
-
-		/// <summary>
-		/// Lower parts of the sea floor that would cause grounding if a boat were in the sea.
-		/// </summary>
-		/// <param name="map"></param>
-		/// <param name="n"></param>
-		/// <param name="height"></param>
-		/// <returns></returns>
-		private Vector3[][] lowerMap(Vector3[][] map, int n, float seaLevel){
-			float min = map[0][0].Z, max = map[0][0].Z;
-			for (int i = 0; i <= n; i++) {
-				for (int j = 0; j <= n; j++){
-					if (map[i][j].Z < min) {
-						min = map[i][j].Z;
-					}
-					if (map[i][j].Z > max) {
-						max = map[i][j].Z;
-					}
-				}
-			}
-			if (min < 0) {
-				min = -min;
-			}
-			for (int i = 0; i <= n; i++) {
-				for (int j = 0; j <= n; j++){
-					// lower to average height
-					// map[i][j].Z = map[i][j].Z - min;
 				}
 			}
 			return map;

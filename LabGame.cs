@@ -49,13 +49,13 @@ namespace Project
         public bool gameOver;
         public int size;
         public int edgemax;
-        private Land worldBase;
+        public Land worldBase;
         private Ocean ocean;
         public MainPage mainPage;
         public bool powerups = true;
         public int windowHeight, windowWidth;
         public Vector3 lightdirection;
-        public bool lightingSystemOn = false;
+        public bool lightingSystemOn = true;
 
         // TASK 4: Use this to represent difficulty
         public float difficulty;
@@ -93,7 +93,7 @@ namespace Project
             assets = new Assets(this);
             random = new Random();
             input = new GameInput();
-            lightdirection = new Vector3(0, 0, 0);
+            lightdirection = new Vector3(0, 0, 1);
 
             // Initialise event handling.
             input.gestureRecognizer.Tapped += Tapped;
@@ -129,9 +129,9 @@ namespace Project
             gameObjects.Add(player);
             controller = new EnemyController(this);
             gameObjects.Add(controller);
-            //Enemy enemy = new Enemy(this, new Vector3(1, 1, -5));
-            //gameObjects.Add(enemy);
-            //gameObjects.Add(new EnemyController(this));
+            Enemy enemy = new Enemy(this, controller, EnemyType.galleon, new Vector3(1, 1, -1));
+            gameObjects.Add(enemy);
+            gameObjects.Add(new EnemyController(this));
 
             // Create an input layout from the vertices
 
@@ -183,6 +183,7 @@ namespace Project
                     App.Current.Exit();
                 }
                 // Handle base.Update
+
             }
             else
             {

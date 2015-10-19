@@ -32,6 +32,9 @@ namespace Project
             {
                 if (myModel.wasLoaded)
                 {
+					this.basicEffect.View = game.camera.View;
+                    this.basicEffect.Projection = game.camera.Projection;
+					this.basicEffect.World = Matrix.Identity;
                     myModel.model.Draw(game.GraphicsDevice,
                         basicEffect.World, basicEffect.View, basicEffect.Projection);
                 }
@@ -41,7 +44,7 @@ namespace Project
                     {
                         this.basicEffect.LightingEnabled = true;
 
-                        basicEffect.AmbientLightColor = new Vector3(1f, 1f, 1f);
+                        basicEffect.AmbientLightColor = new Vector3(0.2f, 0.2f, 0.2f);
                         basicEffect.DirectionalLight0.Enabled = true;
                         basicEffect.DirectionalLight0.DiffuseColor = new Vector3(0.6f, 0.6f, 0.6f);
                         basicEffect.DirectionalLight0.Direction = new Vector3(0, 0, 1f);
