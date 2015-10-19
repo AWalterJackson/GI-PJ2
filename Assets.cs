@@ -239,19 +239,19 @@ namespace Project
                     //Each step creates a square in the map mesh
                     //Bottom triangle
                     shapeArray[k] = new VertexPositionNormalColor(points[i][j], -Vector3.UnitZ,
-						Color.SeaGreen);
+						Color.SkyBlue);
                     shapeArray[k + 1] = new VertexPositionNormalColor(points[i+1][j+1], -Vector3.UnitZ,
-						Color.SeaGreen);
+						Color.SkyBlue);
                     shapeArray[k + 2] = new VertexPositionNormalColor(points[i+1][j], -Vector3.UnitZ,
-						Color.SeaGreen);
+						Color.SkyBlue);
 
                     //Top Triangle
                     shapeArray[k + 3] = new VertexPositionNormalColor(points[i][j], -Vector3.UnitZ,
-						Color.SeaGreen);
+						Color.SkyBlue);
                     shapeArray[k + 4] = new VertexPositionNormalColor(points[i][j+1], -Vector3.UnitZ, 
-						Color.SeaGreen);
+						Color.SkyBlue);
                     shapeArray[k + 5] = new VertexPositionNormalColor(points[i+1][j+1], -Vector3.UnitZ, 
-						Color.SeaGreen);
+						Color.SkyBlue);
 
                     k += 6;
                 }
@@ -372,10 +372,10 @@ namespace Project
 			// Get the color for a vertice
 			Color c = new Color();
 			// TO-DO: Implement height specific colouring
-			if (vertice.Z >= 1) {
-				c = Color.SeaGreen;
+			if (vertice.Z <= -1) {
+				c = Color.ForestGreen;
 			} else {
-				c = Color.LawnGreen;
+				c = Color.SandyBrown;
 			}
 			return c;
 		}
