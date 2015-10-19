@@ -39,6 +39,7 @@ namespace Project
             vertexStride = Utilities.SizeOf<VertexPositionColor>();
             modelType = ModelType.Colored;
             this.collisionRadius = collisionRadius;
+			wasLoaded = false;
         }
 
 		/// <summary>
@@ -54,6 +55,7 @@ namespace Project
             vertexStride = Utilities.SizeOf<VertexPositionNormalColor>();
             modelType = ModelType.Colored;
             this.collisionRadius = collisionRadius;
+			wasLoaded = false;
         }
 
 		/// <summary>
@@ -71,6 +73,7 @@ namespace Project
             modelType = ModelType.Textured;
             Texture = game.Content.Load<Texture2D>(textureName);
             this.collisionRadius = collisionRadius;
+			wasLoaded = false;
         }
 
 		/// <summary>

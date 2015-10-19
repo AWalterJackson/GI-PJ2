@@ -74,7 +74,7 @@ namespace Project
 
         public Vector3 newSearch()
         {
-            return new Vector3(coord(), coord(), -1);
+            return new Vector3(coord(), coord(), 0);
         }
 
 		/// <summary>

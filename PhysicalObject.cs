@@ -174,7 +174,7 @@ namespace Project
 				float damage = velocity.Length() * 100;
 				hitpoints -= (int)damage;
 				// adjust physics appropriately
-				pos = -Vector3.Normalize(velocity) * (myModel.collisionRadius + 0.001f);
+				pos = pos -Vector3.Normalize(velocity) * (myModel.collisionRadius + 0.001f);
                 velocity = velocity / -2;
 			}
             return false;

@@ -56,7 +56,6 @@ namespace Project
 
                     this.basicEffect.View = game.camera.View;
                     this.basicEffect.Projection = game.camera.Projection;
-					this.basicEffect.World = Matrix.Identity;
 
                     if (type == GameObjectType.Ocean)
                     {
