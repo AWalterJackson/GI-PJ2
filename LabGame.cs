@@ -128,7 +128,7 @@ namespace Project
             gameObjects.Add(player);
             controller = new EnemyController(this);
             gameObjects.Add(controller);
-            Enemy enemy = new Enemy(this, controller, EnemyType.demoship, new Vector3(1, 1, -1));
+            Enemy enemy = new Enemy(this, controller, EnemyType.galleon, new Vector3(1, 1, -1));
             gameObjects.Add(enemy);
             gameObjects.Add(new EnemyController(this));
 
