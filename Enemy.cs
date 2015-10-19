@@ -34,7 +34,7 @@ namespace Project
             type = GameObjectType.Enemy;
             myModel = game.assets.GetModel("player", CreateEnemyModel);
             this.pos = pos;
-            this.maxspeed = 0.3f;
+            this.maxspeed = 0.15f;
             this.range = 4;
             this.detected = false;
             this.controller = controller;
