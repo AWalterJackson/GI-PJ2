@@ -40,15 +40,16 @@ namespace Project
                 }
                 else
                 {
+                    if (game.lightingSystemOn)
+                    {
+                        this.basicEffect.LightingEnabled = true;
 
-                    this.basicEffect.LightingEnabled = true;
-
-                    basicEffect.AmbientLightColor = new Vector3(0.2f, 0.2f, 0.2f);
-                    basicEffect.DirectionalLight0.Enabled = true;
-                    basicEffect.DirectionalLight0.DiffuseColor = new Vector3(0.6f, 0.6f, 0.6f);
-                    basicEffect.DirectionalLight0.Direction = new Vector3(0, 0, 1f);
-                    basicEffect.DirectionalLight0.SpecularColor = new Vector3(0.1f, 0.1f, 0.166f);
-
+                        basicEffect.AmbientLightColor = new Vector3(1f, 1f, 1f);
+                        basicEffect.DirectionalLight0.Enabled = true;
+                        basicEffect.DirectionalLight0.DiffuseColor = new Vector3(0.6f, 0.6f, 0.6f);
+                        basicEffect.DirectionalLight0.Direction = new Vector3(0, 0, 1f);
+                        basicEffect.DirectionalLight0.SpecularColor = new Vector3(0.1f, 0.1f, 0.166f);
+                    }
                     // Setup the vertices
                     game.GraphicsDevice.SetVertexBuffer(0, myModel.vertices, myModel.vertexStride);
                     game.GraphicsDevice.SetVertexInputLayout(myModel.inputLayout);

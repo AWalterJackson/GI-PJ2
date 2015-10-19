@@ -25,7 +25,7 @@ namespace Project
         {
             this.game = game;
             type = GameObjectType.Player;
-            myModel = game.assets.GetModel("player", CreatePlayerModel);
+            myModel = game.assets.GetModel("boat.png", CreatePlayerModel);
             pos = new SharpDX.Vector3(0, 0, -1);
             velocity = new Vector3(0, 0, 0);
             acceleration = new Vector3(0, 0, 0);
@@ -42,7 +42,7 @@ namespace Project
 		/// <returns></returns>
         public MyModel CreatePlayerModel()
         {
-            return game.assets.CreateTexturedCube("player.png",1);
+            return game.assets.CreateShip("boat.png");
         }
 
 		/// <summary>
@@ -89,11 +89,16 @@ namespace Project
             Vector3 direction = new Vector3(dir.X - 1542 / 2, -dir.Y + 1024 / 2, 0);
             direction.Normalize();
             game.Add(new Projectile(game,
-                game.assets.GetModel("player projectile", CreateProjectileModel),
+                game.assets.GetModel("shot", CreatePlayerProjectile),
                 pos,
             direction * 10,
                 this
             ));
+        }
+
+        public MyModel CreatePlayerProjectile()
+        {
+            return game.assets.CreateCannonBall();
         }
     }
 }

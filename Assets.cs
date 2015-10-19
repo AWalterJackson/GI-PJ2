@@ -117,7 +117,7 @@ namespace Project
             for (int i = 0; i < shapeArray.Length; i++)
             {
                 shapeArray[i].Position.X *= size.X / 2;
-                shapeArray[i].Position.Z *= size.Y / 2;
+                shapeArray[i].Position.Y *= size.Y / 2;
                 shapeArray[i].Position.Z *= size.Z / 2;
             }
 
@@ -270,9 +270,9 @@ namespace Project
 		/// </summary>
 		/// <param name="texturePath">Texture file to use.</param>
 		/// <returns>A ship model.</returns>
-        public MyModel CreateShip(String modelPath)
+        public MyModel CreateShip(String texturePath)
         {
-            return new MyModel(game, modelPath);
+            return CreateTexturedCube(texturePath, 0.7f);
         }
 
 		/// <summary>
@@ -281,7 +281,7 @@ namespace Project
 		/// <returns>A cannonball model.</returns>
         public MyModel CreateCannonBall()
         {
-             return CreateTexturedCube("projectile.png", 0.5f);
+            return CreateTexturedCube("balltexture.jpg", 0.1f);
         }
 
 		/// <summary>

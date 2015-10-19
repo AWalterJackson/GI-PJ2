@@ -52,7 +52,7 @@ namespace Project
 		/// <returns>A new enemy model.</returns>
         public MyModel CreateEnemyModel()
         {
-            return game.assets.CreateTexturedCube("enemy.png",1);
+            return game.assets.CreateShip("boat.png");
         }
 
 		/// <summary>
@@ -61,7 +61,7 @@ namespace Project
 		/// <returns>A new enemy projectile model.</returns>
         private MyModel CreateEnemyProjectileModel()
         {
-            return game.assets.CreateTexturedCube("enemy projectile.png", new Vector3(0.2f, 0.2f, 0.4f));
+            return game.assets.CreateCannonBall();
         }
 
 		/// <summary>
@@ -73,6 +73,7 @@ namespace Project
 			// Check if still alive
             if(hitpoints <= 0)
             {
+                game.score += 1;
                 game.Remove(this);
             }
             int time = gameTime.ElapsedGameTime.Milliseconds;
@@ -161,12 +162,13 @@ namespace Project
             Vector3 direction = new Vector3(dir.X, dir.Y, 0);
             direction.Normalize();
             game.Add(new Projectile(game,
-                game.assets.GetModel("projectile", CreateProjectileModel),
+                game.assets.GetModel("shot", CreateEnemyProjectileModel),
                 pos,
                 direction * 10,
                 this
             ));
         }
+
 
     }
 }

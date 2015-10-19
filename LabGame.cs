@@ -55,6 +55,7 @@ namespace Project
         public bool powerups = true;
         public int windowHeight, windowWidth;
         public Vector3 lightdirection;
+        public bool lightingSystemOn = false;
 
         // TASK 4: Use this to represent difficulty
         public float difficulty;
@@ -173,6 +174,7 @@ namespace Project
                 }
 
                 mainPage.UpdateScore(score);
+                mainPage.UpdateHitpoints(player.hitpoints);
 
                 if (keyboardState.IsKeyDown(Keys.Escape))
                 {
