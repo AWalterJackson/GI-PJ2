@@ -34,7 +34,7 @@ namespace Project
             type = GameObjectType.Enemy;
             myModel = game.assets.GetModel("player", CreateEnemyModel);
             this.pos = pos;
-            this.maxspeed = 0.5f;
+            this.maxspeed = 0.15f;
             this.range = 4;
             this.detected = false;
             this.controller = controller;
@@ -52,7 +52,7 @@ namespace Project
 		/// <returns>A new enemy model.</returns>
         public MyModel CreateEnemyModel()
         {
-            return game.assets.CreateShip("boat.png");
+            return game.assets.CreateShip("demoship.png");
         }
 
 		/// <summary>

@@ -114,6 +114,9 @@
     <Content Include="Content\boat.PNG">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\demoship.PNG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\enemy projectile.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
