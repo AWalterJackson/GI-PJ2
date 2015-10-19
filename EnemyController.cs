@@ -39,9 +39,19 @@ namespace Project
 
         private int coord()
         {
-			// Pick a spawn spot in the upper portion of the map
-            return RNGesus.Next(-game.edgemax, -game.edgemax + 
-				(int)(((28.0f/128)*2*game.edgemax)*((int)Math.Pow(2, game.size)+1)));
+			int r = RNGesus.Next(0,4);
+			if (r == 0){
+				return 10;
+			} else if (r == 1) {
+				return 20;
+			} else if (r == 2) {
+				return 60;
+			} else if (r == 3) {
+				return 70;
+			}
+			return 80;
+            //return RNGesus.Next(-game.edgemax, -game.edgemax + 
+			//	(int)(((28.0f/128)*2*game.edgemax)*((int)Math.Pow(2, game.size)+1)));
         }
 
 		/// <summary>
@@ -54,9 +64,10 @@ namespace Project
             while (i > 0)
             {
                 newpos = new Vector3(coord(),coord(),-1);
-                game.gameObjects.Add(new Enemy(this.game, this, EnemyType.galleon, newpos));
-                newpos = new Vector3(coord(),coord(),-1);
-                game.gameObjects.Add(new Enemy(this.game, this, EnemyType.demoship, newpos));
+				Enemy e = new Enemy(this.game, this, EnemyType.galleon, newpos);
+				e.damagemodifier = dmgmod;
+				e.armour = armmod;
+                game.gameObjects.Add(e);
                 i--;
             }
         }

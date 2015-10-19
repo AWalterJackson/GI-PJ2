@@ -70,6 +70,7 @@ namespace Project
 		/// <param name="gameTime">Time since last update.</param>
         public override void Update(GameTime gameTime)
         {
+			// Check if still alive
             if(hitpoints <= 0)
             {
                 game.Remove(this);
@@ -79,7 +80,8 @@ namespace Project
             Vector3 playerpos = game.getPlayerPos();
             Vector3 playervel = game.getPlayerVel();
             Vector2 toPlayer = new Vector2(playerpos.X-this.pos.X, playerpos.Y-this.pos.Y);
-            float anglebetween = (float)Math.Acos(Vector2.Dot(new Vector2(this.velocity.X, this.velocity.Y), new Vector2(playervel.X,playervel.Y)));
+            float anglebetween = (float)Math.Acos(Vector2.Dot(new Vector2(this.velocity.X, this.velocity.Y), 
+				new Vector2(playervel.X,playervel.Y)));
 
             //Determines if the enemy can see the player ship or not
             if (!this.detected && toPlayer.Length() <= detectrange) {
@@ -98,6 +100,7 @@ namespace Project
             {
                 if (this.etype == EnemyType.galleon)
                 {
+					// Move towards player
                     if (toPlayer.Length() <= range / 2f)
                     {
                         this.acceleration.X = -toPlayer.X;
@@ -111,6 +114,7 @@ namespace Project
                         this.acceleration.Y = toPlayer.Y;
                         //acceleration /= 3f;
                     }
+					// Check if the enemy can engage the player and do so
                     if(toPlayer.Length() <= fireDistance && fireTimer <= 0)
                     {
                         fire(toPlayer);
@@ -124,7 +128,6 @@ namespace Project
                     this.acceleration.Normalize();
                 }
             }
-
             //Behaviour if player is not detected
             else
             {

@@ -92,7 +92,7 @@ namespace Project
             assets = new Assets(this);
             random = new Random();
             input = new GameInput();
-            lightdirection = new Vector3(0, 0, 0);
+            lightdirection = new Vector3(0, 0, 1);
 
             // Initialise event handling.
             input.gestureRecognizer.Tapped += Tapped;
@@ -128,7 +128,7 @@ namespace Project
             gameObjects.Add(player);
             controller = new EnemyController(this);
             gameObjects.Add(controller);
-            Enemy enemy = new Enemy(this, controller, EnemyType.demoship, new Vector3(1, 1, -5));
+            Enemy enemy = new Enemy(this, controller, EnemyType.demoship, new Vector3(1, 1, -1));
             gameObjects.Add(enemy);
             gameObjects.Add(new EnemyController(this));
 
@@ -181,6 +181,7 @@ namespace Project
                     App.Current.Exit();
                 }
                 // Handle base.Update
+
             }
             else
             {

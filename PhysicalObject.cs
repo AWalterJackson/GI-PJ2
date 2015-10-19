@@ -174,7 +174,7 @@ namespace Project
 				float damage = velocity.Length() * 100;
 				hitpoints -= (int)damage;
 				// adjust physics appropriately
-				pos = - Vector3.Normalize(velocity) * (myModel.collisionRadius + 0.001f);
+				pos = -Vector3.Normalize(velocity) * (myModel.collisionRadius + 0.001f);
                 velocity = velocity / -2;
 			}
             return false;
@@ -259,7 +259,8 @@ namespace Project
 
             Matrix Rotation = new Matrix(0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1) * new Matrix(direction.X, direction.Y, 0, 0, -direction.Y, direction.X, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
             Matrix Tilt = Matrix.RotationX(velocity.Length()/2);
-            Vector3 rollSize = acceleration - Vector3.Dot(velocity, acceleration) / Vector3.Dot(velocity, velocity) * velocity;
+            Vector3 rollSize = acceleration - 
+				Vector3.Dot(velocity, acceleration) / Vector3.Dot(velocity, velocity) * velocity;
             int rollDir = 1;
             if(Vector3.Cross(rollSize, velocity).Z > 0) { rollDir = -1; }
             Matrix playerRoll = Matrix.RotationY(rollDir*rollSize.Length());

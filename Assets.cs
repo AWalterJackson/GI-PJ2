@@ -150,19 +150,19 @@ namespace Project
 			points = diamondSquare(points, rand, HEIGHT_INIT, 0, sidelength, 0, sidelength, CORNER);
 
 			// Apply diamond square algorithm
-			points = flattenSection(points, sidelength, 32,49,32,49);
+			points = flattenSection(points, sidelength, 30,50,30,50);
 			points = diamondSquare(points, rand, 1, 32, 49, 32, 49, -4);
 
 			// Apply diamond square algorithm
-			points = flattenSection(points, sidelength, 32,49,87,96);
+			points = flattenSection(points, sidelength, 30,50,85,100);
 			points = diamondSquare(points, rand, 1, 32, 49, 87, 96, -4);
 
 			// Apply diamond square algorithm
-			points = flattenSection(points, sidelength, 87,96,32,49);
+			points = flattenSection(points, sidelength, 85,100,30,50);
 			points = diamondSquare(points, rand, 1, 87, 96, 32, 49, -4);
 
 			// Apply diamond square algorithm
-			points = flattenSection(points, sidelength, 87,96,87,96);
+			points = flattenSection(points, sidelength, 85,100,85,100);
 			points = diamondSquare(points, rand, 1, 87, 96, 87, 96, -4);
 
 			// Lower points
@@ -281,7 +281,7 @@ namespace Project
 		/// <returns>A cannonball model.</returns>
         public MyModel CreateCannonBall()
         {
-             return new MyModel(game, "projectile");
+             return CreateTexturedCube("projectile.png", 0.5f);
         }
 
 		/// <summary>
@@ -580,7 +580,7 @@ namespace Project
 			for (int i = 0; i < n; i++) {
 				for (int j = 0; j < n; j++){
 					// Check the point height, lower if necessary
-					if (map[i][j].Z < seaLevel && map[i][j].Z > seaLevel + minDepth){
+					if (map[i][j].Z > seaLevel && map[i][j].Z > seaLevel + minDepth){
 						map[i][j].Z = seaLevel + minDepth;
 					}
 				}
