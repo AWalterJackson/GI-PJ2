@@ -55,7 +55,7 @@ namespace Project
         public bool powerups = true;
         public int windowHeight, windowWidth;
         public Vector3 lightdirection;
-        public bool lightingSystemOn = false;
+        public bool lightingSystemOn = true;
 
         // TASK 4: Use this to represent difficulty
         public float difficulty;

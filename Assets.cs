@@ -166,7 +166,7 @@ namespace Project
 			points = diamondSquare(points, rand, 1, 87, 96, 87, 96, -4);
 
 			// Lower points
-			points = lowerSeaFloor(points, sidelength, 1, 1.5f);
+			points = lowerSeaFloor(points, sidelength, -1, 1.5f);
 
 			// Calculate vertex normals
 			normals = getNormals(points);
@@ -179,19 +179,19 @@ namespace Project
                 {
                     //Each step creates a square in the map mesh
                     //Bottom triangle
-                    shapeArray[k] = new VertexPositionNormalColor(points[i][j], normals[i][j],
+                    shapeArray[k] = new VertexPositionNormalColor(points[i][j], -Vector3.UnitZ,
 						getColor(points[i][j]));
-                    shapeArray[k + 1] = new VertexPositionNormalColor(points[i+1][j+1], normals[i+1][j+1],
+                    shapeArray[k + 1] = new VertexPositionNormalColor(points[i+1][j+1], -Vector3.UnitZ,
 						getColor(points[i+1][j+1]));
-                    shapeArray[k + 2] = new VertexPositionNormalColor(points[i+1][j], normals[i+1][j],
+                    shapeArray[k + 2] = new VertexPositionNormalColor(points[i+1][j], -Vector3.UnitZ,
 						getColor(points[i+1][j]));
 
                     //Top Triangle
-                    shapeArray[k + 3] = new VertexPositionNormalColor(points[i][j], normals[i][j],
+                    shapeArray[k + 3] = new VertexPositionNormalColor(points[i][j], -Vector3.UnitZ,
 						getColor(points[i][j]));
-                    shapeArray[k + 4] = new VertexPositionNormalColor(points[i][j+1], normals[i][j+1], 
+                    shapeArray[k + 4] = new VertexPositionNormalColor(points[i][j+1], -Vector3.UnitZ, 
 						getColor(points[i][j+1]));
-                    shapeArray[k + 5] = new VertexPositionNormalColor(points[i+1][j+1], normals[i+1][j+1], 
+                    shapeArray[k + 5] = new VertexPositionNormalColor(points[i+1][j+1], -Vector3.UnitZ, 
 						getColor(points[i+1][j+1]));
 
                     k += 6;
@@ -238,19 +238,19 @@ namespace Project
                 {
                     //Each step creates a square in the map mesh
                     //Bottom triangle
-                    shapeArray[k] = new VertexPositionNormalColor(points[i][j], normals[i][j],
+                    shapeArray[k] = new VertexPositionNormalColor(points[i][j], -Vector3.UnitZ,
 						Color.SeaGreen);
-                    shapeArray[k + 1] = new VertexPositionNormalColor(points[i+1][j+1], normals[i+1][j+1],
+                    shapeArray[k + 1] = new VertexPositionNormalColor(points[i+1][j+1], -Vector3.UnitZ,
 						Color.SeaGreen);
-                    shapeArray[k + 2] = new VertexPositionNormalColor(points[i+1][j], normals[i+1][j],
+                    shapeArray[k + 2] = new VertexPositionNormalColor(points[i+1][j], -Vector3.UnitZ,
 						Color.SeaGreen);
 
                     //Top Triangle
-                    shapeArray[k + 3] = new VertexPositionNormalColor(points[i][j], normals[i][j],
+                    shapeArray[k + 3] = new VertexPositionNormalColor(points[i][j], -Vector3.UnitZ,
 						Color.SeaGreen);
-                    shapeArray[k + 4] = new VertexPositionNormalColor(points[i][j+1], normals[i][j+1], 
+                    shapeArray[k + 4] = new VertexPositionNormalColor(points[i][j+1], -Vector3.UnitZ, 
 						Color.SeaGreen);
-                    shapeArray[k + 5] = new VertexPositionNormalColor(points[i+1][j+1], normals[i+1][j+1], 
+                    shapeArray[k + 5] = new VertexPositionNormalColor(points[i+1][j+1], -Vector3.UnitZ, 
 						Color.SeaGreen);
 
                     k += 6;
@@ -357,7 +357,7 @@ namespace Project
 					}
 					avgItms = 0;
 					avg /= avgItms;
-					n[i][j] = Vector3.Normalize(avg);
+					n[i][j] = -Vector3.Normalize(avg);
 				}
 			}
 			return n;
