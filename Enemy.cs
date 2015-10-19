@@ -22,6 +22,8 @@ namespace Project
         float detectrange;
         float escaperange;
         bool detected;
+        float fireTimer;
+        float fireDistance;
         EnemyType etype;
         Vector3 searchloc;
         EnemyController controller;
@@ -40,6 +42,8 @@ namespace Project
             this.escaperange = detectrange * 2;
             this.etype = etype;
             GetParamsFromModel();
+            fireTimer = 0;
+            fireDistance = 4;
         }
 
 		/// <summary>
@@ -57,7 +61,7 @@ namespace Project
 		/// <returns>A new enemy projectile model.</returns>
         private MyModel CreateEnemyProjectileModel()
         {
-            return game.assets.CreateTexturedCube("enemy projectile.png", new Vector3(0.2f, 0.2f, 0.4f));
+            return game.assets.CreateCannonBall();
         }
 
 		/// <summary>
@@ -68,8 +72,11 @@ namespace Project
         {
             if(hitpoints <= 0)
             {
+                game.score += 1;
                 game.Remove(this);
             }
+            int time = gameTime.ElapsedGameTime.Milliseconds;
+            fireTimer -= time;
             Vector3 playerpos = game.getPlayerPos();
             Vector3 playervel = game.getPlayerVel();
             Vector2 toPlayer = new Vector2(playerpos.X-this.pos.X, playerpos.Y-this.pos.Y);
@@ -105,6 +112,11 @@ namespace Project
                         this.acceleration.Y = toPlayer.Y;
                         //acceleration /= 3f;
                     }
+                    if(toPlayer.Length() <= fireDistance && fireTimer <= 0)
+                    {
+                        fire(toPlayer);
+                        fireTimer = 3000;
+                    }
                 }
                 if(this.etype == EnemyType.demoship)
                 {
@@ -133,22 +145,27 @@ namespace Project
             //Handle the graphics transforms for this update
             transform();
         }
-
-		/// <summary>
-		/// Fire!
-		/// </summary>
-        private void fire()
+        
+        /// <summary>
+        /// Shoot a projectile.
+        /// </summary>
+        public void fire(Vector2 dir)
         {
-            //throw new NotImplementedException();
+            /*dir.X *= 145;
+            dir.Y *= -145;
+            Vector2 position = new Vector2(-(pos.X - game.getPlayerPos().X) * 145 - 1542 / 2, (pos.Y - game.getPlayerPos().Y) * 145 + 1024 / 2);
+            System.Diagnostics.Debug.WriteLine("shooter=" + this + " dirx=" + dir.X + " diry=" + dir.Y + " positionx=" + position.X + " positiony=" + position.Y + " posx=" + pos.X + " posy=" + pos.Y + " player.x=" + game.getPlayerPos().X + " player.y=" + game.getPlayerPos().Y);
+            Vector3 direction = new Vector3(dir.X + position.X, -dir.Y + position.Y, 0);*/
+            Vector3 direction = new Vector3(dir.X, dir.Y, 0);
+            direction.Normalize();
+            game.Add(new Projectile(game,
+                game.assets.GetModel("shot", CreateEnemyProjectileModel),
+                pos,
+                direction * 10,
+                this
+            ));
         }
 
-		/// <summary>
-		/// React to being hit.
-		/// </summary>
-        public void Hit()
-        {
-            hitpoints -= 5;
-        }
 
     }
 }

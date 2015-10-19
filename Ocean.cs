@@ -24,7 +24,10 @@ namespace Project
             myModel = game.assets.CreateOcean(degree,1);
             GetParamsFromModel();
 
+			// Lighting properties
+			basicEffect = new BasicEffect(game.GraphicsDevice);
             basicEffect.Alpha = 0.75f;
+			basicEffect.PreferPerPixelLighting = true;
         }
 
 		/// <summary>
@@ -33,6 +36,7 @@ namespace Project
 		/// <param name="gameTime">Time since last update.</param>
         public override void Update(GameTime gametime)
         {
+			EffectTechniqueCollection e = basicEffect.Techniques;
 
         }
     }

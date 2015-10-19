@@ -30,32 +30,40 @@ namespace Project
             // Some objects such as the Enemy Controller have no model and thus will not be drawn
             if (myModel != null)
             {
-
-                this.basicEffect.LightingEnabled = true;
-
-                basicEffect.AmbientLightColor = new Vector3(0.2f, 0.2f, 0.2f);
-                basicEffect.DirectionalLight0.Enabled = true;
-                basicEffect.DirectionalLight0.DiffuseColor = new Vector3(0.6f, 0.6f, 0.6f);
-                basicEffect.DirectionalLight0.Direction = new Vector3(0,0,1f);
-                basicEffect.DirectionalLight0.SpecularColor = new Vector3(0.1f, 0.1f, 0.166f);
-                
-                // Setup the vertices
-                game.GraphicsDevice.SetVertexBuffer(0, myModel.vertices, myModel.vertexStride);
-                game.GraphicsDevice.SetVertexInputLayout(myModel.inputLayout);
-
-                this.basicEffect.View = game.camera.View;
-                this.basicEffect.Projection = game.camera.Projection;
-
-
-                if (type == GameObjectType.Ocean)
+                if (myModel.wasLoaded)
                 {
-                    game.GraphicsDevice.SetBlendState(game.GraphicsDevice.BlendStates.AlphaBlend);
+                    myModel.model.Draw(game.GraphicsDevice,
+                        basicEffect.World, basicEffect.View, basicEffect.Projection);
                 }
+                else
+                {
+                    if (game.lightingSystemOn)
+                    {
+                        this.basicEffect.LightingEnabled = true;
 
-                // Apply the basic effect technique and draw the object
-                basicEffect.CurrentTechnique.Passes[0].Apply();
-                System.Diagnostics.Debug.WriteLine(myModel.vertices.ElementCount);
-                game.GraphicsDevice.Draw(PrimitiveType.TriangleList, myModel.vertices.ElementCount);
+                        basicEffect.AmbientLightColor = new Vector3(1f, 1f, 1f);
+                        basicEffect.DirectionalLight0.Enabled = true;
+                        basicEffect.DirectionalLight0.DiffuseColor = new Vector3(0.6f, 0.6f, 0.6f);
+                        basicEffect.DirectionalLight0.Direction = new Vector3(0, 0, 1f);
+                        basicEffect.DirectionalLight0.SpecularColor = new Vector3(0.1f, 0.1f, 0.166f);
+                    }
+                    // Setup the vertices
+                    game.GraphicsDevice.SetVertexBuffer(0, myModel.vertices, myModel.vertexStride);
+                    game.GraphicsDevice.SetVertexInputLayout(myModel.inputLayout);
+
+                    this.basicEffect.View = game.camera.View;
+                    this.basicEffect.Projection = game.camera.Projection;
+
+                    if (type == GameObjectType.Ocean)
+                    {
+                        game.GraphicsDevice.SetBlendState(game.GraphicsDevice.BlendStates.AlphaBlend);
+                    }
+
+                    // Apply the basic effect technique and draw the object
+                    basicEffect.CurrentTechnique.Passes[0].Apply();
+                    System.Diagnostics.Debug.WriteLine(myModel.vertices.ElementCount);
+                    game.GraphicsDevice.Draw(PrimitiveType.TriangleList, myModel.vertices.ElementCount);
+                }
             }
         }
 

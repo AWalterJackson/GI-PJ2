@@ -49,6 +49,12 @@ namespace Project
             txtScore.Text = "Score: " + score.ToString();
         }
 
+        // TASK 1: Update the game's score
+        public void UpdateHitpoints(int hitpoints)
+        {
+            txtHitpoints.Text = "Hitpoints: " + hitpoints.ToString();
+        }
+
         private void LoadOptions(object sender, RoutedEventArgs e)
         {
             this.Children.Add(options);

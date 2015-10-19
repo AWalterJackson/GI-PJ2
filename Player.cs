@@ -25,11 +25,11 @@ namespace Project
         {
             this.game = game;
             type = GameObjectType.Player;
-            myModel = game.assets.GetModel("player", CreatePlayerModel);
-            pos = new SharpDX.Vector3(0, 0, -1);
+            myModel = game.assets.GetModel("boat.png", CreatePlayerModel);
+            pos = new SharpDX.Vector3(0, 0, -1); // Islands are either side of the player so should fit
             velocity = new Vector3(0, 0, 0);
             acceleration = new Vector3(0, 0, 0);
-            hitpoints = 10;
+            hitpoints = 100;
             armour = 1;
             maxspeed = 0.5f;
             maxaccel = 1.4f;
@@ -42,36 +42,9 @@ namespace Project
 		/// <returns></returns>
         public MyModel CreatePlayerModel()
         {
-            return game.assets.CreateTexturedCube("boat.png", 0.7f);
+            return game.assets.CreateShip("boat.png");
         }
 
-		/// <summary>
-		/// Method to create projectile texture to give to newly created projectiles.
-		/// </summary>
-		/// <returns></returns>
-        private MyModel CreatePlayerProjectileModel()
-        {
-            return game.assets.CreateTexturedCube("player projectile.png", new Vector3(0.3f, 0.2f, 0.25f));
-        }
-		
-		/// <summary>
-		/// Shoot a projectile.
-		/// </summary>
-        private void fire(Vector2 dir)
-        {
-
-            //System.Diagnostics.Debug.WriteLine("dirx="+dir.X+" diry="+dir.Y+"window height="+game.windowHeight+" window width="+game.windowWidth);
-
-            Vector3 direction = new Vector3(dir.X - 1542 / 2, -dir.Y + 1024 / 2, 0);
-            direction.Normalize();
-            game.Add(new Projectile(game,
-                game.assets.GetModel("player projectile", CreatePlayerProjectileModel),
-                pos,
-                direction*10,
-                this
-            ));
-        }
-		
 		/// <summary>
 		/// Frame update.
 		/// </summary>
@@ -81,7 +54,7 @@ namespace Project
             //System.Diagnostics.Debug.WriteLine(hitpoints);
             if (hitpoints <= 0)
             {
-                Hit();
+                game.gameOver = true;
             }
             // TASK 1: Determine velocity based on accelerometer reading
             acceleration.X = (float)game.accelerometerReading.AccelerationX;
@@ -91,16 +64,8 @@ namespace Project
 
             transform();
         }
-		
-		/// <summary>
-		/// React to getting hit by an enemy bullet.
-		/// </summary>
-        public void Hit()
-        {
-            game.gameOver = true;
-        }
-
-		/// <summary>
+        
+        /// <summary>
 		/// Initiate event upon recieving a tap input.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -114,6 +79,26 @@ namespace Project
         public override void OnManipulationUpdated(GestureRecognizer sender, ManipulationUpdatedEventArgs args)
         {
             //pos.X += (float)args.Delta.Translation.X / 100;
+        }
+
+        private void fire(Vector2 dir)
+        {
+
+            System.Diagnostics.Debug.WriteLine("dirx="+dir.X+" diry="+dir.Y+"window height="+game.windowHeight+" window width="+game.windowWidth);
+
+            Vector3 direction = new Vector3(dir.X - 1542 / 2, -dir.Y + 1024 / 2, 0);
+            direction.Normalize();
+            game.Add(new Projectile(game,
+                game.assets.GetModel("shot", CreatePlayerProjectile),
+                pos,
+            direction * 10,
+                this
+            ));
+        }
+
+        public MyModel CreatePlayerProjectile()
+        {
+            return game.assets.CreateCannonBall();
         }
     }
 }

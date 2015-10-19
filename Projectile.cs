@@ -81,10 +81,10 @@ namespace Project
 
                     {
                         case GameObjectType.Player:
-                            ((Player)obj).Hit();
+                            ((Player)obj).Hit((int)(pos - initPos).Length());
                             break;
                         case GameObjectType.Enemy:
-                            ((Enemy)obj).Hit();
+                            ((Enemy)obj).Hit((int)(pos - initPos).Length());
                             break;
                     }
 
