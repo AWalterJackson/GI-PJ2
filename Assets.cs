@@ -235,19 +235,19 @@ namespace Project
                     //Each step creates a square in the map mesh
                     //Bottom triangle
                     shapeArray[k] = new VertexPositionNormalColor(points[i][j], normals[i][j],
-						Color.SeaGreen);
+						Color.SkyBlue);
                     shapeArray[k + 1] = new VertexPositionNormalColor(points[i+1][j+1], normals[i+1][j+1],
-						Color.SeaGreen);
+						Color.SkyBlue);
                     shapeArray[k + 2] = new VertexPositionNormalColor(points[i+1][j], normals[i+1][j],
-						Color.SeaGreen);
+						Color.SkyBlue);
 
                     //Top Triangle
                     shapeArray[k + 3] = new VertexPositionNormalColor(points[i][j], normals[i][j],
-						Color.SeaGreen);
+						Color.SkyBlue);
                     shapeArray[k + 4] = new VertexPositionNormalColor(points[i][j+1], normals[i][j+1], 
-						Color.SeaGreen);
+						Color.SkyBlue);
                     shapeArray[k + 5] = new VertexPositionNormalColor(points[i+1][j+1], normals[i+1][j+1], 
-						Color.SeaGreen);
+						Color.SkyBlue);
 
                     k += 6;
                 }

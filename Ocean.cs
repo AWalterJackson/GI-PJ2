@@ -25,9 +25,9 @@ namespace Project
             GetParamsFromModel();
 
 			// Lighting properties
-			basicEffect = new BasicEffect(game.GraphicsDevice);
+			//basicEffect = new BasicEffect(game.GraphicsDevice);
             basicEffect.Alpha = 0.75f;
-			basicEffect.PreferPerPixelLighting = true;
+			//basicEffect.PreferPerPixelLighting = true;
         }
 
 		/// <summary>
