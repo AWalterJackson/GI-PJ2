@@ -41,13 +41,13 @@ namespace Project
         {
 			int r = RNGesus.Next(0,4);
 			if (r == 0){
-				return 10;
+				return -18;
 			} else if (r == 1) {
-				return 20;
+				return 1;
 			} else if (r == 2) {
-				return 60;
+				return 17;
 			} else if (r == 3) {
-				return 70;
+				return -2;
 			}
 			return 80;
             //return RNGesus.Next(-game.edgemax, -game.edgemax + 
