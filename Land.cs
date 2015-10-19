@@ -38,10 +38,16 @@ namespace Project
 			}
 			// Check if this point is colliding with any point in the terrain.
 			Vector3[][] map = this.myModel.modelMap;
+			Vector2 directionP = new Vector2(0.0f,0.0f), directionM = new Vector2(0.0f,0.0f);
+			directionP.X = pt.X;
+			directionP.Y = pt.Y;
 			for (int i = 0; i < map.Length; i++) {
-					for (int j = 0; j < map[i].Length; j++) {  
+					for (int j = 0; j < map[i].Length; j++) { 
+					directionM.X = map[i][j].X;
+					directionM.Y = map[i][j].Y;
 					// Calculate distance and return true if within collision radius
-					if (Vector3.Distance(map[i][j], pt) <= collisionRadius) {
+					if (Vector3.Distance(map[i][j], pt) <= collisionRadius || 
+						(Vector2.Distance(directionP, directionM) < collisionRadius && pt.Z > map[i][j].Z)) {
 						return true;
 					}
 				}
