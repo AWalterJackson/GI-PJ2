@@ -65,7 +65,7 @@ namespace Project
 
                     // Apply the basic effect technique and draw the object
                     basicEffect.CurrentTechnique.Passes[0].Apply();
-                    System.Diagnostics.Debug.WriteLine(myModel.vertices.ElementCount);
+                    //System.Diagnostics.Debug.WriteLine(myModel.vertices.ElementCount);
                     game.GraphicsDevice.Draw(PrimitiveType.TriangleList, myModel.vertices.ElementCount);
                 }
             }
