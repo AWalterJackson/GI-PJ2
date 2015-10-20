@@ -65,6 +65,8 @@ namespace Project
             {
                 newpos = new Vector3(coord(),coord(),-1);
 				Enemy e = new Enemy(this.game, this, EnemyType.galleon, newpos);
+				newpos = new Vector3(coord(),coord(),-1);
+				Enemy e = new Enemy(this.game, this, EnemyType.demoship, newpos);
 				e.damagemodifier = dmgmod;
 				e.armour = armmod;
                 game.gameObjects.Add(e);
