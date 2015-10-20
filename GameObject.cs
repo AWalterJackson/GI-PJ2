@@ -23,6 +23,7 @@ namespace Project
         public GameObjectType type = GameObjectType.None;
         public Vector3 pos;
         public BasicEffect basicEffect;
+        public Effect effect;
 
         public abstract void Update(GameTime gametime);
         public void Draw(GameTime gametime)
