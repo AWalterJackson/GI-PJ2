@@ -170,8 +170,8 @@ namespace Project
             }
 			// Land coliision handling
 			if (game.worldBase.isColiding(pos + (velocity * time), myModel.collisionRadius)){
-				// deal damage
-				float damage = velocity.Length() * 100;
+				// deal slight damage for hitting edge, just change the multiply factor to adjust
+				float damage = velocity.Length() * 10;
 				hitpoints -= (int)damage;
 				// adjust physics appropriately
 				pos = pos -Vector3.Normalize(velocity) * (myModel.collisionRadius + 0.001f);
