@@ -93,7 +93,7 @@ namespace Project
             {
                 this.detected = false;
                 this.maxspeed = 0.2f;
-                searchloc = controller.newSearch();
+                searchloc = controller.newSearch(pos);
             }
 
             //Behaviour if player is detected
@@ -134,11 +134,12 @@ namespace Project
             {
                 if (Vector3.Distance(searchloc, this.pos) < detectrange)
                 {
-                    searchloc = controller.newSearch();
+                    searchloc = controller.newSearch(pos);
                 }
 
                 this.acceleration.X = searchloc.X - this.pos.X;
                 this.acceleration.Y = searchloc.Y - this.pos.Y;
+
                 acceleration.Normalize();
             }
 

@@ -28,14 +28,7 @@ namespace Project
         }
 
 		// Check if a point collides with the land
-		public bool isColiding(Vector3 pt, float collisionRadius) {
-			// Stay within boudaries
-			if (pt.X <= -game.edgemax || pt.X >= game.edgemax) {
-				return true;
-			}
-			if (pt.Y <= -game.edgemax || pt.Y >= game.edgemax) {
-				return true;
-			}
+		public bool isColidingTerrain(Vector3 pt, float collisionRadius) {
 			// Check if this point is colliding with any point in the terrain.
 			Vector3[][] map = this.myModel.modelMap;
 			Vector2 directionP = new Vector2(0.0f,0.0f), directionM = new Vector2(0.0f,0.0f);
@@ -53,6 +46,23 @@ namespace Project
 				}
 			}
 			return false;
+		}
+
+		// Check if a point collides with the land
+		public bool isColidingEdge(Vector3 pt, float collisionRadius) {
+			// Stay within boudaries
+			if (pt.X <= -game.edgemax || pt.X >= game.edgemax) {
+				return true;
+			}
+			if (pt.Y <= -game.edgemax || pt.Y >= game.edgemax) {
+				return true;
+			}
+			return false;
+		}
+
+		// Check if a point collides with the land
+		public bool isColiding(Vector3 pt, float collisionRadius) {
+			return isColidingEdge(pt, collisionRadius) || isColidingTerrain(pt, collisionRadius);
 		}
     }
 }

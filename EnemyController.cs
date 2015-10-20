@@ -61,12 +61,13 @@ namespace Project
         {
             int i = numenemies;
             Vector3 newpos;
+			Enemy e;
             while (i > 0)
             {
                 newpos = new Vector3(coord(),coord(),-1);
-				Enemy e = new Enemy(this.game, this, EnemyType.galleon, newpos);
+				e = new Enemy(this.game, this, EnemyType.galleon, newpos);
 				newpos = new Vector3(coord(),coord(),-1);
-				Enemy e = new Enemy(this.game, this, EnemyType.demoship, newpos);
+				e = new Enemy(this.game, this, EnemyType.demoship, newpos);
 				e.damagemodifier = dmgmod;
 				e.armour = armmod;
                 game.gameObjects.Add(e);
@@ -74,9 +75,9 @@ namespace Project
             }
         }
 
-        public Vector3 newSearch()
+        public Vector3 newSearch(Vector3 curPos)
         {
-            return new Vector3(coord(), coord(), 0);
+            return new Vector3(curPos.X + 5*RNGesus.NextFloat(-1,1), curPos.Y + 5*RNGesus.NextFloat(-1,1), curPos.Z);
         }
 
 		/// <summary>
