@@ -22,8 +22,11 @@ namespace Project
         public LabGame game;
         public GameObjectType type = GameObjectType.None;
         public Vector3 pos;
-        public BasicEffect basicEffect;
+        //public BasicEffect basicEffect;
+        public Matrix World;
+        public Matrix WorldInverseTranspose;
         public Effect effect;
+        public BasicEffect basicEffect;
 
         public abstract void Update(GameTime gametime);
         public void Draw(GameTime gametime)
@@ -33,15 +36,36 @@ namespace Project
             {
                 if (myModel.wasLoaded)
                 {
-					this.basicEffect.View = game.camera.View;
-                    this.basicEffect.Projection = game.camera.Projection;
-					this.basicEffect.World = Matrix.Identity;
-                    myModel.model.Draw(game.GraphicsDevice,
-                        basicEffect.World, basicEffect.View, basicEffect.Projection);
+                    if (myModel.modelType == ModelType.Colored)
+                    {
+                        this.effect.Parameters["View"].SetValue(game.camera.View);
+                        this.effect.Parameters["Projection"].SetValue(game.camera.Projection);
+                        this.effect.Parameters["World"].SetValue(Matrix.Identity);
+                        this.effect.Parameters["cameraPos"].SetValue(game.camera.pos);
+                        this.effect.Parameters["worldInvTrp"].SetValue(WorldInverseTranspose);
+                        myModel.model.Draw(game.GraphicsDevice,
+                            Matrix.Identity, game.camera.View, game.camera.Projection);
+                    }
+                    if (myModel.modelType == ModelType.Textured)
+                    {
+                        basicEffect.World = Matrix.Identity;
+                        basicEffect.Projection = game.camera.Projection;
+                        basicEffect.View = game.camera.View;
+                        myModel.model.Draw(game.GraphicsDevice,
+                            basicEffect.World, basicEffect.View, basicEffect.Projection);
+                    }
+                    
                 }
                 else
                 {
-                    if (game.lightingSystemOn)
+                    if (myModel.modelType == ModelType.Colored)
+                    {
+                        game.lighting.SetLighting(effect);
+
+                        this.effect.Parameters["View"].SetValue(game.camera.View);
+                        this.effect.Parameters["Projection"].SetValue(game.camera.Projection);
+                    }
+                    else
                     {
                         this.basicEffect.LightingEnabled = true;
 
@@ -50,13 +74,14 @@ namespace Project
                         basicEffect.DirectionalLight0.DiffuseColor = new Vector3(0.6f, 0.6f, 0.6f);
                         basicEffect.DirectionalLight0.Direction = new Vector3(0, 0, 1f);
                         basicEffect.DirectionalLight0.SpecularColor = new Vector3(0.1f, 0.1f, 0.166f);
+
+                        basicEffect.View = game.camera.View;
+                        basicEffect.Projection = game.camera.Projection;
                     }
+
                     // Setup the vertices
                     game.GraphicsDevice.SetVertexBuffer(0, myModel.vertices, myModel.vertexStride);
                     game.GraphicsDevice.SetVertexInputLayout(myModel.inputLayout);
-
-                    this.basicEffect.View = game.camera.View;
-                    this.basicEffect.Projection = game.camera.Projection;
 
                     if (type == GameObjectType.Ocean)
                     {
@@ -64,7 +89,14 @@ namespace Project
                     }
 
                     // Apply the basic effect technique and draw the object
-                    basicEffect.CurrentTechnique.Passes[0].Apply();
+                    if (myModel.modelType == ModelType.Colored)
+                    {
+                        effect.CurrentTechnique.Passes[0].Apply();
+                    }
+                    else
+                    {
+                        basicEffect.CurrentTechnique.Passes[0].Apply();
+                    }
                     //System.Diagnostics.Debug.WriteLine(myModel.vertices.ElementCount);
                     game.GraphicsDevice.Draw(PrimitiveType.TriangleList, myModel.vertices.ElementCount);
                 }
@@ -74,13 +106,11 @@ namespace Project
         public void GetParamsFromModel()
         {
             if (myModel.modelType == ModelType.Colored) {
-                basicEffect = new BasicEffect(game.GraphicsDevice)
-                {
-                    View = game.camera.View,
-                    Projection = game.camera.Projection,
-                    World = Matrix.Identity,
-                    VertexColorEnabled = true
-                };
+                effect = game.Content.Load<Effect>("multipoint");
+                this.effect.Parameters["View"].SetValue(game.camera.View);
+                this.effect.Parameters["Projection"].SetValue(game.camera.Projection);
+                this.effect.Parameters["World"].SetValue(Matrix.Identity);
+
             }
             else if (myModel.modelType == ModelType.Textured) {
                 basicEffect = new BasicEffect(game.GraphicsDevice)

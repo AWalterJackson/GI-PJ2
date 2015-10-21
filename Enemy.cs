@@ -41,6 +41,9 @@ namespace Project
             this.detectrange = 3.5f;
             this.escaperange = detectrange * 2;
             this.etype = etype;
+            this.locallight.lightCol = new Vector4(1f, 0f, 0f, 1f);
+            this.locallight.lightPos = new Vector4(this.pos.X, this.pos.Y, this.pos.Z - 2, 1f);
+            game.addLight(this.locallight);
             GetParamsFromModel();
             fireTimer = 0;
             fireDistance = 4;
@@ -74,6 +77,8 @@ namespace Project
             if(hitpoints <= 0)
             {
                 game.score += 1;
+                game.Add(new TransientLight(this.game, this.pos));
+                game.removeLight(this.locallight);
                 game.Remove(this);
             }
             int time = gameTime.ElapsedGameTime.Milliseconds;
@@ -145,7 +150,8 @@ namespace Project
 
             //Handle the in-game physics
             physicsUpdate(gameTime);
-
+            //Handle the following light
+            updateLight();
             //Handle the graphics transforms for this update
             transform();
         }

@@ -45,6 +45,7 @@ namespace Project
         public AccelerometerReading accelerometerReading;
         public GameInput input;
         private EnemyController controller;
+        private LightingController lighting;
         public int score;
         public bool gameOver;
         public int size;
@@ -129,9 +130,8 @@ namespace Project
             gameObjects.Add(player);
             controller = new EnemyController(this);
             gameObjects.Add(controller);
-            Enemy enemy = new Enemy(this, controller, EnemyType.galleon, new Vector3(1, 1, -1));
-            gameObjects.Add(enemy);
-            gameObjects.Add(new EnemyController(this));
+            lighting = new LightingController(this);
+            gameObjects.Add(lighting);
 
             // Create an input layout from the vertices
 
@@ -275,6 +275,16 @@ namespace Project
         public Vector3 getPlayeraccel()
         {
             return this.player.acceleration;
+        }
+
+        public void addLight(LightingController.LightSource light)
+        {
+            lighting.Add(light);
+        }
+
+        public void removeLight(LightingController.LightSource light)
+        {
+            lighting.Remove(light);
         }
 
 		/// <summary>

@@ -19,6 +19,7 @@ namespace Project
 		public float maxaccel; //A value that the magnitude of acceleration cannot exceed
         public float heading; //Angle in radians from north
         public float damagemodifier; //Damage modifier (multiplicative)
+        public LightingController.LightSource locallight; //A Point light that follows the object
 
         //public abstract void Update(GameTime gametime);
 
@@ -300,6 +301,12 @@ namespace Project
         public void Hit(int damage)
         {
             hitpoints -= damage;
+        }
+
+        public void updateLight()
+        {
+            this.locallight.lightPos.X = this.pos.X;
+            this.locallight.lightPos.Y = this.pos.Y;
         }
 
     }
