@@ -159,6 +159,7 @@ namespace Project
             {
                 if (gameOver == true)
                 {
+                    "append score onto the highscores list, probably seperated into a function, or actually, probably best to take the high score and insert it into the correct position, so the highscores stay sorted, I was just going to sort them when you access the highscores, actually, yeah, that does sound better, just sorting them (not in place) to display";
                     this.Exit();
                     this.Dispose();
                     App.Current.Exit();

@@ -36,6 +36,7 @@ namespace Project
             this.parent = parent;
             InitializeComponent();
         }
+
         private void StartGame(object sender, RoutedEventArgs e)
         {
             parent.StartGame();
@@ -46,11 +47,17 @@ namespace Project
             parent.Children.Add(new Instructions(parent));
             parent.Children.Remove(this);
         }
+
         private void LoadOptions(object sender, RoutedEventArgs e)
         {
             parent.Children.Add(new Options(parent));
             parent.Children.Remove(this);
         }
 
+        private void LoadHighscores(object sender, RoutedEventArgs e)
+        {
+            parent.Children.Add(new Highscores(parent));
+            parent.Children.Remove(this);
+        }
     }
 }

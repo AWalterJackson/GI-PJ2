@@ -9,8 +9,9 @@
     d:DesignWidth="1280"
     d:DesignHeight="800">
     <Grid>
-        <Button x:Name="cmdStart" Content="Start" HorizontalAlignment="Left" Height="77" Margin="515,247,0,0" VerticalAlignment="Top" Width="163" Click="StartGame"/>
-        <Button x:Name="cmdInstructions" Content="Help" HorizontalAlignment="Left" Height="77" Margin="515,401,0,0" VerticalAlignment="Top" Width="163" Click="LoadInstructions"/>
-        <Button x:Name="cmdOptions" Content="Options" HorizontalAlignment="Left" Height="77" Margin="515,555,0,0" VerticalAlignment="Top" Width="163" Click="LoadOptions"/>
+        <Button x:Name="cmdStart" Content="Start" HorizontalAlignment="Left" Height="77" Margin="515,150,0,0" VerticalAlignment="Top" Width="163" Click="StartGame"/>
+        <Button x:Name="cmdInstructions" Content="Help" HorizontalAlignment="Left" Height="77" Margin="515,300,0,0" VerticalAlignment="Top" Width="163" Click="LoadInstructions"/>
+        <Button x:Name="cmdOptions" Content="Options" HorizontalAlignment="Left" Height="77" Margin="515,450,0,0" VerticalAlignment="Top" Width="163" Click="LoadOptions"/>
+        <Button x:Name="cmdHighscores" Content="Highscores" HorizontalAlignment="Left" Height="77" Margin="515,600,0,0" VerticalAlignment="Top" Width="163" Click="LoadHighscores"/>
     </Grid>
 </Page>
