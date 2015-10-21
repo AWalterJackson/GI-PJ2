@@ -59,7 +59,7 @@ namespace Project
                 {
                     if (myModel.modelType == ModelType.Colored)
                     {
-                        game.lighting.SetLighting(effect);
+                        game.lighting.SetLighting(this.effect);
 
                         this.effect.Parameters["View"].SetValue(game.camera.View);
                         this.effect.Parameters["Projection"].SetValue(game.camera.Projection);

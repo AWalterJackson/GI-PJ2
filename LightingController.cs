@@ -66,13 +66,12 @@ namespace Project
             {
                 Rebuild();
             }
-            changed = false;
         }
 
         private void Rebuild()
         {
             int index = 0;
-            
+            System.Diagnostics.Debug.WriteLine(Count());
             passablelights = new LightSource[totallights];
             foreach (LightSource light in lights)
             {
@@ -86,6 +85,7 @@ namespace Project
                 passablelights[index].lightPos = new Vector4(0f, 0f, 0f, 1f);
                 index++;
             }
+            changed = false;
         }
 
         public int Count()
@@ -102,6 +102,7 @@ namespace Project
             if (!lights.Contains(light) && !addedlights.Contains(light) && lights.Count < totallights)
             {
                 changed = true;
+                //DEBUG DIAGNOSTICS HERE TO SEE IF LIGHTS ARE ACTUALLY BEING ADDED
                 addedlights.Push(light);
             }
         }

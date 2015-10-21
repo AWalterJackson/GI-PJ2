@@ -10,10 +10,11 @@ namespace Project
 {
     class TransientLight : GameObject
     {
-        private LightingController.LightSource light;
+        public LightingController.LightSource light;
 
         public TransientLight(LabGame game, Vector3 pos)
         {
+            this.game = game;
             this.light.lightCol = new Vector4(1f, 1f, 1f, 1f);
             this.light.lightPos = new Vector4(pos.X, pos.Y, pos.Z - 2, 1f);
             game.addLight(this.light);
