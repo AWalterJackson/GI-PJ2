@@ -26,7 +26,7 @@ namespace Project
             this.game = game;
             type = GameObjectType.Player;
             myModel = game.assets.GetModel("boat.png", CreatePlayerModel);
-            pos = new SharpDX.Vector3(0, 0, -1); // Islands are either side of the player so should fit
+            pos = new SharpDX.Vector3(0, 0, -1);
             velocity = new Vector3(0, 0, 0);
             acceleration = new Vector3(0, 0, 0);
             hitpoints = 100;
@@ -51,7 +51,7 @@ namespace Project
 		/// <param name="gameTime">Time since last update.</param>
         public override void Update(GameTime gameTime)
         {
-            //System.Diagnostics.Debug.WriteLine(hitpoints);
+            //System.Diagnostics.Debug.WriteLine(gameTime.ElapsedGameTime.Milliseconds);
             if (hitpoints <= 0)
             {
                 game.gameOver = true;
@@ -84,7 +84,7 @@ namespace Project
         private void fire(Vector2 dir)
         {
 
-            System.Diagnostics.Debug.WriteLine("dirx="+dir.X+" diry="+dir.Y+"window height="+game.windowHeight+" window width="+game.windowWidth);
+            //System.Diagnostics.Debug.WriteLine("dirx="+dir.X+" diry="+dir.Y+"window height="+game.windowHeight+" window width="+game.windowWidth);
 
             Vector3 direction = new Vector3(dir.X - 1542 / 2, -dir.Y + 1024 / 2, 0);
             direction.Normalize();
