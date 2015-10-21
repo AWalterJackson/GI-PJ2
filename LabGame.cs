@@ -45,7 +45,7 @@ namespace Project
         public AccelerometerReading accelerometerReading;
         public GameInput input;
         private EnemyController controller;
-        private LightingController lighting;
+        public LightingController lighting;
         public int score;
         public bool gameOver;
         public int size;

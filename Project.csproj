@@ -46,6 +46,7 @@
     <Compile Include="EnemyController.cs" />
     <Compile Include="GameInput.cs" />
     <Compile Include="Land.cs" />
+    <Compile Include="LightingController.cs" />
     <Compile Include="MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>
     </Compile>
@@ -66,6 +67,7 @@
     <Compile Include="LabGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameObject.cs" />
+    <Compile Include="TransientLight.cs" />
     <Compile Include="VertexPositionNormalColour.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -129,6 +131,7 @@
     <ToolkitFxc Include="Content\Phong.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </ToolkitFxc>
+    <Content Include="Content\MultiPoint.fx" />
     <Content Include="Content\player projectile.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
