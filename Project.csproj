@@ -46,6 +46,7 @@
     <Compile Include="EnemyController.cs" />
     <Compile Include="GameInput.cs" />
     <Compile Include="Land.cs" />
+    <Compile Include="Light.cs" />
     <Compile Include="LightingController.cs" />
     <Compile Include="MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>
@@ -131,7 +132,9 @@
     <ToolkitFxc Include="Content\Phong.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </ToolkitFxc>
-    <Content Include="Content\MultiPoint.fx" />
+    <ToolkitFxc Include="Content\MultiPoint.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </ToolkitFxc>
     <Content Include="Content\player projectile.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

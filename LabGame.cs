@@ -122,6 +122,8 @@ namespace Project
             removedGameObjects = new Stack<GameObject>();
 
             // Create game objects.
+            lighting = new LightingController(this);
+            gameObjects.Add(lighting);
             worldBase = new Land(this, this.size);
             gameObjects.Add(worldBase);
             ocean = new Ocean(this, this.size);
@@ -130,8 +132,7 @@ namespace Project
             gameObjects.Add(player);
             controller = new EnemyController(this);
             gameObjects.Add(controller);
-            lighting = new LightingController(this);
-            gameObjects.Add(lighting);
+            
 
             // Create an input layout from the vertices
 

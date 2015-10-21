@@ -26,7 +26,7 @@ namespace Project
 
 			// Lighting properties
 			//basicEffect = new BasicEffect(game.GraphicsDevice);
-            basicEffect.Alpha = 0.75f;
+            //basicEffect.Alpha = 0.75f;
 			//basicEffect.PreferPerPixelLighting = true;
         }
 
@@ -36,7 +36,7 @@ namespace Project
 		/// <param name="gameTime">Time since last update.</param>
         public override void Update(GameTime gametime)
         {
-			EffectTechniqueCollection e = basicEffect.Techniques;
+			//EffectTechniqueCollection e = basicEffect.Techniques;
 
         }
     }

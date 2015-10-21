@@ -23,7 +23,7 @@
 
 // these won't change in a given iteration of the shader
 // It is more efficient to use a set number of lights than to do this dynamically
-#define MAX_LIGHTS 3
+#define MAX_LIGHTS 10
 
 struct Light
 {

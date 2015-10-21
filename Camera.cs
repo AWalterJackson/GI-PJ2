@@ -31,11 +31,12 @@ namespace Project
 		/// </summary>
         public void Update()
         {
-            pos.X = game.gameObjects[2].pos.X;
-            pos.Y = game.gameObjects[2].pos.Y -1 ;
+            Vector3 playerpos = game.getPlayerPos();
+            pos.X = playerpos.X;
+            pos.Y = playerpos.Y -1 ;
             Projection = Matrix.PerspectiveFovLH((float)Math.PI / 4.0f, (float)game.GraphicsDevice.BackBuffer.Width / game.GraphicsDevice.BackBuffer.Height, 0.1f, 100.0f);
-            Vector3 up = Vector3.Normalize(Vector3.Cross(game.gameObjects[2].pos - pos, Vector3.UnitX));
-            View = Matrix.LookAtLH(pos, game.gameObjects[2].pos, up);
+            Vector3 up = Vector3.Normalize(Vector3.Cross(playerpos - pos, Vector3.UnitX));
+            View = Matrix.LookAtLH(pos, playerpos, up);
         }
     }
 }

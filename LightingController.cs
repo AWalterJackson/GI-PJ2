@@ -10,7 +10,7 @@ namespace Project
     using SharpDX.Toolkit.Graphics;
     using SharpDX.Toolkit.Input;
     // This class is optional.  It just makes it a bit easier to see what's been added, and to organise lighting separately from other code.
-    class LightingController : GameObject
+    public class LightingController : GameObject
     {
         int totallights = 10;
         bool changed;
@@ -37,7 +37,7 @@ namespace Project
             removedlights = new Stack<LightSource>();
             changed = true;
 
-            ambientCol = new Vector4(0.4f, 0.4f, 0.4f, 1.0f);
+            ambientCol = new Vector4(0.5f, 0.5f, 0.5f, 1.0f);
             // TASK 3: Initialise lights
             //packedLights[0].lightPos = new Vector4(-3f, 0f, 0f, 1f);
             //packedLights[0].lightCol = new Vector4(1f, 0f, 0f, 1f);
@@ -55,11 +55,12 @@ namespace Project
         {
             // TASK 2: Pass parameters to shader
             effect.Parameters["lightAmbCol"].SetValue(ambientCol);
+            //effect.Parameters["totallights"].SetValue(totallights);
             effect.Parameters["lights"].SetValue(passablelights);
         }
 
         
-        public void Update()
+        public override void Update(GameTime gameTime)
         {
             if (changed == true)
             {
@@ -72,10 +73,17 @@ namespace Project
         {
             int index = 0;
             
-            passablelights = new LightSource[Count()];
+            passablelights = new LightSource[totallights];
             foreach (LightSource light in lights)
             {
                 passablelights[index] = light;
+                index++;
+            }
+            while (index < totallights)
+            {
+                passablelights[index] = new LightSource();
+                passablelights[index].lightCol = new Vector4(0f, 0f, 0f, 1f);
+                passablelights[index].lightPos = new Vector4(0f, 0f, 0f, 1f);
                 index++;
             }
         }

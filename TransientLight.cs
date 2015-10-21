@@ -19,7 +19,7 @@ namespace Project
             game.addLight(this.light);
         }
 
-        public void Update()
+        public override void Update(GameTime gameTime)
         {
             this.light.lightCol *= 0.95f;
             if (this.light.lightCol.X < 0.05f)

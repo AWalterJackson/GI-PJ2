@@ -22,7 +22,6 @@ namespace Project
         public LabGame game;
         public GameObjectType type = GameObjectType.None;
         public Vector3 pos;
-        //public BasicEffect basicEffect;
         public Matrix World;
         public Matrix WorldInverseTranspose;
         public Effect effect;
@@ -48,9 +47,9 @@ namespace Project
                     }
                     if (myModel.modelType == ModelType.Textured)
                     {
-                        basicEffect.World = Matrix.Identity;
-                        basicEffect.Projection = game.camera.Projection;
-                        basicEffect.View = game.camera.View;
+                        this.basicEffect.World = Matrix.Identity;
+                        this.basicEffect.Projection = game.camera.Projection;
+                        this.basicEffect.View = game.camera.View;
                         myModel.model.Draw(game.GraphicsDevice,
                             basicEffect.World, basicEffect.View, basicEffect.Projection);
                     }
@@ -106,7 +105,7 @@ namespace Project
         public void GetParamsFromModel()
         {
             if (myModel.modelType == ModelType.Colored) {
-                effect = game.Content.Load<Effect>("multipoint");
+                effect = game.Content.Load<Effect>("MultiPoint");
                 this.effect.Parameters["View"].SetValue(game.camera.View);
                 this.effect.Parameters["Projection"].SetValue(game.camera.Projection);
                 this.effect.Parameters["World"].SetValue(Matrix.Identity);
