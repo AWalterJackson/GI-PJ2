@@ -42,6 +42,7 @@ namespace Project
                         this.effect.Parameters["World"].SetValue(Matrix.Identity);
                         this.effect.Parameters["cameraPos"].SetValue(game.camera.pos);
                         this.effect.Parameters["worldInvTrp"].SetValue(WorldInverseTranspose);
+                        game.lighting.SetLighting(this.effect);
                         myModel.model.Draw(game.GraphicsDevice,
                             Matrix.Identity, game.camera.View, game.camera.Projection);
                     }
@@ -84,7 +85,7 @@ namespace Project
 
                     if (type == GameObjectType.Ocean)
                     {
-                        game.GraphicsDevice.SetBlendState(game.GraphicsDevice.BlendStates.AlphaBlend);
+                        //game.GraphicsDevice.SetBlendState(game.GraphicsDevice.BlendStates.AlphaBlend);
                     }
 
                     // Apply the basic effect technique and draw the object

@@ -37,10 +37,8 @@ float4x4 Projection;
 float4 cameraPos;
 float4x4 worldInvTrp;
 
-// TASK 2: These are no longer hard coded
 float4 lightAmbCol;
 
-// TASK 4 & 6: Here we take an array of lights
 Light lights[MAX_LIGHTS];
 
 struct VS_IN

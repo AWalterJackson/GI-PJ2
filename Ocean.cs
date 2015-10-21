@@ -36,7 +36,7 @@ namespace Project
 		/// <param name="gameTime">Time since last update.</param>
         public override void Update(GameTime gametime)
         {
-			//EffectTechniqueCollection e = basicEffect.Techniques;
+            WorldInverseTranspose = Matrix.Transpose(Matrix.Invert(World));
 
         }
     }

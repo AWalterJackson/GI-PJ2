@@ -38,15 +38,6 @@ namespace Project
             changed = true;
 
             ambientCol = new Vector4(0.5f, 0.5f, 0.5f, 1.0f);
-            // TASK 3: Initialise lights
-            //packedLights[0].lightPos = new Vector4(-3f, 0f, 0f, 1f);
-            //packedLights[0].lightCol = new Vector4(1f, 0f, 0f, 1f);
-
-            //packedLights[1].lightPos = new Vector4(3f, 0f, 0f, 1f);
-            //packedLights[1].lightCol = new Vector4(0f, 1f, 0f, 1f);
-
-            //packedLights[2].lightPos = new Vector4(0f, 0f, -3f, 1f);
-            //packedLights[2].lightCol = new Vector4(0f, 0f, 1f, 1f);
 
             this.game = game;
         }
@@ -56,12 +47,14 @@ namespace Project
             // TASK 2: Pass parameters to shader
             effect.Parameters["lightAmbCol"].SetValue(ambientCol);
             //effect.Parameters["totallights"].SetValue(totallights);
+            System.Diagnostics.Debug.WriteLine(lights[0].lightPos);
             effect.Parameters["lights"].SetValue(passablelights);
         }
 
         
         public override void Update(GameTime gameTime)
         {
+            flushAddedAndRemovedLights();
             if (changed == true)
             {
                 Rebuild();
@@ -75,6 +68,10 @@ namespace Project
             passablelights = new LightSource[totallights];
             foreach (LightSource light in lights)
             {
+                //System.Diagnostics.Debug.WriteLine("COL");
+                //System.Diagnostics.Debug.WriteLine(light.lightCol);
+                //System.Diagnostics.Debug.WriteLine("POS");
+                //System.Diagnostics.Debug.WriteLine(light.lightPos);
                 passablelights[index] = light;
                 index++;
             }
@@ -102,7 +99,6 @@ namespace Project
             if (!lights.Contains(light) && !addedlights.Contains(light) && lights.Count < totallights)
             {
                 changed = true;
-                //DEBUG DIAGNOSTICS HERE TO SEE IF LIGHTS ARE ACTUALLY BEING ADDED
                 addedlights.Push(light);
             }
         }
@@ -123,7 +119,7 @@ namespace Project
         /// <summary>
         /// Process the buffers of game objects that need to be added/removed.
         /// </summary>
-        private void flushAddedAndRemovedGameObjects()
+        private void flushAddedAndRemovedLights()
         {
             while (addedlights.Count > 0) { lights.Add(addedlights.Pop()); }
             while (removedlights.Count > 0) { lights.Remove(removedlights.Pop()); }
