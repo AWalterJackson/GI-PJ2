@@ -8,20 +8,19 @@ using SharpDX.Toolkit;
 
 namespace Project
 {
+    //Abstract class inherited by any object with physics
     abstract public class PhysicalObject : GameObject
     {
-        public Vector3 velocity; //Speed relative to the map
-        public Vector2 direction; //Unit vector in the direction of velocity
-        public Vector3 acceleration; //Rate at which velocity is changing
-        public int hitpoints; //Health of the object, if it goes below 0, object dies
-        public float armour; //A value between 0 and 1 to indicate a percentage reduction in damage taken
-        public float maxspeed; //A value that the magnitude of velocity cannot exceed
-		public float maxaccel; //A value that the magnitude of acceleration cannot exceed
-        public float heading; //Angle in radians from north
-        public float damagemodifier; //Damage modifier (multiplicative)
-        public LightingController.LightSource locallight; //A Point light that follows the object
-
-        //public abstract void Update(GameTime gametime);
+        public Vector3 velocity;                            //Speed relative to the map
+        public Vector2 direction;                           //Unit vector in the direction of velocity
+        public Vector3 acceleration;                        //Rate at which velocity is changing
+        public int hitpoints;                               //Health of the object, if it goes below 0, object dies
+        public float armour;                                //Value between 0 and 1 acting as a multiplier to reduce damage in
+        public float maxspeed;                              //A value that the magnitude of velocity cannot exceed
+		public float maxaccel;                              //A value that the magnitude of acceleration cannot exceed
+        public float heading;                               //Angle in radians from north
+        public float damagemodifier;                        //Damage modifier (multiplicative)
+        public LightingController.LightSource locallight;   //A Point light that follows the object
 
 		/// <summary>
 		/// Get the magnitude of velocity.
@@ -39,6 +38,8 @@ namespace Project
             this.heading = 0;
             this.damagemodifier = 1;
         }
+
+        //Absolute velocity of an object
         public float absVelocity()
         {
 			return velocity.Length();
@@ -131,6 +132,7 @@ namespace Project
             return false;
         }
 
+        //Function to handle colliding between objects
         public bool collisionHandling(float time)
         {
             for (int i = 0; i < game.gameObjects.Count; i++)
@@ -157,15 +159,6 @@ namespace Project
                     velocity = velocity / -2;
                     ((PhysicalObject)game.gameObjects[i]).velocity = ((PhysicalObject)game.gameObjects[i]).velocity / -2;
 
-                    // Other possible post collision velocity calculations
-
-                    /*Vector3 tempdir = Vector3.Normalize(game.gameObjects[i].pos - pos);
-                    velocity = -tempdir * velocity.Length();
-                    ((PhysicalObject)game.gameObjects[i]).velocity = tempdir * ((PhysicalObject)game.gameObjects[i]).velocity.Length();*/
-
-                    /*Vector3 tempdir = ((PhysicalObject)game.gameObjects[i]).velocity;
-                    ((PhysicalObject)game.gameObjects[i]).velocity = velocity / 2;
-                    velocity = tempdir / 2;*/
                     return true;
                 }
             }
@@ -190,6 +183,7 @@ namespace Project
             return false;
         }
 
+        //Update the physics of the physical object (acceleration, velocity, position)
         public void physicsUpdate(GameTime gameTime)
         {
             // limit acceleration
@@ -263,6 +257,7 @@ namespace Project
             }
         }
 
+        //Perform visual transformations on the object for drawing
         public void transform()
         {
             this.setDirection();
@@ -303,6 +298,7 @@ namespace Project
             hitpoints -= damage;
         }
 
+        //Update the lighting position details for the object
         public void updateLight()
         {
             this.locallight.lightPos.X = this.pos.X;

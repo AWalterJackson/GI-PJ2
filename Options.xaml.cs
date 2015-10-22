@@ -52,17 +52,6 @@ namespace Project
             playerAcceleration = (float)e.NewValue;
         }
 
-        private void changePowerups(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
-        {
-            if ((int)e.NewValue == 1)
-            {
-                powerups = true;
-            } else
-            {
-                powerups = false;
-            }
-        }
-
         private void changeDifficulty(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
         {
             difficulty = (float)e.NewValue;

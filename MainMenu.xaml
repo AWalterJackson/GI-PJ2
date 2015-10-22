@@ -9,8 +9,10 @@
     d:DesignWidth="1280"
     d:DesignHeight="800">
     <Grid>
-        <Button x:Name="cmdStart" Content="Start" HorizontalAlignment="Left" Height="77" Margin="515,247,0,0" VerticalAlignment="Top" Width="163" Click="StartGame"/>
-        <Button x:Name="cmdInstructions" Content="Help" HorizontalAlignment="Left" Height="77" Margin="515,401,0,0" VerticalAlignment="Top" Width="163" Click="LoadInstructions"/>
-        <Button x:Name="cmdOptions" Content="Options" HorizontalAlignment="Left" Height="77" Margin="515,555,0,0" VerticalAlignment="Top" Width="163" Click="LoadOptions"/>
+        <Button x:Name="cmdStart" Content="Start" HorizontalAlignment="Stretch" Height="77" Margin="295,254,822,0" VerticalAlignment="Top" Click="StartGame" Width="163"/>
+        <Button x:Name="cmdInstructions" Content="Help" HorizontalAlignment="Stretch" Height="77" Margin="295,408,822,0" VerticalAlignment="Top" Click="LoadInstructions" Width="163"/>
+        <Button x:Name="cmdOptions" Content="Options" HorizontalAlignment="Stretch" Height="77" Margin="295,562,822,0" VerticalAlignment="Top" Click="LoadOptions" Width="163"/>
+        <Image x:Name="TitleImage" Margin="633,236,0,0" Source="/Assets/Square310x310Logo.scale-180.png" Width="400" Height="400" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <TextBlock x:Name="Title" Margin="703,122,0,0" TextWrapping="Wrap" Text="Piracy!" VerticalAlignment="Top" Height="114" FontSize="90" HorizontalAlignment="Left" Width="275"/>
     </Grid>
 </Page>

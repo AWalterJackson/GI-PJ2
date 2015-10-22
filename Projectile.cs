@@ -9,15 +9,16 @@ using SharpDX.Toolkit;
 namespace Project
 {
     using SharpDX.Toolkit.Graphics;
-    // Projectile classed, used by both player and enemy.
+
+    // Projectile class, used by both player and enemy.
     class Projectile : PhysicalObject
     {
-        private Vector3 vel;
-        private PhysicalObject shooter;	// The physical object that fired this projectile
-        private float hitRadius = 0.5f;
-        private float squareHitRadius;
-        private Vector3 initPos;
-        private float maxDist = 5;
+        private Vector3 vel;            //Local class velocity for projectile only behaviours
+        private PhysicalObject shooter;	//The physical object that fired this projectile
+        private float hitRadius = 0.5f; //Radius at which the projectile hits
+        private float squareHitRadius;  //Squared hitradius
+        private Vector3 initPos;        //Initial position
+        private float maxDist = 5;      //Maximum distance projectiles can travel
 		
 		/// <summary>
 		/// Create a new projectile.
@@ -57,8 +58,10 @@ namespace Project
                 return;
             }
 
-            // Set local transformation to be spinning according to time for fun.
+            //Cannonball has constant velocity, thus updatephysics is not used for simplicity
+            // Set local transformation to be spinning because why not.
             basicEffect.World = Matrix.RotationY(time) * Matrix.RotationZ(time * time) * Matrix.Translation(pos);
+            //Handle lighting update
             updateLight();
             // Check if collided with the target type of object.
             checkForCollisions();
@@ -90,7 +93,7 @@ namespace Project
                             break;
                     }
 
-                    // Destroy self.
+                    //Destroy self.
                     game.Remove(this);
                 }
             }

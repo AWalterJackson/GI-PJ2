@@ -9,6 +9,7 @@ using SharpDX.Toolkit.Graphics;
 
 namespace Project
 {
+    //Class for the water surface
     class Ocean : GameObject
     {
 		/// <summary>
@@ -23,11 +24,6 @@ namespace Project
             type = GameObjectType.Ocean;
             myModel = game.assets.CreateOcean(degree,1);
             GetParamsFromModel();
-
-			// Lighting properties
-			//basicEffect = new BasicEffect(game.GraphicsDevice);
-            //basicEffect.Alpha = 0.75f;
-			//basicEffect.PreferPerPixelLighting = true;
         }
 
 		/// <summary>

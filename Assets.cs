@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SharpDX;
 using SharpDX.Toolkit;
+
 namespace Project
 {
     using SharpDX.Toolkit.Graphics;
@@ -12,13 +13,14 @@ namespace Project
     {
         LabGame game;
 
-		// Private variables used by functions
+		//Private variables used by functions
 		public static int HEIGHT_MIN = 5;
 		public static int HEIGHT_MAX = -5;
 		public static int CORNER = -1;
 		public static int HEIGHT_INIT = 3;
 		public static float WORLD_WIDTH = 20.0f;
 
+        //Class constructor
         public Assets(LabGame game)
         {
             this.game = game;
@@ -367,7 +369,6 @@ namespace Project
 		private Color getColor(Vector3 vertice) {
 			// Get the color for a vertice
 			Color c = new Color();
-			// TO-DO: Implement height specific colouring
 			if (vertice.Z <= -1) {
 				c = Color.ForestGreen;
 			} else {
@@ -410,12 +411,7 @@ namespace Project
 			map[(int)squares[0][1].X][(int)squares[0][1].Y].Z = corner;
 			map[(int)squares[0][2].X][(int)squares[0][2].Y].Z = corner;
 			map[(int)squares[0][3].X][(int)squares[0][3].Y].Z = corner;
-			/*
-			map[(int)squares[0][0].X][(int)squares[0][0].Y].Z = rand.NextFloat(min, max);
-			map[(int)squares[0][1].X][(int)squares[0][1].Y].Z = rand.NextFloat(min, max);
-			map[(int)squares[0][2].X][(int)squares[0][2].Y].Z = rand.NextFloat(min, max);
-			map[(int)squares[0][3].X][(int)squares[0][3].Y].Z = rand.NextFloat(min, max);
-			*/
+
 			bool done = false;
 			mainGap = (x2-x1);
 			while (!done) {
@@ -534,7 +530,7 @@ namespace Project
 						topLeft.Y + gap);
 					bottomMiddle = new Vector2(topLeft.X + gap,
 						bottomLeft.Y);
-					// TO-DO: split current square into 4 smaller squares of size gap;
+
 					// TOPLEFT SQUARE
 					newSquares[c] = new Vector2[4];
 					newSquares[c][0] = topLeft; newSquares[c][1] = topMiddle;

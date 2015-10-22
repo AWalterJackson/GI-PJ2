@@ -8,22 +8,24 @@ using SharpDX.Toolkit;
 
 namespace Project
 {
+
+    //Class representing the islands and the undersea terrain
     public class Land : GameObject
     {
 
         public Land(LabGame game, int degree)
         {
             this.game = game;
-            this.pos = new Vector3(0, 0, 0);
-            type = GameObjectType.None;
-            myModel = game.assets.CreateWorldBase(degree);
+            this.pos = new Vector3(0, 0, 0);        //The world is centred at 0,0,0
+            type = GameObjectType.Terrain;          //Terrain is terrain
+            myModel = game.assets.CreateWorldBase(degree);  //Generate a terrain model
             GetParamsFromModel();
             
         }
 
         public override void Update(GameTime gametime)
         {
-
+            //Terrain never changes
         }
 
 		// Check if a point collides with the land

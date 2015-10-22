@@ -5,12 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using SharpDX.Toolkit;
 using SharpDX;
+
 namespace Project
 {
-    // Enemy class
-    // Basically just shoots randomly, see EnemyController for enemy movement.
     using SharpDX.Toolkit.Graphics;
 
+    /* Two enemy types, the galleon will attempt to maintain a certain distance
+     * from the player while firing cannons, while the demoship will plow
+     * straight into the player to deal ramming damage, dying in the process.
+     */
     public enum EnemyType
     {
         galleon, demoship
@@ -18,15 +21,15 @@ namespace Project
 
     class Enemy : PhysicalObject
     {
-        float range;
-        float detectrange;
-        float escaperange;
-        bool detected;
-        float fireTimer;
-        float fireDistance;
-        EnemyType etype;
-        Vector3 searchloc;
-        EnemyController controller;
+        float range;                //Range a galleon will attempt to maintain from a player
+        float detectrange;          //Range at which the enemy will detect the player
+        float escaperange;          //Range at which the ship will cease pursuit of the player
+        bool detected;              //Variable controlling if the ship is in pursuit or not
+        float fireTimer;            //Timer to stop the enemy from spamming cannonballs
+        float fireDistance;         //Maximum distance an enemy will fire from
+        EnemyType etype;            //Enemy type descriptor
+        Vector3 searchloc;          //Location that an enemy will approach to search for a player
+        EnemyController controller; //Controller responsible for this enemy
 
         public Enemy(LabGame game, EnemyController controller, EnemyType etype, Vector3 pos) : base()
         {
@@ -79,19 +82,20 @@ namespace Project
                 game.Add(new TransientLight(this.game, this.pos));
                 game.Remove(this);
             }
+
             int time = gameTime.ElapsedGameTime.Milliseconds;
             fireTimer -= time;
             Vector3 playerpos = game.getPlayerPos();
             Vector3 playervel = game.getPlayerVel();
             Vector2 toPlayer = new Vector2(playerpos.X-this.pos.X, playerpos.Y-this.pos.Y);
-            float anglebetween = (float)Math.Acos(Vector2.Dot(new Vector2(this.velocity.X, this.velocity.Y), 
-				new Vector2(playervel.X,playervel.Y)));
 
             //Determines if the enemy can see the player ship or not
             if (!this.detected && toPlayer.Length() <= detectrange) {
                 this.detected = true;
                 this.maxspeed = 0.5f;
             }
+
+            //Determines if the player has escaped or not
             if (this.detected && toPlayer.Length() > escaperange)
             {
                 this.detected = false;
@@ -104,7 +108,7 @@ namespace Project
             {
                 if (this.etype == EnemyType.galleon)
                 {
-					// Move towards player
+					// Move away from the player if too close
                     if (toPlayer.Length() <= range / 2f)
                     {
                         this.acceleration.X = -toPlayer.X;
@@ -112,12 +116,14 @@ namespace Project
                         acceleration.Normalize();
                         acceleration /= 1.5f;
                     }
+
+                    //Move towards the player if too far
                     if (toPlayer.Length() > range / 2f)
                     {
                         this.acceleration.X = toPlayer.X;
                         this.acceleration.Y = toPlayer.Y;
-                        //acceleration /= 3f;
                     }
+
 					// Check if the enemy can engage the player and do so
                     if(toPlayer.Length() <= fireDistance && fireTimer <= 0)
                     {
@@ -125,6 +131,8 @@ namespace Project
                         fireTimer = 3000;
                     }
                 }
+
+                //I'm a demoship and I hate life, CHARGE FORWARD
                 if(this.etype == EnemyType.demoship)
                 {
                     this.acceleration.X = toPlayer.X;
@@ -132,6 +140,7 @@ namespace Project
                     this.acceleration.Normalize();
                 }
             }
+
             //Behaviour if player is not detected
             else
             {
@@ -159,11 +168,6 @@ namespace Project
         /// </summary>
         public void fire(Vector2 dir)
         {
-            /*dir.X *= 145;
-            dir.Y *= -145;
-            Vector2 position = new Vector2(-(pos.X - game.getPlayerPos().X) * 145 - 1542 / 2, (pos.Y - game.getPlayerPos().Y) * 145 + 1024 / 2);
-            System.Diagnostics.Debug.WriteLine("shooter=" + this + " dirx=" + dir.X + " diry=" + dir.Y + " positionx=" + position.X + " positiony=" + position.Y + " posx=" + pos.X + " posy=" + pos.Y + " player.x=" + game.getPlayerPos().X + " player.y=" + game.getPlayerPos().Y);
-            Vector3 direction = new Vector3(dir.X + position.X, -dir.Y + position.Y, 0);*/
             Vector3 direction = new Vector3(dir.X, dir.Y, 0);
             direction.Normalize();
             game.Add(new Projectile(game,
@@ -173,7 +177,5 @@ namespace Project
                 this
             ));
         }
-
-
     }
 }

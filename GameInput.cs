@@ -33,6 +33,7 @@ namespace Project
         }
 
         // Call the gesture recognizer when a pointer event occurs
+        //Added try/catch blocks to deal with input being handled out of order
         void OnPointerPressed(CoreWindow sender, PointerEventArgs args)
         {
             try

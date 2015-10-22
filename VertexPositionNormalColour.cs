@@ -1,4 +1,5 @@
-﻿// This definition doesn't exist in SharpDX for some reason so I've added it
+﻿//VertexPositionNormalColour class by Matt Blair. Thanks Matt :D
+//Originally created for the graphics labs
 
 using System;
 using System.Runtime.InteropServices;

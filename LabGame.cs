@@ -28,37 +28,34 @@ using Windows.Devices.Sensors;
 
 namespace Project
 {
-    // Use this namespace here in case we need to use Direct3D11 namespace as well, as this
-    // namespace will override the Direct3D11.
+
     using SharpDX.Toolkit.Graphics;
     using SharpDX.Toolkit.Input;
 
     public class LabGame : Game
     {
-        private GraphicsDeviceManager graphicsDeviceManager;
-        public List<GameObject> gameObjects;
-        private Stack<GameObject> addedGameObjects;
-        private Stack<GameObject> removedGameObjects;
-        private KeyboardManager keyboardManager;
-        public KeyboardState keyboardState;
-        private Player player;
-        public AccelerometerReading accelerometerReading;
-        public GameInput input;
-        private EnemyController controller;
-        public LightingController lighting;
-        public int score;
-        public bool gameOver;
-        public int size;
-        public int edgemax;
-        public Land worldBase;
-        private Ocean ocean;
-        public MainPage mainPage;
-        public bool powerups = true;
-        public int windowHeight, windowWidth;
-        public Vector3 lightdirection;
-        public bool lightingSystemOn = true;
+        private GraphicsDeviceManager graphicsDeviceManager;    //Graphics device manager
+        public List<GameObject> gameObjects;                    //List of active game objects
+        private Stack<GameObject> addedGameObjects;             //game objects to be added to the active list
+        private Stack<GameObject> removedGameObjects;           //game objects to be removed from the active list
+        private KeyboardManager keyboardManager;                //Keyboard input manager
+        public KeyboardState keyboardState;                     //Keyboard state to read input from
+        private Player player;                                  //Player entity
+        public AccelerometerReading accelerometerReading;       //Input from accelerometers
+        public GameInput input;                                 //Input class into the game
+        private EnemyController controller;                     //Enemy spawning and AI controller
+        public LightingController lighting;                     //Lighting and shading controller
+        public int score;                                       //Player score
+        public bool gameOver;                                   //Game exits when you lose, no second chances
+        public int size;                                        //Map size
+        public int edgemax;                                     //Maximum map coordinate value
+        public Land worldBase;                                  //Land under the ocean
+        private Ocean ocean;                                    //The ocean
+        public MainPage mainPage;                               //Main XAML interface page
+        public int windowHeight, windowWidth;                   //Window height and width
+        public bool lightingSystemOn = true;                    //Control variable for basiceffect lighting on/off
 
-        // TASK 4: Use this to represent difficulty
+        //Difficulty representation
         public float difficulty;
 
         // Represents the camera's position and orientation
@@ -66,9 +63,6 @@ namespace Project
 
         // Graphics assets
         public Assets assets;
-
-        // Random number generator
-        public Random random;
 
         // World boundaries that indicate where the edge of the screen is for the camera.
         public float boundaryLeft;
@@ -91,10 +85,10 @@ namespace Project
 
             // Create the keyboard manager
             keyboardManager = new KeyboardManager(this);
+            //Assets utility class
             assets = new Assets(this);
-            random = new Random();
+            //Input parser
             input = new GameInput();
-            lightdirection = new Vector3(0, 0, 1);
 
             // Initialise event handling.
             input.gestureRecognizer.Tapped += Tapped;
@@ -102,8 +96,10 @@ namespace Project
             input.gestureRecognizer.ManipulationUpdated += OnManipulationUpdated;
             input.gestureRecognizer.ManipulationCompleted += OnManipulationCompleted;
 
+            //Create main XAML interface
             this.mainPage = mainPage;
 
+            //Initialise game state
             score = 0;
             difficulty = 1;
             gameOver = false;
@@ -132,9 +128,6 @@ namespace Project
             gameObjects.Add(player);
             controller = new EnemyController(this);
             gameObjects.Add(controller);
-            
-
-            // Create an input layout from the vertices
 
             base.LoadContent();
         }
@@ -156,34 +149,34 @@ namespace Project
 		/// <param name="gameTime">Time since last update.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (started)
+            if (started) //Do nothing if the game has not started
             {
-                if (gameOver == true)
+                if (gameOver == true)   //Exit if you lose. NO SECOND CHANCES
                 {
                     this.Exit();
                     this.Dispose();
                     App.Current.Exit();
                     return;
                 }
-                keyboardState = keyboardManager.GetState();
-                flushAddedAndRemovedGameObjects();
-                camera.Update();
-                accelerometerReading = input.accelerometer.GetCurrentReading();
-                for (int i = 0; i < gameObjects.Count; i++)
+
+                keyboardState = keyboardManager.GetState(); //Get keyboard state
+                flushAddedAndRemovedGameObjects();          //Add and remove waiting objects
+                camera.Update();                            //Update the camera first
+                accelerometerReading = input.accelerometer.GetCurrentReading(); //Read accelerometers
+                for (int i = 0; i < gameObjects.Count; i++) //Update all other game objects and entities
                 {
                     gameObjects[i].Update(gameTime);
                 }
 
-                mainPage.UpdateScore(score);
-                mainPage.UpdateHitpoints(player.hitpoints);
+                mainPage.UpdateScore(score);    //Increment the player score
+                mainPage.UpdateHitpoints(player.hitpoints); //Adjust the hitpoints display
 
-                if (keyboardState.IsKeyDown(Keys.Escape))
+                if (keyboardState.IsKeyDown(Keys.Escape)) //Exit the game when escape is mashed
                 {
                     this.Exit();
                     this.Dispose();
                     App.Current.Exit();
                 }
-                // Handle base.Update
 
             }
             else
@@ -191,6 +184,8 @@ namespace Project
                 windowHeight = Window.ClientBounds.Height;
                 windowWidth = Window.ClientBounds.Width;
             }
+
+            // Handle base.Update
             base.Update(gameTime);
 
         }
@@ -203,8 +198,8 @@ namespace Project
         {
             if (started)
             {
-                // Clears the screen with the Color.CornflowerBlue
-                GraphicsDevice.Clear(Color.CornflowerBlue);
+                // Clears the screen with Black
+                GraphicsDevice.Clear(Color.Black);
 
                 for (int i = 0; i < gameObjects.Count; i++)
                 {
@@ -263,26 +258,31 @@ namespace Project
             while (removedGameObjects.Count > 0) { gameObjects.Remove(removedGameObjects.Pop()); }
         }
 
+        //Get the player position for other classes
         public Vector3 getPlayerPos()
         {
             return this.player.pos;
         }
 
+        //Get the player velocity for other classes
         public Vector3 getPlayerVel()
         {
             return this.player.velocity;
         }
 
+        //Get the player acceleration for other classes
         public Vector3 getPlayeraccel()
         {
             return this.player.acceleration;
         }
 
+        //Allow other classes to add a light to the lighting queue
         public void addLight(LightingController.LightSource light)
         {
             lighting.Add(light);
         }
 
+        //Allow other classes to remove their light from the lighting queue
         public void removeLight(LightingController.LightSource light)
         {
             lighting.Remove(light);
@@ -296,7 +296,6 @@ namespace Project
         public void OnManipulationStarted(GestureRecognizer sender, ManipulationStartedEventArgs args)
         {
             // Pass Manipulation events to the game objects.
-
         }
 
 		/// <summary>
@@ -306,12 +305,7 @@ namespace Project
 		/// <param name="args"></param>
         public void Tapped(GestureRecognizer sender, TappedEventArgs args)
         {
-            player.Tapped(sender, args);
-            // Pass Manipulation events to the game objects.
-            /*foreach (var obj in gameObjects)
-            {
-                obj.Tapped(sender, args);
-            }*/
+            player.Tapped(sender, args); //Only the player can react to taps
         }
 
 		/// <summary>
@@ -321,27 +315,21 @@ namespace Project
 		/// <param name="args"></param>
         public void OnManipulationUpdated(GestureRecognizer sender, ManipulationUpdatedEventArgs args)
         {
-            camera.pos.Z = camera.pos.Z * args.Delta.Scale;
-            // Update camera position for all game objects
-            /*foreach (var obj in gameObjects)
-            {
-                if (obj.basicEffect != null) { obj.basicEffect.View = camera.View; }
-                obj.OnManipulationUpdated(sender, args);
-            }*/
+            camera.pos.Z = camera.pos.Z * args.Delta.Scale; //Only the camera responds to pinch/stretch
         }
 
         public void OnManipulationCompleted(GestureRecognizer sender, ManipulationCompletedEventArgs args)
         {
-
+            //Not Used
         }
 
-        public void start(float playerSpeed, float playerAcceleration, bool powerups, float difficulty)
+        //Start the game from the main menu
+        public void start(float playerSpeed, float playerAcceleration, float difficulty)
         {
             started = true;
-            player.maxspeed = playerSpeed;
-            player.maxaccel = playerAcceleration;
-            this.powerups = powerups;
-            this.difficulty = difficulty;
+            player.maxspeed = player.maxspeed * playerSpeed;
+            player.maxaccel = player.maxaccel * playerAcceleration;
+            player.hitpoints = (int)(100/difficulty);
         }
 
     }

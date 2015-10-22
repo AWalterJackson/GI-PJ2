@@ -14,8 +14,9 @@ namespace Project
     // Enemy Controller class.
     class EnemyController : GameObject
     {
-        int round;
-        public Random RNGesus;
+        int round;              //Round counter
+        public Random RNGesus;  //RNG for AI seeking behaviour
+
         // Constructor.
         public EnemyController(LabGame game)
         {
@@ -49,6 +50,14 @@ namespace Project
         {
             int i = numenemies;
             Vector3 newpos;
+
+            //Limit maximum number of enemies... have to make at least not impossible
+            if (i > 7)
+            {
+                i = 7;
+            }
+
+            //Spawn two enemies for every round (Up to a maximum of  14 enemies)
             while (i > 0)
             {
                 newpos = new Vector3(coord(),coord(),-1);
@@ -59,17 +68,19 @@ namespace Project
             }
         }
 
+        //Pick a new search location to hunt for the player
         public Vector3 newSearch(Vector3 curPos)
         {
             return new Vector3(curPos.X + 5*RNGesus.NextFloat(-1,1), curPos.Y + 5*RNGesus.NextFloat(-1,1), curPos.Z);
         }
 
 		/// <summary>
-		/// Frame update method.
+		/// Update method.
 		/// </summary>
 		/// <param name="gameTime">Time since last update.</param>
         public override void Update(GameTime gameTime)
         {
+            //If all the enemies are dead, time to move on
             if (game.Count(GameObjectType.Enemy) == 0)
             {
                 nextRound();

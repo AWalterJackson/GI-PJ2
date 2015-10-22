@@ -10,14 +10,16 @@
     d:DesignHeight="800">
     <Grid>
         <Button x:Name="cmdBack" Content="Back" HorizontalAlignment="Left" Height="77" Margin="954,70,0,0" VerticalAlignment="Top" Width="163" Click="GoBack"/>
-        <TextBlock x:Name="txtInstructions" HorizontalAlignment="Left" Height="523" Margin="415,73,0,0" TextWrapping="Wrap" xml:space="preserve" VerticalAlignment="Top" Width="366" FontSize="24"
->In this game you play as a sailing ship, defending the seas from vicious pirates. You must fight off wave after wave of pirates to gain points and progress through the waves. Get it? Waves? It's a sailing pun.
+        <TextBlock x:Name="txtInstructions" HorizontalAlignment="Left" Height="672" Margin="415,73,0,0" TextWrapping="Wrap" xml:space="preserve" VerticalAlignment="Top" Width="366" FontSize="24"
+>In this game you play as a Merchant frigate, defending your small patch of ocean in space from vicious pirates. You must fight off wave after wave of pirates to gain points and progress through the waves. Get it? Waves? It's a sailing pun.
 
 Tilt to control the ship.
 
-Get in close to your enemies to fire your attack!
+Get in close to your enemies and fire your attack by tapping where you wish to shoot!
 
-Avoid crashing into enemies and the land, and avoid your enemy's attack! If you lose your health, you lose the game.</TextBlock>
+Avoid crashing into enemies and the land, and avoid your enemy's attack! If you lose your health, you lose the game.
+
+If you lose the game, the game is over. There are no second chances in the space ocean.</TextBlock>
 
     </Grid>
 </Page>

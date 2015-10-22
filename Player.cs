@@ -17,7 +17,7 @@ namespace Project
     // Player class.
     class Player : PhysicalObject
     {
-        //private float speed = 0.006f;
+
         private float projectileSpeed = 10;
 
         public Player(LabGame game)
@@ -31,7 +31,7 @@ namespace Project
             game.addLight(this.locallight);
             velocity = new Vector3(0, 0, 0);
             acceleration = new Vector3(0, 0, 0);
-            hitpoints = 100;
+            hitpoints = (int)(100 / game.difficulty);
             armour = 1;
             maxspeed = 0.5f;
             maxaccel = 1.4f;
@@ -58,12 +58,15 @@ namespace Project
             {
                 game.gameOver = true;
             }
-            // TASK 1: Determine velocity based on accelerometer reading
-            acceleration.X = (float)game.accelerometerReading.AccelerationX;
-            acceleration.Y = (float)game.accelerometerReading.AccelerationY;
+            //Read acceleration from accelerometers
+            acceleration.X = (float)game.accelerometerReading.AccelerationX * 1.25f;
+            acceleration.Y = (float)game.accelerometerReading.AccelerationY * 1.25f;
             
+            //Update player physics
             physicsUpdate(gameTime);
+            //Update following light
             updateLight();
+            //Perform visual transformations
             transform();
         }
         
@@ -80,14 +83,11 @@ namespace Project
 		// Initiate event upon recieving a swipe input
         public override void OnManipulationUpdated(GestureRecognizer sender, ManipulationUpdatedEventArgs args)
         {
-            //pos.X += (float)args.Delta.Translation.X / 100;
+            //Do nothing
         }
 
         private void fire(Vector2 dir)
         {
-
-            //System.Diagnostics.Debug.WriteLine("dirx="+dir.X+" diry="+dir.Y+"window height="+game.windowHeight+" window width="+game.windowWidth);
-
             Vector3 direction = new Vector3(dir.X - 1542 / 2, -dir.Y + 1024 / 2, 0);
             direction.Normalize();
             game.Add(new Projectile(game,

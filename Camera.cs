@@ -9,11 +9,12 @@ namespace Project
 {
     public class Camera
     {
-        public Matrix View;
-        public Matrix Projection;
-        public LabGame game;
-        public Vector3 pos;
-        public Vector3 oldPos;
+
+        public Matrix View;         //Camera view
+        public Matrix Projection;   //Camera projection
+        public LabGame game;        //Game
+        public Vector3 pos;         //Camera position in the world
+        public Vector3 oldPos;      //Camera's previous position in the world
 
 		/// <summary>
 		/// Ensures that all objects are being rendered from a consistent viewpoint

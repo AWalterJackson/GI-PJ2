@@ -12,8 +12,8 @@ namespace Project
     // This class is optional.  It just makes it a bit easier to see what's been added, and to organise lighting separately from other code.
     public class LightingController : GameObject
     {
-        int totallights = 15;
 
+        //Individual light sources passed to shader
         private LightSource l1;
         private LightSource l2;
         private LightSource l3;
@@ -30,26 +30,30 @@ namespace Project
         private LightSource l14;
         private LightSource l15;
 
-        bool changed;
+        /*
+         * This was previously done as an array of LightSource structs with a coded limit of 15, but
+         * was changed to its current form to avoid issues with zero padding arrays in HLSL
+         */
 
+        //Struct to contain lighting data in a form compatible with the HLSL shader
         public struct LightSource
         {
             public Vector4 lightPos;
             public Vector4 lightCol;
         }
 
+        //Ambient colour value to be passed to the shader
         public Vector4 ambientCol;
-        // TASKS 3 & 6: Note that an array of PackedLights has been used here, rather than the Light Class defined before.
-        // This is not required, but somewhat more efficient as a single array can be passed to the shader rather than individual Lights.
-        // It also makes it easier to extend the number of lights (as in Task 6)
+        //List of lights passed to the controller from game entities
         public List<LightSource> lights;
-        private Stack<LightSource> addedlights;
-        private Stack<LightSource> removedlights;
+
+        //Create a new controller
         public LightingController(LabGame game)
         {
             lights = new List<LightSource>();
             ambientCol = new Vector4(0.2f, 0.2f, 0.2f, 1f);
 
+            //Initialise all lights to the "off" state, ie giving off no light.
             l1.lightPos = new Vector4(0f, 0f, 0f, 1f);
             l1.lightCol = new Vector4(0f, 0f, 0f, 1f);
             l2.lightPos = new Vector4(0f, 0f, 0f, 1f);
@@ -80,13 +84,14 @@ namespace Project
             l14.lightCol = new Vector4(0f, 0f, 0f, 1f);
             l15.lightPos = new Vector4(0f, 0f, 0f, 1f);
             l15.lightCol = new Vector4(0f, 0f, 0f, 1f);
-            changed = true;
 
+            //Ambient light colour is constant
             ambientCol = new Vector4(0.5f, 0.5f, 0.5f, 1.0f);
 
             this.game = game;
         }
 
+        //Method called by GameObject.draw to set the lighting parameters for a given object
         public void SetLighting(Effect effect)
         {
             effect.Parameters["lightAmbCol"].SetValue(ambientCol);
@@ -109,22 +114,27 @@ namespace Project
         }
 
         
+        //Update internal lighting data
         public override void Update(GameTime gameTime)
         {
+            //Rebuild the light variables from incoming data in lights list
             Rebuild();
 
+            //Clear the lights list to allow for new entries to queue up
             for (int i = 0; i < lights.Count; i++)
             {
                 lights.Remove(lights[i]);
             }
         }
 
+        //Method to rebuild lighting variables
         private void Rebuild()
         {
-            LightSource blanklight;
+            LightSource blanklight; //Ensure an empty light entity exists to fill empty slots
             blanklight.lightPos = new Vector4(0f, 0f, 0f, 1f);
             blanklight.lightCol = new Vector4(0f, 0f, 0f, 1f);
 
+            //It may be ugly, but it works every time
             for (int i = 0; i < lights.Count(); i++)
             {
                 if (i == 0) { l1 = lights[i]; }
@@ -143,6 +153,8 @@ namespace Project
                 if (i == 13) { l14 = lights[i]; }
                 if (i == 14) { l15 = lights[i]; }
             }
+
+            //Fill any remaining variables with empty or "off" lights
             for (int i = lights.Count(); i < 15; i++)
             {
                 if (i == 0) { l1 = blanklight; }
@@ -164,30 +176,21 @@ namespace Project
         }
 
         /// <summary>
-        /// Add a new light.
+        /// Add a new light to the list.
         /// </summary>
-        /// <param name="obj"></param>
+        /// <param name="light"></param>
         public void Add(LightSource light)
         {
             lights.Add(light);
         }
 
         /// <summary>
-        /// Remove a game object.
+        /// Remove a light from the list.
         /// </summary>
-        /// <param name="obj"></param>
+        /// <param name="light"></param>
         public void Remove(LightSource light)
         {
             lights.Remove(light);
-        }
-
-        /// <summary>
-        /// Process the buffers of game objects that need to be added/removed.
-        /// </summary>
-        private void flushAddedAndRemovedLights()
-        {
-            while (removedlights.Count > 0) { lights.Remove(removedlights.Pop()); }
-            while (addedlights.Count > 0) { lights.Add(addedlights.Pop()); }
         }
     }
 }
