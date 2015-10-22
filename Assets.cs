@@ -173,26 +173,34 @@ namespace Project
 
             VertexPositionNormalColor[] shapeArray = new VertexPositionNormalColor[(sidelength + 1) * (sidelength + 1) *6];
 
+			Vector3 p, n;
+
             for (int i = 0; i < sidelength; i++)
             {
                 for (int j = 0; j < sidelength; j++)
                 {
                     //Each step creates a square in the map mesh
                     //Bottom triangle
-                    shapeArray[k] = new VertexPositionNormalColor(points[i][j], -Vector3.UnitZ,
-						getColor(points[i][j]));
-                    shapeArray[k + 1] = new VertexPositionNormalColor(points[i+1][j+1], -Vector3.UnitZ,
-						getColor(points[i+1][j+1]));
-                    shapeArray[k + 2] = new VertexPositionNormalColor(points[i+1][j], -Vector3.UnitZ,
-						getColor(points[i+1][j]));
+					p = points[i][j];
+					n = normals[i][j];
+                    shapeArray[k] = new VertexPositionNormalColor(p, n, getColor(p));
+					p = points[i+1][j+1];
+					n = normals[i+1][j+1];
+                    shapeArray[k + 1] = new VertexPositionNormalColor(p, n, getColor(p));
+					p = points[i+1][j];
+					n = normals[i+1][j];
+                    shapeArray[k + 2] = new VertexPositionNormalColor(p, n, getColor(p));
 
                     //Top Triangle
-                    shapeArray[k + 3] = new VertexPositionNormalColor(points[i][j], -Vector3.UnitZ,
-						getColor(points[i][j]));
-                    shapeArray[k + 4] = new VertexPositionNormalColor(points[i][j+1], -Vector3.UnitZ, 
-						getColor(points[i][j+1]));
-                    shapeArray[k + 5] = new VertexPositionNormalColor(points[i+1][j+1], -Vector3.UnitZ, 
-						getColor(points[i+1][j+1]));
+					p = points[i][j];
+					n = normals[i][j];
+                    shapeArray[k + 3] = new VertexPositionNormalColor(p, n, getColor(p));
+					p = points[i][j+1];
+					n = normals[i][j+1];
+                    shapeArray[k + 4] = new VertexPositionNormalColor(p, n, getColor(p));
+					p = points[i+1][j+1];
+					n = normals[i+1][j+1];
+                    shapeArray[k + 5] = new VertexPositionNormalColor(p, n, getColor(p));
 
                     k += 6;
                 }
