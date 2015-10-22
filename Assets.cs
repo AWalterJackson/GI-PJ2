@@ -18,10 +18,6 @@ namespace Project
 		public static int CORNER = -1;
 		public static int HEIGHT_INIT = 3;
 		public static float WORLD_WIDTH = 20.0f;
-		
-		// List of specific model types to load
-		private Model shipModel, projectileModel;
-		private BoundingSphere modelBounds;
 
         public Assets(LabGame game)
         {
@@ -166,7 +162,7 @@ namespace Project
 			points = diamondSquare(points, rand, 1, 87, 96, 87, 96, -4);
 
 			// Lower points
-			points = lowerSeaFloor(points, sidelength, -1, 1.5f);
+			points = lowerSeaFloor(points, sidelength, -1, 2.0f);
 
 			// Calculate vertex normals
 			normals = getNormals(points);

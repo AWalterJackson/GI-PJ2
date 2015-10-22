@@ -10,7 +10,6 @@ namespace Project
 {
     public class Land : GameObject
     {
-		int sidelength;
 
         public Land(LabGame game, int degree)
         {

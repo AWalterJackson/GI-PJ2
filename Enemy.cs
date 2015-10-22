@@ -140,8 +140,8 @@ namespace Project
                     searchloc = controller.newSearch(pos);
                 }
 
-                this.acceleration.X = searchloc.X - this.pos.X;
-                this.acceleration.Y = searchloc.Y - this.pos.Y;
+				this.acceleration.X = searchloc.X - this.pos.X;
+				this.acceleration.Y = searchloc.Y - this.pos.Y;
 
                 acceleration.Normalize();
             }
