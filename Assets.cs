@@ -353,7 +353,7 @@ namespace Project
 					}
 					avgItms = 0;
 					avg /= avgItms;
-					n[i][j] = -Vector3.Normalize(avg);
+					n[i][j] = Vector3.Normalize(avg);
 				}
 			}
 			return n;

@@ -26,6 +26,9 @@ namespace Project
             type = GameObjectType.Player;
             myModel = game.assets.GetModel("boat.png", CreatePlayerModel);
             pos = new SharpDX.Vector3(0, 0, -1);
+            this.locallight.lightCol = new Vector4(0f,0.15f,0.5f,1f);
+            this.locallight.lightPos = new Vector4(this.pos.X, this.pos.Y,this.pos.Z-2,1f);
+            game.addLight(this.locallight);
             velocity = new Vector3(0, 0, 0);
             acceleration = new Vector3(0, 0, 0);
             hitpoints = 100;
@@ -60,7 +63,7 @@ namespace Project
             acceleration.Y = (float)game.accelerometerReading.AccelerationY;
             
             physicsUpdate(gameTime);
-
+            updateLight();
             transform();
         }
         

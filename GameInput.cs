@@ -40,7 +40,7 @@ namespace Project
 
         void OnPointerMoved(CoreWindow sender, PointerEventArgs args)
         {
-            gestureRecognizer.ProcessMoveEvents(args.GetIntermediatePoints());
+                gestureRecognizer.ProcessMoveEvents(args.GetIntermediatePoints());
         }
 
         void OnPointerReleased(CoreWindow sender, PointerEventArgs args)
