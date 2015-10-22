@@ -35,7 +35,14 @@ namespace Project
         // Call the gesture recognizer when a pointer event occurs
         void OnPointerPressed(CoreWindow sender, PointerEventArgs args)
         {
-            gestureRecognizer.ProcessDownEvent(args.CurrentPoint);
+            try
+            {
+                gestureRecognizer.ProcessDownEvent(args.CurrentPoint);
+            }
+            catch (System.Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Lets do the time warp.");
+            }
         }
 
         void OnPointerMoved(CoreWindow sender, PointerEventArgs args)
@@ -52,7 +59,14 @@ namespace Project
 
         void OnPointerReleased(CoreWindow sender, PointerEventArgs args)
         {
-            gestureRecognizer.ProcessUpEvent(args.CurrentPoint);
+            try
+            {
+                gestureRecognizer.ProcessUpEvent(args.CurrentPoint);
+            }
+            catch (System.Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Let's do yet another time warp.");
+            }
         }
     }
 }
