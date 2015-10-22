@@ -33,7 +33,6 @@ namespace Project
         private MainPage parent;
         public float playerSpeed = 0.5f;
         public float playerAcceleration = 1.4f;
-        public bool powerups = true;
         public float difficulty = 1;
 
         public Options(MainPage parent)

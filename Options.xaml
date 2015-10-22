@@ -17,6 +17,5 @@
         <Slider x:Name="sldPlayerAcceleration" HorizontalAlignment="Left" Height="38" Margin="700,200,0,0" VerticalAlignment="Top" Width="159" ValueChanged="changeAcceleration" Value="1.4" IsTabStop="False" Minimum="0.1" Maximum="5" LargeChange="0.1" SmallChange="0.01" StepFrequency="0.01"/>
         <TextBlock x:Name="txtDifficulty" HorizontalAlignment="Left" Height="71" Margin="415,276,0,0" TextWrapping="Wrap" xml:space="preserve" VerticalAlignment="Top" Width="366" FontSize="24">Difficulty</TextBlock>
         <Slider x:Name="sldDifficulty" HorizontalAlignment="Left" Height="38" Margin="700,276,0,0" VerticalAlignment="Top" Width="159" ValueChanged="changeDifficulty" Value="1" IsTabStop="False" Minimum="0.5" Maximum="3" LargeChange="0.1" SmallChange="0.01" StepFrequency="0.01"/>
-
     </Grid>
 </Page>
