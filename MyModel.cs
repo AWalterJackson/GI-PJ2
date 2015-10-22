@@ -75,17 +75,5 @@ namespace Project
             this.collisionRadius = collisionRadius;
 			wasLoaded = false;
         }
-
-		/// <summary>
-		/// Create a new model.
-		/// </summary>
-		/// <param name="game"></param>
-		/// <param name="modelName"></param>
-        public MyModel(LabGame game, string modelName)
-        {
-			model = game.Content.Load<Model>(modelName);
-			wasLoaded = true;
-            modelType = ModelType.Colored;
-        }
     }
 }

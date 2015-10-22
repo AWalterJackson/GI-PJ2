@@ -92,7 +92,6 @@ float4 PS( PS_IN input ) : SV_Target
 	returnCol.rgb = amb.rgb;
 	returnCol.a = input.col.a;
 
-	// TASK 4: When working with multiple lights, simply sum the diffuse and specular components of all light sources
 	for (int i = 0; i < MAX_LIGHTS; i++) {
 		// Calculate diffuse RBG reflections
 		float fAtt = 1;

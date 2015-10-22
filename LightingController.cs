@@ -47,7 +47,7 @@ namespace Project
             // TASK 2: Pass parameters to shader
             effect.Parameters["lightAmbCol"].SetValue(ambientCol);
             //effect.Parameters["totallights"].SetValue(totallights);
-            System.Diagnostics.Debug.WriteLine(lights[0].lightPos);
+            //System.Diagnostics.Debug.WriteLine(lights[0].lightPos);
             effect.Parameters["lights"].SetValue(passablelights);
         }
 
@@ -64,7 +64,7 @@ namespace Project
         private void Rebuild()
         {
             int index = 0;
-            System.Diagnostics.Debug.WriteLine(Count());
+            //System.Diagnostics.Debug.WriteLine(Count());
             passablelights = new LightSource[totallights];
             foreach (LightSource light in lights)
             {
@@ -74,6 +74,10 @@ namespace Project
                 //System.Diagnostics.Debug.WriteLine(light.lightPos);
                 passablelights[index] = light;
                 index++;
+                if (index >= totallights)
+                {
+                    break;
+                }
             }
             while (index < totallights)
             {

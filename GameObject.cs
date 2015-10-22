@@ -37,6 +37,7 @@ namespace Project
                 {
                     if (myModel.modelType == ModelType.Colored)
                     {
+                        System.Diagnostics.Debug.WriteLine("NOTLOAD");
                         this.effect.Parameters["View"].SetValue(game.camera.View);
                         this.effect.Parameters["Projection"].SetValue(game.camera.Projection);
                         this.effect.Parameters["World"].SetValue(Matrix.Identity);
@@ -61,9 +62,11 @@ namespace Project
                     if (myModel.modelType == ModelType.Colored)
                     {
                         game.lighting.SetLighting(this.effect);
-
+                        this.effect.Parameters["World"].SetValue(Matrix.Identity);
                         this.effect.Parameters["View"].SetValue(game.camera.View);
                         this.effect.Parameters["Projection"].SetValue(game.camera.Projection);
+                        this.effect.Parameters["cameraPos"].SetValue(game.camera.pos);
+                        this.effect.Parameters["worldInvTrp"].SetValue(WorldInverseTranspose);
                     }
                     else
                     {
@@ -91,6 +94,8 @@ namespace Project
                     // Apply the basic effect technique and draw the object
                     if (myModel.modelType == ModelType.Colored)
                     {
+                        System.Diagnostics.Debug.WriteLine("SHADING");
+                        //System.Diagnostics.Debug.WriteLine(effect.Parameters["lights"].ToString());
                         effect.CurrentTechnique.Passes[0].Apply();
                     }
                     else

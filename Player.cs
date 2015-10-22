@@ -17,9 +17,6 @@ namespace Project
     // Player class.
     class Player : PhysicalObject
     {
-        //private float speed = 0.006f;
-        private float projectileSpeed = 20;
-        private float lockprogress = 0;
 
         public Player(LabGame game)
         {

@@ -91,13 +91,5 @@ namespace Project
                 nextRound();
             }
         }
-
-		/// <summary>
-		/// Move all the enemies.
-		/// </summary>
-        private void step()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
