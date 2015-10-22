@@ -40,7 +40,14 @@ namespace Project
 
         void OnPointerMoved(CoreWindow sender, PointerEventArgs args)
         {
+            try
+            {
                 gestureRecognizer.ProcessMoveEvents(args.GetIntermediatePoints());
+            }
+            catch (System.Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("Lets do the time warp again.");
+            }
         }
 
         void OnPointerReleased(CoreWindow sender, PointerEventArgs args)
