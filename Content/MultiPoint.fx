@@ -46,15 +46,14 @@ struct VS_IN
 	float4 pos : SV_POSITION;
 	float4 nrm : NORMAL;
 	float4 col : COLOR;
-// Other vertex properties, e.g. texture co-ords, surface Kd, Ks, etc
 };
 
 struct PS_IN
 {
 	float4 pos : SV_POSITION; //Position in camera co-ords
-	float4 col : COLOR;
-	float4 wpos : TEXCOORD0; //Position in world co-ords
-	float3 wnrm : TEXCOORD1; //Normal in world co-ords 
+	float4 col : COLOR;       //Vertex Colour
+	float4 wpos : TEXCOORD0;  //Position in world co-ords
+	float3 wnrm : TEXCOORD1;  //Normal in world co-ords 
 };
 
 
@@ -104,8 +103,8 @@ float4 PS( PS_IN input ) : SV_Target
 		float Ks = 1;
 		float specN = 5; // Numbers>>1 give more mirror-like highlights
 		float3 V = normalize(cameraPos.xyz - input.wpos.xyz);
-		float3 R = normalize(2 * LdotN*interpNormal.xyz - L.xyz);
-		//float3 R = normalize(0.5*(L.xyz+V.xyz)); //Blinn-Phong equivalent
+		//float3 R = normalize(2 * LdotN*interpNormal.xyz - L.xyz);
+		float3 R = normalize(0.5*(L.xyz+V.xyz)); //Blinn-Phong equivalent
 		float3 spe = fAtt*lights[i].lightCol.rgb*Ks*pow(saturate(dot(V, R)), specN);
 		returnCol.rgb = returnCol.rgb + dif.rgb + spe.rgb;
 	}
