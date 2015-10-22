@@ -30,6 +30,7 @@ namespace Project
             }
             else
             {
+                game.removeLight(this.light);
                 game.Remove(this);
             }
         }

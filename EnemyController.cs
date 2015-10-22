@@ -16,8 +16,6 @@ namespace Project
     {
         int round;
         public Random RNGesus;
-        float damageincrease;
-        float armourincrease;
         // Constructor.
         public EnemyController(LabGame game)
         {
@@ -39,7 +37,7 @@ namespace Project
 
         private int coord()
         {
-			int r = RNGesus.Next(0,4);
+			/*int r = RNGesus.Next(0,4);
 			if (r == 0){
 				return -18;
 			} else if (r == 1) {
@@ -49,7 +47,8 @@ namespace Project
 			} else if (r == 3) {
 				return -2;
 			}
-			return 80;
+			return 80;*/
+            return RNGesus.Next(-game.edgemax, game.edgemax);
             //return RNGesus.Next(-game.edgemax, -game.edgemax + 
 			//	(int)(((28.0f/128)*2*game.edgemax)*((int)Math.Pow(2, game.size)+1)));
         }

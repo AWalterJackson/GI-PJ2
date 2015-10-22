@@ -34,6 +34,9 @@ namespace Project
             this.pos = pos;
             this.vel = vel;
             this.shooter = shooter;
+            this.locallight.lightPos = new Vector4(this.pos.X, this.pos.Y, this.pos.Z - 2, 1f);
+            this.locallight.lightCol = new Vector4(0.2f, 0.2f, 0.2f, 1f);
+            game.addLight(this.locallight);
             squareHitRadius = hitRadius * hitRadius;
             GetParamsFromModel();
             initPos = pos;
@@ -51,13 +54,14 @@ namespace Project
             pos += vel * timeDelta;
             if((pos - initPos).Length() > maxDist)
             {
+                game.removeLight(this.locallight);
                 game.Remove(this);
                 return;
             }
 
             // Set local transformation to be spinning according to time for fun.
             basicEffect.World = Matrix.RotationY(time) * Matrix.RotationZ(time * time) * Matrix.Translation(pos);
-
+            updateLight();
             // Check if collided with the target type of object.
             checkForCollisions();
         }

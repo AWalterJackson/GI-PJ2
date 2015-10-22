@@ -88,13 +88,16 @@ namespace Project
 
                     if (type == GameObjectType.Ocean)
                     {
-                        //game.GraphicsDevice.SetBlendState(game.GraphicsDevice.BlendStates.AlphaBlend);
+                        effect.Parameters["lightAmbCol"].SetValue(new Vector4(0.2f, 0.2f, 0.2f, 1f));
+                    }
+                    if (type == GameObjectType.Terrain)
+                    {
+                        effect.Parameters["lightAmbCol"].SetValue(new Vector4(0.1f, 0.1f, 0.1f, 1f));
                     }
 
                     // Apply the basic effect technique and draw the object
                     if (myModel.modelType == ModelType.Colored)
                     {
-                        System.Diagnostics.Debug.WriteLine("SHADING");
                         //System.Diagnostics.Debug.WriteLine(effect.Parameters["lights"].ToString());
                         effect.CurrentTechnique.Passes[0].Apply();
                     }

@@ -12,7 +12,7 @@ namespace Project
     // This class is optional.  It just makes it a bit easier to see what's been added, and to organise lighting separately from other code.
     public class LightingController : GameObject
     {
-        int totallights = 10;
+        int totallights = 15;
         bool changed;
 
         public struct LightSource

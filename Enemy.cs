@@ -41,7 +41,7 @@ namespace Project
             this.detectrange = 3.5f;
             this.escaperange = detectrange * 2;
             this.etype = etype;
-            this.locallight.lightCol = new Vector4(1f, 0f, 0f, 1f);
+            this.locallight.lightCol = new Vector4(0.1f, 0f, 0f, 1f);
             this.locallight.lightPos = new Vector4(this.pos.X, this.pos.Y, this.pos.Z - 2, 1f);
             game.addLight(this.locallight);
             GetParamsFromModel();
