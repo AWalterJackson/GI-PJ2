@@ -50,7 +50,7 @@ namespace Project
         public int size;                                        //Map size
         public int edgemax;                                     //Maximum map coordinate value
         public Land worldBase;                                  //Land under the ocean
-        private Ocean ocean;                                    //The ocean
+        public Ocean ocean;                                    //The ocean
         public MainPage mainPage;                               //Main XAML interface page
         public int windowHeight, windowWidth;                   //Window height and width
         public bool lightingSystemOn = true;                    //Control variable for basiceffect lighting on/off

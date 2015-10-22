@@ -10,8 +10,9 @@ using SharpDX.Toolkit.Graphics;
 namespace Project
 {
     //Class for the water surface
-    class Ocean : GameObject
+    public class Ocean : GameObject
     {
+        public int sealevel;
 		/// <summary>
 		/// Create a new ocean.
 		/// </summary>
@@ -22,7 +23,8 @@ namespace Project
             this.game = game;
             this.pos = new Vector3(0, 0, 0);
             type = GameObjectType.Ocean;
-            myModel = game.assets.CreateOcean(degree,1);
+            this.sealevel = 1;
+            myModel = game.assets.CreateOcean(degree,this.sealevel);
             GetParamsFromModel();
         }
 

@@ -258,6 +258,7 @@ namespace Project
             MyModel m = new MyModel(game, shapeArray, collisionRadius);
 
 			// Make reference to points
+            game.worldBase.heights = points;
 			m.modelMap = points;
 
             return m;

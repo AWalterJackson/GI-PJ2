@@ -12,6 +12,7 @@ namespace Project
     //Class representing the islands and the undersea terrain
     public class Land : GameObject
     {
+        public Vector3[][] heights;
 
         public Land(LabGame game, int degree)
         {

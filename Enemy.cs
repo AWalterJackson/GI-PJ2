@@ -44,6 +44,7 @@ namespace Project
             this.detectrange = 3.5f;
             this.escaperange = detectrange * 2;
             this.etype = etype;
+            searchloc = controller.newSearch(this, pos);
             this.locallight.lightCol = new Vector4(0.15f, 0f, 0f, 1f);
             this.locallight.lightPos = new Vector4(this.pos.X, this.pos.Y, this.pos.Z - 2, 1f);
             GetParamsFromModel();
@@ -100,7 +101,7 @@ namespace Project
             {
                 this.detected = false;
                 this.maxspeed = 0.2f;
-                searchloc = controller.newSearch(pos);
+                searchloc = controller.newSearch(this, pos);
             }
 
             //Behaviour if player is detected
@@ -146,7 +147,7 @@ namespace Project
             {
                 if (Vector3.Distance(searchloc, this.pos) < detectrange)
                 {
-                    searchloc = controller.newSearch(pos);
+                    searchloc = controller.newSearch(this, pos);
                 }
 
 				this.acceleration.X = searchloc.X - this.pos.X;

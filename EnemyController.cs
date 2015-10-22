@@ -69,9 +69,14 @@ namespace Project
         }
 
         //Pick a new search location to hunt for the player
-        public Vector3 newSearch(Vector3 curPos)
+        public Vector3 newSearch(Enemy ship, Vector3 curPos)
         {
-            return new Vector3(curPos.X + 5*RNGesus.NextFloat(-1,1), curPos.Y + 5*RNGesus.NextFloat(-1,1), curPos.Z);
+            Vector3 loc = new Vector3(coord(), coord(), curPos.Z);
+            while (!hasValidPath(ship, loc))    //If the new search location has terrain blocking it, find a new one
+            {
+                loc = new Vector3(coord(), coord(), curPos.Z);
+            }
+            return loc;
         }
 
 		/// <summary>
@@ -85,6 +90,24 @@ namespace Project
             {
                 nextRound();
             }
+        }
+
+        //Function to check if the given enemy has a path to its search location
+        private bool hasValidPath(Enemy ship, Vector3 point)
+        {
+            Vector2 topoint = new Vector2(point.X - ship.pos.X, point.Y - ship.pos.Y);
+            Vector2 testpoint = new Vector2(ship.pos.X, ship.pos.Y);
+            for (float i = 0.01f; i < 1; i += 0.01f)
+            {
+                testpoint.X = (int)(ship.pos.X + topoint.X * i) + game.edgemax;
+                testpoint.Y = (int)(ship.pos.Y + topoint.Y * i) + game.edgemax;
+
+                if (game.worldBase.heights[(int)testpoint.X][(int)testpoint.Y].Z < -game.ocean.sealevel)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
