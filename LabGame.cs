@@ -204,7 +204,7 @@ namespace Project
             if (started)
             {
                 // Clears the screen with the Color.CornflowerBlue
-                GraphicsDevice.Clear(Color.Black);
+                GraphicsDevice.Clear(Color.CornflowerBlue);
 
                 for (int i = 0; i < gameObjects.Count; i++)
                 {
