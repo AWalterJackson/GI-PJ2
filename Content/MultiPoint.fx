@@ -20,9 +20,9 @@
 //
 // Adapted for COMP30019 by Jeremy Nicholson, 10 Sep 2012
 // Adapted further by Chris Ewin, 23 Sep 2013
+// Modified even more by Alexander Jackson, 20 Oct 2015
 
-// these won't change in a given iteration of the shader
-// It is more efficient to use a set number of lights than to do this dynamically
+//The set number of lights
 #define MAX_LIGHTS 15
 
 struct Light
@@ -76,9 +76,6 @@ PS_IN VS( VS_IN input )
 	PS_IN output = (PS_IN)0;
 
 	// Convert Vertex position and corresponding normal into world coords
-	// Note that we have to multiply the normal by the transposed inverse of the world 
-	// transformation matrix (for cases where we have non-uniform scaling; we also don't
-	// care about the "fourth" dimension, because translations don't affect the normal)
 	output.wpos = mul(input.pos, World);
 	output.wnrm = mul(input.nrm.xyz, (float3x3)worldInvTrp);
 
@@ -94,7 +91,7 @@ PS_IN VS( VS_IN input )
 
 float4 PS( PS_IN input ) : SV_Target
 {
-	// Our interpolated normal might not be of length 1
+
 	float3 interpNormal = normalize(input.wnrm);
 
 	// Calculate ambient RGB intensities
@@ -131,10 +128,9 @@ float4 PS( PS_IN input ) : SV_Target
 
 		// Calculate specular reflections
 		float Ks = 1;
-		float specN = 5; // Numbers>>1 give more mirror-like highlights
+		float specN = 5;
 		float3 V = normalize(cameraPos.xyz - input.wpos.xyz);
-		//float3 R = normalize(2 * LdotN*interpNormal.xyz - L.xyz);
-		float3 R = normalize(0.5*(L.xyz+V.xyz)); //Blinn-Phong equivalent
+		float3 R = normalize(0.5*(L.xyz+V.xyz)); //Blinn-Phong method calculation
 		float3 spe = fAtt*currentLight.lightCol.rgb*Ks*pow(saturate(dot(V, R)), specN);
 		returnCol.rgb = returnCol.rgb + dif.rgb + spe.rgb;
 	}
@@ -148,7 +144,6 @@ technique Lighting
 {
     pass Pass1
     {
-		// TASK 6 - One simple way to accomplish this is to target a newer shader profile
 		Profile = 10.0;
         VertexShader = VS;
         PixelShader = PS;

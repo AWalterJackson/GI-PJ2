@@ -24,9 +24,18 @@ and using superclasses to unify behaviour.
 Graphics were handled using SharpDX, and standard draw methods along with 
 lighting and shading models. The camera is set to follow the player, at a 
 slight angle from vertical.
+Player and enemy entities are shaded differently to the background, this is
+so that when an enemy dies, the explosion does not obscure vision of the player.
 
 The external code we used for this assignment is the algorithm for the diamond 
 square algorithm, and the framework was based on tutorial/workshop code. The 
 diamond square algorithm was used as decribed by the Wikipedia article 
 (https://en.wikipedia.org/wiki/Diamond-square_algorithm), and was based on work 
 done in project 1.
+The multiple point light shader model is a heavily modified adaptation of the
+phong shader used in Lab 8.
+
+Created by:
+Alexander Jackson, awj, 587332
+David Toulmin, dtoulmin, 638541
+Aaron Priestley, apriestley, 638524
