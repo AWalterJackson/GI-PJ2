@@ -13,6 +13,23 @@ namespace Project
     public class LightingController : GameObject
     {
         int totallights = 15;
+
+        private LightSource l1;
+        private LightSource l2;
+        private LightSource l3;
+        private LightSource l4;
+        private LightSource l5;
+        private LightSource l6;
+        private LightSource l7;
+        private LightSource l8;
+        private LightSource l9;
+        private LightSource l10;
+        private LightSource l11;
+        private LightSource l12;
+        private LightSource l13;
+        private LightSource l14;
+        private LightSource l15;
+
         bool changed;
 
         public struct LightSource
@@ -28,13 +45,41 @@ namespace Project
         public List<LightSource> lights;
         private Stack<LightSource> addedlights;
         private Stack<LightSource> removedlights;
-
-        private LightSource[] passablelights;
         public LightingController(LabGame game)
         {
             lights = new List<LightSource>();
-            addedlights = new Stack<LightSource>();
-            removedlights = new Stack<LightSource>();
+            ambientCol = new Vector4(0.2f, 0.2f, 0.2f, 1f);
+
+            l1.lightPos = new Vector4(0f, 0f, 0f, 1f);
+            l1.lightCol = new Vector4(0f, 0f, 0f, 1f);
+            l2.lightPos = new Vector4(0f, 0f, 0f, 1f);
+            l2.lightCol = new Vector4(0f, 0f, 0f, 1f);
+            l3.lightPos = new Vector4(0f, 0f, 0f, 1f);
+            l3.lightCol = new Vector4(0f, 0f, 0f, 1f);
+            l4.lightPos = new Vector4(0f, 0f, 0f, 1f);
+            l4.lightCol = new Vector4(0f, 0f, 0f, 1f);
+            l5.lightPos = new Vector4(0f, 0f, 0f, 1f);
+            l5.lightCol = new Vector4(0f, 0f, 0f, 1f);
+            l6.lightPos = new Vector4(0f, 0f, 0f, 1f);
+            l6.lightCol = new Vector4(0f, 0f, 0f, 1f);
+            l7.lightPos = new Vector4(0f, 0f, 0f, 1f);
+            l7.lightCol = new Vector4(0f, 0f, 0f, 1f);
+            l8.lightPos = new Vector4(0f, 0f, 0f, 1f);
+            l8.lightCol = new Vector4(0f, 0f, 0f, 1f);
+            l9.lightPos = new Vector4(0f, 0f, 0f, 1f);
+            l9.lightCol = new Vector4(0f, 0f, 0f, 1f);
+            l10.lightPos = new Vector4(0f, 0f, 0f, 1f);
+            l10.lightCol = new Vector4(0f, 0f, 0f, 1f);
+            l11.lightPos = new Vector4(0f, 0f, 0f, 1f);
+            l11.lightCol = new Vector4(0f, 0f, 0f, 1f);
+            l12.lightPos = new Vector4(0f, 0f, 0f, 1f);
+            l12.lightCol = new Vector4(0f, 0f, 0f, 1f);
+            l13.lightPos = new Vector4(0f, 0f, 0f, 1f);
+            l13.lightCol = new Vector4(0f, 0f, 0f, 1f);
+            l14.lightPos = new Vector4(0f, 0f, 0f, 1f);
+            l14.lightCol = new Vector4(0f, 0f, 0f, 1f);
+            l15.lightPos = new Vector4(0f, 0f, 0f, 1f);
+            l15.lightCol = new Vector4(0f, 0f, 0f, 1f);
             changed = true;
 
             ambientCol = new Vector4(0.5f, 0.5f, 0.5f, 1.0f);
@@ -44,54 +89,78 @@ namespace Project
 
         public void SetLighting(Effect effect)
         {
-            // TASK 2: Pass parameters to shader
             effect.Parameters["lightAmbCol"].SetValue(ambientCol);
-            //effect.Parameters["totallights"].SetValue(totallights);
-            //System.Diagnostics.Debug.WriteLine(lights[0].lightPos);
-            effect.Parameters["lights"].SetValue(passablelights);
+
+            effect.Parameters["l1"].SetValue(l1);
+            effect.Parameters["l2"].SetValue(l2);
+            effect.Parameters["l3"].SetValue(l3);
+            effect.Parameters["l4"].SetValue(l4);
+            effect.Parameters["l5"].SetValue(l5);
+            effect.Parameters["l6"].SetValue(l6);
+            effect.Parameters["l7"].SetValue(l7);
+            effect.Parameters["l8"].SetValue(l8);
+            effect.Parameters["l9"].SetValue(l9);
+            effect.Parameters["l10"].SetValue(l10);
+            effect.Parameters["l11"].SetValue(l11);
+            effect.Parameters["l12"].SetValue(l12);
+            effect.Parameters["l13"].SetValue(l13);
+            effect.Parameters["l14"].SetValue(l14);
+            effect.Parameters["l15"].SetValue(l15);
         }
 
         
         public override void Update(GameTime gameTime)
         {
-            flushAddedAndRemovedLights();
-            if (changed == true)
+            Rebuild();
+
+            for (int i = 0; i < lights.Count; i++)
             {
-                Rebuild();
+                lights.Remove(lights[i]);
             }
         }
 
         private void Rebuild()
         {
-            int index = 0;
-            //System.Diagnostics.Debug.WriteLine(Count());
-            passablelights = new LightSource[totallights];
-            foreach (LightSource light in lights)
-            {
-                //System.Diagnostics.Debug.WriteLine("COL");
-                //System.Diagnostics.Debug.WriteLine(light.lightCol);
-                //System.Diagnostics.Debug.WriteLine("POS");
-                //System.Diagnostics.Debug.WriteLine(light.lightPos);
-                passablelights[index] = light;
-                index++;
-                if (index >= totallights)
-                {
-                    break;
-                }
-            }
-            while (index < totallights)
-            {
-                passablelights[index] = new LightSource();
-                passablelights[index].lightCol = new Vector4(0f, 0f, 0f, 1f);
-                passablelights[index].lightPos = new Vector4(0f, 0f, 0f, 1f);
-                index++;
-            }
-            changed = false;
-        }
+            LightSource blanklight;
+            blanklight.lightPos = new Vector4(0f, 0f, 0f, 1f);
+            blanklight.lightCol = new Vector4(0f, 0f, 0f, 1f);
 
-        public int Count()
-        {
-            return lights.Count;
+            for (int i = 0; i < lights.Count(); i++)
+            {
+                if (i == 0) { l1 = lights[i]; }
+                if (i == 1) { l2 = lights[i]; }
+                if (i == 2) { l3 = lights[i]; }
+                if (i == 3) { l4 = lights[i]; }
+                if (i == 4) { l5 = lights[i]; }
+                if (i == 5) { l6 = lights[i]; }
+                if (i == 6) { l7 = lights[i]; }
+                if (i == 7) { l8 = lights[i]; }
+                if (i == 8) { l9 = lights[i]; }
+                if (i == 9) { l10 = lights[i]; }
+                if (i == 10) { l11 = lights[i]; }
+                if (i == 11) { l12 = lights[i]; }
+                if (i == 12) { l13 = lights[i]; }
+                if (i == 13) { l14 = lights[i]; }
+                if (i == 14) { l15 = lights[i]; }
+            }
+            for (int i = lights.Count(); i < 15; i++)
+            {
+                if (i == 0) { l1 = blanklight; }
+                if (i == 1) { l2 = blanklight; }
+                if (i == 2) { l3 = blanklight; }
+                if (i == 3) { l4 = blanklight; }
+                if (i == 4) { l5 = blanklight; }
+                if (i == 5) { l6 = blanklight; }
+                if (i == 6) { l7 = blanklight; }
+                if (i == 7) { l8 = blanklight; }
+                if (i == 8) { l9 = blanklight; }
+                if (i == 9) { l10 = blanklight; }
+                if (i == 10) { l11 = blanklight; }
+                if (i == 11) { l12 = blanklight; }
+                if (i == 12) { l13 = blanklight; }
+                if (i == 13) { l14 = blanklight; }
+                if (i == 14) { l15 = blanklight; }
+            }
         }
 
         /// <summary>
@@ -100,11 +169,7 @@ namespace Project
         /// <param name="obj"></param>
         public void Add(LightSource light)
         {
-            if (!lights.Contains(light) && !addedlights.Contains(light) && lights.Count < totallights)
-            {
-                changed = true;
-                addedlights.Push(light);
-            }
+            lights.Add(light);
         }
 
         /// <summary>
@@ -113,11 +178,7 @@ namespace Project
         /// <param name="obj"></param>
         public void Remove(LightSource light)
         {
-            if (lights.Contains(light) && !removedlights.Contains(light))
-            {
-                changed = true;
-                removedlights.Push(light);
-            }
+            lights.Remove(light);
         }
 
         /// <summary>
@@ -125,8 +186,8 @@ namespace Project
         /// </summary>
         private void flushAddedAndRemovedLights()
         {
-            while (addedlights.Count > 0) { lights.Add(addedlights.Pop()); }
             while (removedlights.Count > 0) { lights.Remove(removedlights.Pop()); }
+            while (addedlights.Count > 0) { lights.Add(addedlights.Pop()); }
         }
     }
 }

@@ -122,12 +122,12 @@ namespace Project
             removedGameObjects = new Stack<GameObject>();
 
             // Create game objects.
-            lighting = new LightingController(this);
-            gameObjects.Add(lighting);
             worldBase = new Land(this, this.size);
             gameObjects.Add(worldBase);
             ocean = new Ocean(this, this.size);
             gameObjects.Add(ocean);
+            lighting = new LightingController(this);
+            gameObjects.Add(lighting);
             player = new Player(this);
             gameObjects.Add(player);
             controller = new EnemyController(this);

@@ -26,6 +26,7 @@ namespace Project
         public Matrix WorldInverseTranspose;
         public Effect effect;
         public BasicEffect basicEffect;
+        public bool removable;
 
         public abstract void Update(GameTime gametime);
         public void Draw(GameTime gametime)
@@ -37,7 +38,6 @@ namespace Project
                 {
                     if (myModel.modelType == ModelType.Colored)
                     {
-                        System.Diagnostics.Debug.WriteLine("NOTLOAD");
                         this.effect.Parameters["View"].SetValue(game.camera.View);
                         this.effect.Parameters["Projection"].SetValue(game.camera.Projection);
                         this.effect.Parameters["World"].SetValue(Matrix.Identity);
@@ -86,14 +86,14 @@ namespace Project
                     game.GraphicsDevice.SetVertexBuffer(0, myModel.vertices, myModel.vertexStride);
                     game.GraphicsDevice.SetVertexInputLayout(myModel.inputLayout);
 
-                    if (type == GameObjectType.Ocean)
+                    /*if (type == GameObjectType.Ocean)
                     {
-                        effect.Parameters["lightAmbCol"].SetValue(new Vector4(0.2f, 0.2f, 0.2f, 1f));
+                        //effect.Parameters["lightAmbCol"].SetValue(new Vector4(0.4f, 0.4f, 0.4f, 1f));
                     }
                     if (type == GameObjectType.Terrain)
                     {
-                        effect.Parameters["lightAmbCol"].SetValue(new Vector4(0.1f, 0.1f, 0.1f, 1f));
-                    }
+                        //effect.Parameters["lightAmbCol"].SetValue(new Vector4(0.4f, 0.4f, 0.4f, 1f));
+                    }*/
 
                     // Apply the basic effect technique and draw the object
                     if (myModel.modelType == ModelType.Colored)

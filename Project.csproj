@@ -46,7 +46,6 @@
     <Compile Include="EnemyController.cs" />
     <Compile Include="GameInput.cs" />
     <Compile Include="Land.cs" />
-    <Compile Include="Light.cs" />
     <Compile Include="LightingController.cs" />
     <Compile Include="MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>

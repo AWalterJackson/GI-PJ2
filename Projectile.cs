@@ -35,8 +35,7 @@ namespace Project
             this.vel = vel;
             this.shooter = shooter;
             this.locallight.lightPos = new Vector4(this.pos.X, this.pos.Y, this.pos.Z - 2, 1f);
-            this.locallight.lightCol = new Vector4(0.2f, 0.2f, 0.2f, 1f);
-            game.addLight(this.locallight);
+            this.locallight.lightCol = new Vector4(0.15f, 0.15f, 0.15f, 1f);
             squareHitRadius = hitRadius * hitRadius;
             GetParamsFromModel();
             initPos = pos;
@@ -54,7 +53,6 @@ namespace Project
             pos += vel * timeDelta;
             if((pos - initPos).Length() > maxDist)
             {
-                game.removeLight(this.locallight);
                 game.Remove(this);
                 return;
             }

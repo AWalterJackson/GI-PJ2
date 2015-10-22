@@ -39,7 +39,21 @@ float4x4 worldInvTrp;
 
 float4 lightAmbCol;
 
-Light lights[MAX_LIGHTS];
+Light l1;
+Light l2;
+Light l3;
+Light l4;
+Light l5;
+Light l6;
+Light l7;
+Light l8;
+Light l9;
+Light l10;
+Light l11;
+Light l12;
+Light l13;
+Light l14;
+Light l15;
 
 struct VS_IN
 {
@@ -91,13 +105,29 @@ float4 PS( PS_IN input ) : SV_Target
 	returnCol.rgb = amb.rgb;
 	returnCol.a = input.col.a;
 
+	Light currentLight;
 	for (int i = 0; i < MAX_LIGHTS; i++) {
+		if (i == 0){ currentLight = l1; }
+		if (i == 1){ currentLight = l2; }
+		if (i == 2){ currentLight = l3; }
+		if (i == 3){ currentLight = l4; }
+		if (i == 4){ currentLight = l5; }
+		if (i == 5){ currentLight = l6; }
+		if (i == 6){ currentLight = l7; }
+		if (i == 7){ currentLight = l8; }
+		if (i == 8){ currentLight = l9; }
+		if (i == 9){ currentLight = l10; }
+		if (i == 10){ currentLight = l11; }
+		if (i == 11){ currentLight = l12; }
+		if (i == 12){ currentLight = l13; }
+		if (i == 13){ currentLight = l14; }
+		if (i == 14){ currentLight = l15; }
 		// Calculate diffuse RBG reflections
 		float fAtt = 1;
 		float Kd = 1;
-		float3 L = normalize(lights[i].lightPos.xyz - input.wpos.xyz);
+		float3 L = normalize(currentLight.lightPos.xyz - input.wpos.xyz);
 		float LdotN = saturate(dot(L, interpNormal.xyz));
-		float3 dif = fAtt*lights[i].lightCol.rgb*Kd*input.col.rgb*LdotN;
+		float3 dif = fAtt*currentLight.lightCol.rgb*Kd*input.col.rgb*LdotN;
 
 		// Calculate specular reflections
 		float Ks = 1;
@@ -105,7 +135,7 @@ float4 PS( PS_IN input ) : SV_Target
 		float3 V = normalize(cameraPos.xyz - input.wpos.xyz);
 		//float3 R = normalize(2 * LdotN*interpNormal.xyz - L.xyz);
 		float3 R = normalize(0.5*(L.xyz+V.xyz)); //Blinn-Phong equivalent
-		float3 spe = fAtt*lights[i].lightCol.rgb*Ks*pow(saturate(dot(V, R)), specN);
+		float3 spe = fAtt*currentLight.lightCol.rgb*Ks*pow(saturate(dot(V, R)), specN);
 		returnCol.rgb = returnCol.rgb + dif.rgb + spe.rgb;
 	}
 

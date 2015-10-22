@@ -37,20 +37,9 @@ namespace Project
 
         private int coord()
         {
-			/*int r = RNGesus.Next(0,4);
-			if (r == 0){
-				return -18;
-			} else if (r == 1) {
-				return 1;
-			} else if (r == 2) {
-				return 17;
-			} else if (r == 3) {
-				return -2;
-			}
-			return 80;*/
+
             return RNGesus.Next(-game.edgemax, game.edgemax);
-            //return RNGesus.Next(-game.edgemax, -game.edgemax + 
-			//	(int)(((28.0f/128)*2*game.edgemax)*((int)Math.Pow(2, game.size)+1)));
+
         }
 
 		/// <summary>
@@ -60,16 +49,12 @@ namespace Project
         {
             int i = numenemies;
             Vector3 newpos;
-			Enemy e;
             while (i > 0)
             {
                 newpos = new Vector3(coord(),coord(),-1);
-				e = new Enemy(this.game, this, EnemyType.galleon, newpos);
+				game.gameObjects.Add(new Enemy(this.game, this, EnemyType.galleon, newpos));
 				newpos = new Vector3(coord(),coord(),-1);
-				e = new Enemy(this.game, this, EnemyType.demoship, newpos);
-				e.damagemodifier = dmgmod;
-				e.armour = armmod;
-                game.gameObjects.Add(e);
+				game.gameObjects.Add(new Enemy(this.game, this, EnemyType.demoship, newpos));
                 i--;
             }
         }
