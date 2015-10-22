@@ -18,8 +18,7 @@ namespace Project
     class Player : PhysicalObject
     {
         //private float speed = 0.006f;
-        private float projectileSpeed = 20;
-        private float lockprogress = 0;
+        private float projectileSpeed = 10;
 
         public Player(LabGame game)
         {
@@ -91,7 +90,7 @@ namespace Project
             game.Add(new Projectile(game,
                 game.assets.GetModel("shot", CreatePlayerProjectile),
                 pos,
-            direction * 10,
+            direction * projectileSpeed,
                 this
             ));
         }

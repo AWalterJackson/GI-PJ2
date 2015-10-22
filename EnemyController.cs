@@ -16,8 +16,6 @@ namespace Project
     {
         int round;
         public Random RNGesus;
-        float damageincrease;
-        float armourincrease;
         // Constructor.
         public EnemyController(LabGame game)
         {
