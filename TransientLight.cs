@@ -22,10 +22,14 @@ namespace Project
 
         public override void Update(GameTime gameTime)
         {
+            game.removeLight(this.light);
             this.light.lightCol *= 0.95f;
-            if (this.light.lightCol.X < 0.05f)
+            if (this.light.lightCol.X >= 0.05f)
             {
-                game.removeLight(this.light);
+                game.addLight(this.light);
+            }
+            else
+            {
                 game.Remove(this);
             }
         }

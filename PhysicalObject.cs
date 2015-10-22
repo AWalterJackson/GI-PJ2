@@ -305,8 +305,10 @@ namespace Project
 
         public void updateLight()
         {
+            game.removeLight(this.locallight);
             this.locallight.lightPos.X = this.pos.X;
             this.locallight.lightPos.Y = this.pos.Y;
+            game.addLight(this.locallight);
         }
 
     }
